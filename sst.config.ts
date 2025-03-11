@@ -10,18 +10,35 @@ export default $config({
     };
   },
   async run() {
+    const discordClientID = new sst.Linkable("DiscordClientID", {
+      properties: {
+        value: process.env.DISCORD_CLIENT_ID
+      }
+    });
+    const discordGuildID = new sst.Linkable("DiscordGuildID", {
+      properties: {
+        value: process.env.DISCORD_GUILD_ID
+      }
+    });
+    const discordClientSecret = new sst.Secret("DiscordClientSecret");
+    const discordToken = new sst.Secret("DiscordToken");
+
     const vpc = new sst.aws.Vpc("QuillVPC");
     const cluster = new sst.aws.Cluster("QuillCluster", {vpc});
-
-    new sst.aws.Service("QuillService", {
+    const service = new sst.aws.Service("QuillService", {
       cluster,
       loadBalancer: {
-        domain: `${$app.stage}.quill.newdawncoalition.com`,
+        domain: $app.stage === "production" ? "quill.newdawncoalition.com" : `${$app.stage}.quill.newdawncoalition.com`,
         ports: [{listen: "80/http", redirect: "443/https"}, {listen: "443/https", forward: "3000/http"}]
       },
+      link: [discordClientID, discordClientSecret, discordToken, discordGuildID],
       dev: {
         command: "pnpm run dev"
       }
     });
+
+    return {
+      url: service.url
+    };
   }
 });

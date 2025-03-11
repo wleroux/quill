@@ -5,10 +5,21 @@
 
 declare module "sst" {
   export interface Resource {
-    "QuillService": {
-      "service": string
-      "type": "sst.aws.Service"
-      "url": string
+    "DiscordClientID": {
+      "type": "sst.sst.Linkable"
+      "value": string
+    }
+    "DiscordClientSecret": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "DiscordGuildID": {
+      "type": "sst.sst.Linkable"
+      "value": string
+    }
+    "DiscordToken": {
+      "type": "sst.sst.Secret"
+      "value": string
     }
     "QuillVPC": {
       "type": "sst.aws.Vpc"

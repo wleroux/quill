@@ -2,7 +2,7 @@
   "name": "quill",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@10.6.2",
   "scripts": {
     "build": "next build",
     "dev": "next dev --turbopack",
@@ -10,10 +10,14 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "15.2.1",
+    "discord-api-types": "^0.37.119",
+    "next": "15.2.2-canary.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sst": "3.9.33"
+    "sst": "3.9.33",
+    "ulid": "^2.3.0",
+    "next-auth": "^4.24.11",
+    "jose": "^6.0.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -1,0 +1,60 @@
+import {NextRequest, NextResponse} from "next/server";
+import {Resource} from "sst";
+import {ulid} from "ulid";
+import {REDIRECT_URL} from "@/lib/authentication/redirectUrl";
+import {encrypt} from "@/lib/authentication/session";
+import {UserDiscordClient} from "@/lib/discord/UserDiscordClient";
+import {Oauth2DiscordClient} from "@/lib/discord/Oauth2DiscordClient";
+
+export default async function authMiddleware(req: NextRequest) {
+  if (req.nextUrl.pathname === "/auth/signin") {
+    const state = ulid();
+    const response = NextResponse.redirect(
+      new URL(`https://discord.com/oauth2/authorize?client_id=${Resource.DiscordClientID.value}&response_type=code&state=${state}&redirect_uri=${encodeURIComponent(REDIRECT_URL)}&scope=identify`)
+    );
+    response.cookies.set("authState", state, {
+      httpOnly: true
+    })
+    return response;
+  } else if (req.nextUrl.pathname === "/auth/signout") {
+    const resp = NextResponse.next();
+    resp.cookies.delete("token");
+    return resp;
+  } else if (req.nextUrl.pathname === "/auth/callback") {
+    if (req.cookies.has("authState")) {
+      const code = req.nextUrl.searchParams.get("code");
+      const state = req.nextUrl.searchParams.get("state");
+      if (req.cookies.get("authState")!.value !== state || code === null) {
+        // Failed Login
+        return NextResponse.next();
+      }
+
+      const token = await new Oauth2DiscordClient(Resource.DiscordClientID.value, Resource.DiscordClientSecret.value).GetOauth2Token(code);
+      const userinfo = await new UserDiscordClient(token.access_token).GetCurrentAuthorizationInformation();
+      const user = userinfo.user;
+      if (user === undefined) return NextResponse.next();
+
+      const authToken = await encrypt(user.id);
+      const url = req.nextUrl.clone();
+      url.pathname = "/";
+      [...url.searchParams.keys()].forEach(key => url.searchParams.delete(key));
+      const resp = NextResponse.redirect(url);
+      resp.cookies.delete("authState");
+      resp.cookies.set("token", authToken, {
+        httpOnly: true
+      });
+      return resp;
+    }
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  runtime: 'nodejs',
+  matcher: [
+    '/auth/signin',
+    '/auth/signout',
+    '/auth/callback'
+  ],
+}
