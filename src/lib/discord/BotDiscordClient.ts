@@ -1,4 +1,4 @@
-import {APIGuildMember, Snowflake} from "discord-api-types/v10";
+import {APIGuildMember, APIRole, Snowflake} from "discord-api-types/v10";
 
 const API_ENDPOINT = "https://discord.com/api/v10";
 
@@ -8,7 +8,7 @@ export class BotDiscordClient {
   ) {
   }
 
-  async GetGuildMembers(guildID: Snowflake, options?: {
+  async listGuildMembers(guildID: Snowflake, options?: {
     limit?: string,
     after?: string
   }): Promise<APIGuildMember[]> {
@@ -23,8 +23,22 @@ export class BotDiscordClient {
     throw new Error(`${url}: ${await response.text()}`);
   }
 
-  async GetGuildMember(guildID: Snowflake, userID: Snowflake): Promise<APIGuildMember> {
-    const response = await fetch(`${API_ENDPOINT}/guilds/${guildID}/members/${userID}`);
+  async getGuildMember(guildID: Snowflake, userID: Snowflake): Promise<APIGuildMember> {
+    const response = await fetch(`${API_ENDPOINT}/guilds/${guildID}/members/${userID}`, {
+      headers: {
+        "Authorization": `Bot ${this.token}`
+      }
+    });
+    if (response.ok) return response.json();
+    throw new Error(await response.text());
+  }
+
+  async getGuildRoles(guildID: Snowflake): Promise<APIRole[]> {
+    const response = await fetch(`${API_ENDPOINT}/guilds/${guildID}/roles`, {
+      headers: {
+        "Authorization": `Bot ${this.token}`
+      }
+    });
     if (response.ok) return response.json();
     throw new Error(await response.text());
   }

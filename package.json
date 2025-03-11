@@ -11,13 +11,15 @@
   },
   "dependencies": {
     "discord-api-types": "^0.37.119",
+    "jose": "^6.0.8",
     "next": "15.2.2-canary.6",
+    "next-auth": "^4.24.11",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.9.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sst": "3.9.33",
-    "ulid": "^2.3.0",
-    "next-auth": "^4.24.11",
-    "jose": "^6.0.8"
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

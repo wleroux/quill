@@ -15,19 +15,27 @@ function getGuildAvatar(userId: string, discriminator: string, userAvatar: strin
   return src;
 }
 
+export async function getUserName(userID: Snowflake) {
+  const client = new BotDiscordClient(Resource.DiscordToken.value);
+  const guildID = Resource.DiscordGuildID.value;
+  const member = await client.getGuildMember(guildID, userID);
+  if (member === undefined) return `${userID}`;
+  return member.nick ?? member.user.username ?? member.user.id ?? "";
+}
+
 export async function Username({userID}: {userID: Snowflake}) {
   const client = new BotDiscordClient(Resource.DiscordToken.value);
   const guildID = Resource.DiscordGuildID.value;
-  const user = await client.GetGuildMembers(guildID, {limit: "1000"}).then(users => users.find(user => user.user.id === userID));
+  const member = await client.getGuildMember(guildID, userID);
 
-  if (!user) {
+  if (!member) {
     return <span>{userID}</span>
   } else {
-    const name = user.nick ?? user.user.username ?? user.user.id ?? "";
-    const src = getGuildAvatar(user.user.id, user.user.discriminator, user.user.avatar, guildID, user.avatar);
-    return <span className="inline-flex items-center gap-2">
+    const name = member.nick ?? member.user.username ?? member.user.id ?? "";
+    const src = getGuildAvatar(member.user.id, member.user.discriminator, member.user.avatar, guildID, member.avatar);
+    return <span className="inline-flex items-center gap-2 text-nowrap overflow-hidden">
       <img alt={name} title={name} className="rounded-full w-8 h-8" src={src} />
-      {user.nick}
+      {name}
     </span>
   }
 }
