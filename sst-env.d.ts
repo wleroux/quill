@@ -21,6 +21,11 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "QuillService": {
+      "service": string
+      "type": "sst.aws.Service"
+      "url": string
+    }
     "QuillVPC": {
       "type": "sst.aws.Vpc"
     }

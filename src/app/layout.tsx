@@ -2,8 +2,8 @@ import type {Metadata} from "next";
 import {Audiowide, Roboto} from "next/font/google";
 import "./globals.css";
 import Page from "@/lib/components/Page";
-import {PrimeReactProvider} from 'primereact/api';
 import {Navigation} from "@/lib/components/Navigation";
+import {TailwindPrimeReactProvider} from "@/app/tailwind-prime-react-provider";
 
 const audiowide = Audiowide({
   variable: "--font-audiowide",
@@ -27,7 +27,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <PrimeReactProvider>
+    <TailwindPrimeReactProvider>
       <html lang="en">
       <head>
         <title>New Dawn Coalition</title>
@@ -42,6 +42,6 @@ export default async function RootLayout({
       </Page>
       </body>
       </html>
-    </PrimeReactProvider>
+    </TailwindPrimeReactProvider>
   );
 }

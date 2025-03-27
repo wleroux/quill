@@ -1,35 +1,45 @@
 import NdcLogo from "@/app/ndc-logo.svg";
 import {SignedIn} from "@/lib/components/SignedIn";
-import {getUserName, Username} from "@/lib/components/Username";
+import {getUserName} from "@/lib/components/Username";
 import {SignedOut} from "@/lib/components/SignedOut";
-import {Menubar} from "primereact/menubar";
+import {Menubar, MenubarPassThroughOptions} from "primereact/menubar";
 import Link from "next/link";
 import Image from "next/image";
 import {isAdministrator, isAuthenticated, isGameMaster, isScribe} from "@/lib/authentication/isAuthenticated";
 import {getUserID} from "@/lib/authentication/getUserID";
 import {MenuItem} from "primereact/menuitem";
 
-const passthrough = {
+const navigationMenuPassthrough: MenubarPassThroughOptions = {
   root: {
-    className: "flex gap-8 items-center",
-  },
-  action: {
-    className: "inline-flex gap-2 items-center text-nowrap h-10 px-2 w-auto"
-  },
-  menu: {
-    className: "inline-flex flex-grow gap-2"
-  },
-  submenu: {
-    className: "bg-[color:var(--background)] rounded-md flex flex-col drop-shadow-lg border border-[color:var(--foreground)]/20"
+    className: "border-0 flex flex-row gap-4 px-0 items-center py-2"
   },
   button: {
     className: "hidden"
   },
+  menu: {
+    className: "flex flex-row gap-4 bg-transparent flex-1 relative py-0"
+  },
+  menuitem: {
+    className: "relative py-1"
+  },
+  submenu: {
+    className: "absolute px-4 py-1 flex flex-col gap-4 drop-shadow-lg bg-[color:var(--background)] border border-[color:var(--foreground)]/20 rounded-md mt-2"
+  },
+  action: {
+    className: "text-nowrap flex flex-row gap-2"
+  },
   start: {
-    className: "inline-flex flex-row gap-4 items-center"
+    className: "flex flex-row items-center"
   },
   end: {
-    className: "inline-flex flex-row gap-4 items-center"
+    className: "flex flex-row items-center gap-4"
+  }
+} as const;
+
+const userManuPassthrough: MenubarPassThroughOptions = {
+  ...navigationMenuPassthrough,
+  root: {
+    className: "border-0 flex flex-row gap-4 px-0 items-center py-0"
   }
 };
 
@@ -39,7 +49,8 @@ export async function Navigation() {
   const model: MenuItem[] = [];
   if (player) {
     model.push({label: "Player", items: [
-      {label: "My Characters", url: "/player/my-characters"}
+      {label: "My Characters", url: "/player/my-characters"},
+      {label: "My Homesteads", url: "/player/my-homesteads"}
     ]});
   }
   if (gameMaster) {
@@ -70,28 +81,24 @@ export async function Navigation() {
   }
 
   const userID = await getUserID();
-  return <div className="container py-2">
+  return <div className="container">
     <Menubar
+      pt={navigationMenuPassthrough}
     start={
       <Link href="/" className="inline-flex gap-2 items-center">
         <Image
-          alt="NDC Logo"
+          alt="New Dawn Coalition"
           width={40}
           height={40}
           src={NdcLogo}
         />
-        <span className="text-2xl text-nowrap">
-          NDC
-        </span>
       </Link>}
     end={<>
       <Link href="https://discord.gg/n2feMpKxmz" className="inline-flex gap-2 items-center">
         <i className="pi pi-discord"/>
-        Discord
       </Link>
-
       <SignedIn>
-        <Menubar pt={passthrough} model={[
+        <Menubar pt={userManuPassthrough} model={[
           {icon: "pi pi-user", label: await getUserName(userID!), items: [
             {icon: "pi pi-sign-out", label: "Sign Out", url: "/auth/signout"}
           ]}
@@ -103,7 +110,6 @@ export async function Navigation() {
         </Link>
       </SignedOut>
     </>}
-    pt={passthrough}
     model={model} />
   </div>;
 }

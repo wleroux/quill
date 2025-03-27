@@ -16,6 +16,7 @@ function getGuildAvatar(userId: string, discriminator: string, userAvatar: strin
 }
 
 export async function getUserName(userID: Snowflake) {
+  if (userID === undefined) return "";
   const client = new BotDiscordClient(Resource.DiscordToken.value);
   const guildID = Resource.DiscordGuildID.value;
   const member = await client.getGuildMember(guildID, userID);
