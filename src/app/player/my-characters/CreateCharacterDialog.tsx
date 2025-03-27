@@ -8,13 +8,14 @@ import {NumberField} from "@/lib/components/NumberField";
 import {Button} from "@/lib/components/Button";
 import {SpecieField} from "@/lib/components/SpecieField";
 import {DefaultHuman, Specie} from "@/model/specie";
-import {Background} from "@/model/background";
+import {Background, DEFAULT_BACKGROUNDS} from "@/model/background";
 import {BackgroundField} from "@/lib/components/BackgroundField";
 import {TextField} from "@/lib/components/TextField";
+import {ATTRIBUTES} from "@/model/attribute";
 
 const stepperPt: StepperPassThroughOptions = {
   nav: {
-    className: "gap-8 border-b border-[color:var(--foreground)]/20 font-[family-name:var(--font-audiowide)] flex flex-row p-4 overflow-hidden overflow-x-auto"
+    className: "gap-8 border-b border-[color:var(--foreground)]/20 font-[family-name:var(--font-audiowide)] flex flex-row p-4 overflow-hidden overflow-x-auto bg-black/10"
   },
   stepperpanel: {
     className: "flex flex-row"
@@ -33,7 +34,7 @@ const stepperPanelPt: StepperPanelPassThroughOptions = {
   action: (props) => ({
     className: twMerge(
       "flex flex-row gap-2 flex-1 cursor-pointer",
-      props.context.active ? "font-bold" : "opacity-50"
+      props.context.active ? "font-bold" : "opacity-65"
     )
   })
 };
@@ -117,7 +118,7 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
     wis: 10,
     cha: 10,
     specie: {type: "human", data: DefaultHuman},
-    background: {type: "farmer", data: undefined}
+    background: {type: "farmer", data: DEFAULT_BACKGROUNDS["farmer"]}
   });
 
   return <Dialog
@@ -142,48 +143,14 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
       <Stepper orientation="horizontal" pt={stepperPt}>
         <StepperPanel pt={stepperPanelPt} header="Base Stats">
           <div className="flex flex-row gap-4 justify-around pb-2">
-            <div className="flex flex-col items-center gap-2">
-              <label htmlFor="str" className="text-lg font-bold">STR {getStatMod(character.str)}</label>
-              <NumberField inputId="str" value={character.str} onValueChange={ev => setCharacter(prev => ({
-                ...prev,
-                str: Math.min(Math.max(8, ev.value ?? 8), 15)
-              }))} maxFractionDigits={0} min={8} max={15} showButtons/>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <label htmlFor="dex" className="text-lg font-bold">DEX {getStatMod(character.dex)}</label>
-              <NumberField inputId="dex" value={character.dex} onValueChange={ev => setCharacter(prev => ({
-                ...prev,
-                dex: Math.min(Math.max(8, ev.value ?? 8), 15)
-              }))} maxFractionDigits={0} min={8} max={15} showButtons/>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <label htmlFor="con" className="text-lg font-bold">CON {getStatMod(character.con)}</label>
-              <NumberField inputId="con" value={character.con} onValueChange={ev => setCharacter(prev => ({
-                ...prev,
-                con: Math.min(Math.max(8, ev.value ?? 8), 15)
-              }))} maxFractionDigits={0} min={8} max={15} showButtons/>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <label htmlFor="int" className="text-lg font-bold">INT {getStatMod(character.int)}</label>
-              <NumberField inputId="int" value={character.int} onValueChange={ev => setCharacter(prev => ({
-                ...prev,
-                int: Math.min(Math.max(8, ev.value ?? 8), 15)
-              }))} maxFractionDigits={0} min={8} max={15} showButtons/>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <label htmlFor="wis" className="text-lg font-bold">WIS {getStatMod(character.wis)}</label>
-              <NumberField inputId="wis" value={character.wis} onValueChange={ev => setCharacter(prev => ({
-                ...prev,
-                wis: Math.min(Math.max(8, ev.value ?? 8), 15)
-              }))} maxFractionDigits={0} min={8} max={15} showButtons/>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <label htmlFor="cha" className="text-lg font-bold">CHA {getStatMod(character.cha)}</label>
-              <NumberField inputId="cha" value={character.cha} onValueChange={ev => setCharacter(prev => ({
-                ...prev,
-                cha: Math.min(Math.max(8, ev.value ?? 8), 15)
-              }))} maxFractionDigits={0} min={8} max={15} showButtons/>
-            </div>
+            {ATTRIBUTES.map(attribute => <div key={attribute} className="flex flex-col items-center gap-2">
+                <label htmlFor={attribute} className="text-lg font-[family-name:var(--font-audiowide)]">{attribute.toUpperCase()} {getStatMod(character[attribute])}</label>
+                <NumberField inputId={attribute} value={character[attribute]} onValueChange={ev => setCharacter(prev => ({
+                  ...prev,
+                  [attribute]: Math.min(Math.max(8, ev.value ?? 8), 15)
+                }))} maxFractionDigits={0} min={8} max={15} showButtons/>
+              </div>
+            )}
           </div>
           <div className="flex flex-row justify-end text-sm opacity-75 flex flex-row gap-2 pt-4 italic">
             <span>Points Remaining</span>

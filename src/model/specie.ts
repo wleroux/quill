@@ -1,5 +1,5 @@
 import {Skill} from "@/model/skill";
-import {OriginFeat} from "@/model/feat";
+import {DefaultOriginFeat, OriginFeat} from "@/model/feat";
 
 export type SpecieAasimar = {
   size: "small" | "medium";
@@ -122,16 +122,8 @@ export type SpecieHuman = {
 export const DefaultHuman: SpecieHuman = {
   size: "medium",
   skillful: "athletics",
-  versatile: {
-    type: "skilled",
-    data: {
-      selection1: "acrobatics",
-      selection2: "arcana",
-      selection3: "deception"
-    }
-  }
+  versatile: DefaultOriginFeat
 };
-
 
 export type SpecieOrc = {
 };

@@ -1,12 +1,34 @@
-import {ArtisanTool, MusicalTool, Tool} from "@/model/tool";
+import {MusicalInstrumentTool, Tool} from "@/model/tool";
 import {Skill} from "@/model/skill";
 import {Spell} from "@/model/spell";
+import {MentalAttribute} from "@/model/attribute";
 
 type FeatAlert = {};
+export type CrafterTool =
+  | "carpenter's tools"
+  | "leatherworker's tools"
+  | "mason's tools"
+  | "potter's tools"
+  | "smith's tools"
+  | "tinker's tools"
+  | "weaver's tools"
+  | "woodcarver's tools";
+export function isCrafterTool(tool: Tool): tool is CrafterTool {
+  return [
+    "carpenter's tools",
+    "leatherworker's tools",
+    "mason's tools",
+    "potter's tools",
+    "smith's tools",
+    "tinker's tools",
+    "weaver's tools",
+    "woodcarver's tools"
+  ].includes(tool);
+}
 export type FeatCrafter = {
-  selection1: ArtisanTool;
-  selection2: ArtisanTool;
-  selection3: ArtisanTool;
+  selection1: CrafterTool;
+  selection2: CrafterTool;
+  selection3: CrafterTool;
 };
 type FeatHealer = {};
 type FeatLucky = {};
@@ -14,12 +36,12 @@ export type FeatMagicInitiate = {
   cantripClass: "cleric" | "druid" | "wizard";
   cantrip1: Spell;
   cantrip2: Spell;
-  spellcastingAbility: "int" | "wis" | "cha";
+  spellcastingAbility: MentalAttribute;
 };
 export type FeatMusician = {
-  selection1: MusicalTool;
-  selection2: MusicalTool;
-  selection3: MusicalTool;
+  selection1: MusicalInstrumentTool;
+  selection2: MusicalInstrumentTool;
+  selection3: MusicalInstrumentTool;
 };
 type FeatSavageAttacker = {};
 export type FeatSkilled = {
@@ -55,7 +77,42 @@ export const ORIGIN_FEATS: (keyof OriginFeats)[] = [
   "tavern brawler",
   "tough"
 ] as const;
-export const ORIGIN_FEAT_LABELS: {[key in keyof OriginFeats]: string} = {
+
+export type OriginFeat = {
+  [key in keyof OriginFeats]: {
+    type: key,
+    data: OriginFeats[key]
+  }
+}[keyof OriginFeats];
+
+export function isOriginFeat(feat: Feat): feat is OriginFeat {
+  return ORIGIN_FEATS.includes(feat.type);
+}
+
+export const DefaultOriginFeat: OriginFeat = {
+  type: "skilled",
+  data: {
+    selection1: "acrobatics",
+    selection2: "arcana",
+    selection3: "deception"
+  }
+};
+
+export const FEATS = [
+  ...ORIGIN_FEATS
+] as const;
+
+export type Feats = OriginFeats & {
+};
+
+export type Feat = {
+  [key in keyof Feats]: {
+    type: key,
+    data: Feats[key]
+  }
+}[keyof Feats];
+
+export const FEAT_LABELS: {[key in keyof Feats]: string} = {
   "alert": "Alert",
   "crafter": "Crafter",
   "healer": "Healer",
@@ -67,12 +124,13 @@ export const ORIGIN_FEAT_LABELS: {[key in keyof OriginFeats]: string} = {
   "tavern brawler": "Tavern Brawler",
   "tough": "Tough"
 };
-export const DEFAULT_ORIGIN_FEATS: {[key in keyof OriginFeats]: OriginFeats[key]} = {
+
+export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
   "alert": {},
   "crafter": {
-    selection1: "carpenter’s tools",
-    selection2: "leatherworker’s tools",
-    selection3: "mason’s tools"
+    selection1: "carpenter's tools",
+    selection2: "leatherworker's tools",
+    selection3: "mason's tools"
   },
   "healer": {},
   "lucky": {},
@@ -96,20 +154,3 @@ export const DEFAULT_ORIGIN_FEATS: {[key in keyof OriginFeats]: OriginFeats[key]
   "tavern brawler": {},
   "tough": {}
 };
-
-export type OriginFeat = {
-  [key in keyof OriginFeats]: {
-    type: key,
-    data: OriginFeats[key]
-  }
-}[keyof OriginFeats];
-
-export type Feats = OriginFeats & {
-};
-
-export type Feat = {
-  [key in keyof Feats]: {
-    type: key,
-    data: Feats[key]
-  }
-}[keyof Feats];

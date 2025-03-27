@@ -6,7 +6,7 @@ import {ulid} from "ulid";
 
 const dropdownPt: DropdownPassThroughOptions = {
   root: {
-    className: "rounded-md bg-black/20 border border-[color:var(--foreground)]/50 py-2 w-full flex gap-2 focus-within:outline hover:outline"
+    className: "rounded-md bg-black/20 border border-[color:var(--foreground)]/50 py-2 flex gap-2 focus-within:outline hover:outline w-full"
   },
   input: {
     className: "bg-transparent border-0 flex-1 rounded-md px-4"
