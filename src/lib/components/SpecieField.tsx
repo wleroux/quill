@@ -111,7 +111,7 @@ export function SpecieTieflingField({value, onChange}: {value: SpecieTiefling, o
 }
 
 export function SpecieField({value, onChange}: {value: Specie, onChange: (value: Specie) => void}) {
-  return <div className="flex flex-col gap-4">
+  return <FieldSet inline>
     <DropdownField label="Specie" value={value.type} onChange={ev => {
       onChange({
         type: ev.value,
@@ -128,5 +128,5 @@ export function SpecieField({value, onChange}: {value: Specie, onChange: (value:
     {value.type === "human" && <SpecieHumanField value={value.data} onChange={(value) => onChange({type: "human", data: value})} />}
     {value.type === "orc" && <SpecieOrcField value={value.data} onChange={(value) => onChange({type: "orc", data: value})} />}
     {value.type === "tiefling" && <SpecieTieflingField value={value.data} onChange={(value) => onChange({type: "tiefling", data: value})} />}
-  </div>
+  </FieldSet>
 }

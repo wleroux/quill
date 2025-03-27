@@ -1,7 +1,11 @@
 import {PropsWithChildren} from "react";
+import {twMerge} from "tailwind-merge";
 
-export function FieldSet(props: PropsWithChildren<{}>) {
-  return <div className="flex flex-col gap-4 border border-[color:var(--foreground)]/10 rounded-md p-4 bg-black/10">
-    {props.children}
+export function FieldSet({inline = false, children}: PropsWithChildren<{inline?: boolean}>) {
+  return <div className={twMerge(
+    "flex flex-col gap-4",
+    !inline && "rounded-md p-4 bg-black/20"
+  )}>
+    {children}
   </div>
 }

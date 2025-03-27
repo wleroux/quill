@@ -1,18 +1,21 @@
 import { Dropdown, DropdownProps, DropdownPassThroughOptions } from 'primereact/dropdown';
 import {twMerge} from "tailwind-merge";
+import {FieldLabel} from "@/lib/components/FieldLabel";
+import {Field} from "@/lib/components/Field";
+import {ulid} from "ulid";
 
 const dropdownPt: DropdownPassThroughOptions = {
   root: {
-    className: "rounded-md bg-transparent border border-[color:var(--foreground)] py-2 w-full flex gap-2 focus-within:outline"
+    className: "rounded-md bg-black/20 border border-[color:var(--foreground)]/50 py-2 w-full flex gap-2 focus-within:outline hover:outline"
   },
   input: {
-    className: "bg-[color:var(--background)] border-0 flex-1 rounded-md px-4"
+    className: "bg-transparent border-0 flex-1 rounded-md px-4"
   },
   list: {
-    className: "flex flex-col gap-0.5 bg-[color:var(--background)] border border-[color:var(--foreground)] shadow-lg rounded-md mt-2"
+    className: "flex flex-col gap-0.5 bg-[color:var(--background)] border border-[color:var(--foreground)]/50 shadow-lg rounded-md mt-2"
   },
   trigger: {
-    className: "pr-4 pointer-events-none"
+    className: "pointer-events-none"
   },
   item: (options) => ({
     className: twMerge(
@@ -23,8 +26,10 @@ const dropdownPt: DropdownPassThroughOptions = {
 } as const;
 
 export function DropdownField({label, ...props}: {label?: string} & DropdownProps) {
-  return <div className="flex flex-col gap-2">
-    {label && <label className="font-bold" htmlFor={props.inputId}>{label}</label>}
-    <Dropdown pt={dropdownPt} {...props} />
-  </div>
+  const inputId = props.inputId ?? ulid();
+
+  return <Field>
+    {label && <FieldLabel htmlFor={inputId}>{label}</FieldLabel>}
+    <Dropdown pt={dropdownPt} {...props} inputId={inputId} />
+  </Field>
 }

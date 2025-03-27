@@ -17,16 +17,16 @@ const navigationMenuPassthrough: MenubarPassThroughOptions = {
     className: "hidden"
   },
   menu: {
-    className: "flex flex-row gap-4 bg-transparent flex-1 relative py-0"
+    className: "flex flex-row gap-4 bg-transparent flex-1 relative py-0 sm:flex-row flex-nowrap"
   },
   menuitem: {
-    className: "relative py-1"
+    className: "relative py-1 w-fit"
   },
   submenu: {
-    className: "absolute px-4 py-1 flex flex-col gap-4 drop-shadow-lg bg-[color:var(--background)] border border-[color:var(--foreground)]/20 rounded-md mt-2"
+    className: "absolute px-4 py-1 flex flex-col gap-4 drop-shadow-lg bg-[color:var(--background)] border border-[color:var(--foreground)]/20 rounded-md mt-2 w-fit"
   },
   action: {
-    className: "text-nowrap flex flex-row gap-2"
+    className: "text-nowrap flex-inline flex-row gap-2"
   },
   start: {
     className: "flex flex-row items-center"

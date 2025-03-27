@@ -4,13 +4,14 @@ import {SkillOrToolField} from "@/lib/components/SkillOrToolField";
 import {MusicalInstrumentField} from "@/lib/components/MusicalInstrumentField";
 import {ArtisanToolField} from "@/lib/components/artisan-tool-field";
 import {FieldSet} from "@/lib/components/FieldSet";
+import {FieldLabel} from "@/lib/components/FieldLabel";
+import {Field} from "@/lib/components/Field";
 
 function FeatCrafterField({value, onChange}: {value: FeatCrafter, onChange: (value: FeatCrafter) => void}) {
   return <FieldSet>
-    <label className="font-bold">3 Artisan Tools</label>
-    <ArtisanToolField value={value.selection1} onChange={(selection) => onChange({...value, selection1: selection})} />
-    <ArtisanToolField value={value.selection2} onChange={(selection) => onChange({...value, selection2: selection})} />
-    <ArtisanToolField value={value.selection3} onChange={(selection) => onChange({...value, selection3: selection})} />
+    <ArtisanToolField label="Artisan Tool" value={value.selection1} onChange={(selection) => onChange({...value, selection1: selection})} />
+    <ArtisanToolField label="Artisan Tool" value={value.selection2} onChange={(selection) => onChange({...value, selection2: selection})} />
+    <ArtisanToolField label="Artisan Tool" value={value.selection3} onChange={(selection) => onChange({...value, selection3: selection})} />
   </FieldSet>
 }
 
@@ -27,9 +28,9 @@ function FeatMagicInitiateField({value, onChange}: {value: FeatMagicInitiate, on
       {value: "wizard", label: "Wizard"},
     ]} onChange={(ev) => onChange({...value, cantripClass: ev.value})} />
     <FieldSet>
-      <DropdownField label="Cantrip 1" value={value.cantrip1} options={[
+      <DropdownField label="Cantrip" value={value.cantrip1} options={[
       ]} onChange={(ev) => onChange({...value, cantrip1: ev.value})} />
-      <DropdownField label="Cantrip 2" value={value.cantrip2} options={[
+      <DropdownField label="Cantrip" value={value.cantrip2} options={[
       ]} onChange={(ev) => onChange({...value, cantrip2: ev.value})} />
     </FieldSet>
   </FieldSet>
@@ -37,26 +38,23 @@ function FeatMagicInitiateField({value, onChange}: {value: FeatMagicInitiate, on
 
 function FeatMusicianField({value, onChange}: {value: FeatMusician, onChange: (value: FeatMusician) => void}) {
   return <FieldSet>
-    <label className="font-bold">3 Musical Instruments</label>
-    <MusicalInstrumentField value={value.selection1} onChange={(selection) => onChange({...value, selection1: selection})} />
-    <MusicalInstrumentField value={value.selection2} onChange={(selection) => onChange({...value, selection2: selection})} />
-    <MusicalInstrumentField value={value.selection3} onChange={(selection) => onChange({...value, selection3: selection})} />
+    <MusicalInstrumentField label="Musical Instrument" value={value.selection1} onChange={(selection) => onChange({...value, selection1: selection})} />
+    <MusicalInstrumentField label="Musical Instrument" value={value.selection2} onChange={(selection) => onChange({...value, selection2: selection})} />
+    <MusicalInstrumentField label="Musical Instrument" value={value.selection3} onChange={(selection) => onChange({...value, selection3: selection})} />
   </FieldSet>
 }
 
 function FeatSkilledField({value, onChange}: {value: FeatSkilled, onChange: (value: FeatSkilled) => void}) {
   return <FieldSet>
-    <label className="font-bold">3 Skills/Tools</label>
-    <SkillOrToolField value={value.selection1} onChange={(selection) => onChange({...value, selection1: selection})} />
-    <SkillOrToolField value={value.selection2} onChange={(selection) => onChange({...value, selection2: selection})} />
-    <SkillOrToolField value={value.selection3} onChange={(selection) => onChange({...value, selection3: selection})} />
+    <SkillOrToolField label="Skill or Tool" value={value.selection1} onChange={(selection) => onChange({...value, selection1: selection})} />
+    <SkillOrToolField label="Skill or Tool" value={value.selection2} onChange={(selection) => onChange({...value, selection2: selection})} />
+    <SkillOrToolField label="Skill or Tool" value={value.selection3} onChange={(selection) => onChange({...value, selection3: selection})} />
   </FieldSet>
 }
 
 export function OriginFeatField({label, value, onChange}: {label: string, value: OriginFeat, onChange: (value: OriginFeat) => void}) {
-  return <div className="flex flex-col gap-2">
-    <label className="font-bold">{label}</label>
-    <DropdownField value={value.type} options={ORIGIN_FEATS.map(feat => ({value: feat, label: ORIGIN_FEAT_LABELS[feat]}))} onChange={ev => {
+  return <FieldSet inline>
+    <DropdownField label={label} value={value.type} options={ORIGIN_FEATS.map(feat => ({value: feat, label: ORIGIN_FEAT_LABELS[feat]}))} onChange={ev => {
       onChange({type: ev.value, data: DEFAULT_ORIGIN_FEATS[ev.value as keyof OriginFeats]} as OriginFeat);
     }} />
 
@@ -64,5 +62,5 @@ export function OriginFeatField({label, value, onChange}: {label: string, value:
     {value.type === "skilled" && <FeatSkilledField value={value.data} onChange={(data) => onChange({type: "skilled", data})} />}
     {value.type === "musician" && <FeatMusicianField value={value.data} onChange={(data) => onChange({type: "musician", data})} />}
     {value.type === "magic initiate" && <FeatMagicInitiateField value={value.data} onChange={(data) => onChange({type: "magic initiate", data})} />}
-  </div>
+  </FieldSet>
 }
