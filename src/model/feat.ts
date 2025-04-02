@@ -1,7 +1,17 @@
 import {MusicalInstrumentTool, Tool} from "@/model/tool";
 import {Skill} from "@/model/skill";
 import {Spell} from "@/model/spell";
-import {Attribute, ConWisAttribute, MentalAttribute, StrConAttribute, StrDexAttribute, WisChaAttribute} from "@/model/attribute";
+import {
+  Attribute,
+  ConWisAttribute, DexConAttribute,
+  DexIntAttribute,
+  IntWisAttribute,
+  MentalAttribute,
+  StrConAttribute,
+  StrDexAttribute,
+  StrDexWisAttribute,
+  WisChaAttribute
+} from "@/model/attribute";
 
 type FeatAlert = {};
 export type CrafterTool =
@@ -139,6 +149,51 @@ export type FeatHeavilyArmored = FeatAttribute<StrConAttribute>;
 export type FeatHeavyArmorMaster = FeatAttribute<StrConAttribute>;
 export type FeatInspiringLeader = FeatAttribute<WisChaAttribute>;
 
+export const KEEN_MIND_SKILLS = ["arcana", "history", "investigation", "nature", "religion"] as const;
+export type FeatKeenMindSkill = typeof KEEN_MIND_SKILLS[number];
+export function isFeatKeenMindSkill(skill: Skill): skill is FeatKeenMindSkill {
+  return KEEN_MIND_SKILLS.includes(skill as FeatKeenMindSkill);
+}
+export type FeatKeenMind = {
+  skill: FeatKeenMindSkill;
+};
+export type FeatLightlyArmored = FeatAttribute<StrDexAttribute>;
+export type FeatMageSlayer = FeatAttribute<StrDexAttribute>;
+export type FeatMartialWeaponTraining = FeatAttribute<StrDexAttribute>;
+export type FeatMediumArmorMaster = FeatAttribute<StrDexAttribute>;
+export type FeatModeratelyArmored = FeatAttribute<StrDexAttribute>;
+export type FeatMountedCombatant = FeatAttribute<StrDexWisAttribute>;
+export type FeatObservant = FeatAttribute<IntWisAttribute>;
+export type FeatPiercer = FeatAttribute<StrDexAttribute>;
+export type FeatPoisoner = FeatAttribute<DexIntAttribute>;
+export type FeatPolearmMaster = FeatAttribute<StrDexAttribute>;
+export type FeatResilient = FeatAttribute<Attribute>;
+export type FeatRitualCaster = FeatAttribute<MentalAttribute> & {
+  spell1: Spell;
+  spell2: Spell;
+  spell3: Spell;
+  spell4: Spell;
+  spell5: Spell;
+  spell6: Spell;
+};
+export type FeatSentinel = FeatAttribute<StrDexAttribute>;
+export type FeatShadowTouched = FeatAttribute<MentalAttribute>;
+export type FeatSharpshooter = {};
+export type FeatShieldMaster = {};
+export type FeatSkillExpert = {
+  attribute: Attribute;
+  skill: Skill;
+  expertise: Skill;
+};
+export type FeatSkulker = {};
+export type FeatSlasher = FeatAttribute<StrDexAttribute>;
+export type FeatSpeedy = FeatAttribute<DexConAttribute>;
+export type FeatSpellSniper = FeatAttribute<MentalAttribute>;
+export type FeatTelekinetic = FeatAttribute<MentalAttribute>;
+export type FeatTelepathic = FeatAttribute<MentalAttribute>;
+export type FeatWarCaster = FeatAttribute<MentalAttribute>;
+export type FeatWeaponMaster = FeatAttribute<StrDexAttribute>;
+
 export const GENERAL_FEATS = [
   "ability score improvement",
   "actor",
@@ -151,7 +206,32 @@ export const GENERAL_FEATS = [
   "fey-touched",
   "grappler",
   "heavily armored",
-  "inspiring leader"
+  "inspiring leader",
+  "keen mind",
+  "mage slayer",
+  "martial weapon training",
+  "moderately armored",
+  "medium armor master",
+  "mounted combatant",
+  "observant",
+  "piercer",
+  "poisoner",
+  "polearm master",
+  "resilient",
+  "ritual caster",
+  "sentinel",
+  "shadow-touched",
+  "sharpshooter",
+  "shield master",
+  "skill expert",
+  "skulker",
+  "slasher",
+  "speedy",
+  "spell sniper",
+  "telekinetic",
+  "telepathic",
+  "war caster",
+  "weapon master"
 ];
 export type GeneralFeats = {
   "actor": FeatActor
@@ -168,7 +248,33 @@ export type GeneralFeats = {
   "great weapon master": FeatGreatWeaponMaster,
   "heavily armored": FeatHeavilyArmored,
   "heavy armor master": FeatHeavyArmorMaster,
-  "inspiring leader": FeatInspiringLeader
+  "inspiring leader": FeatInspiringLeader,
+  "keen mind": FeatKeenMind,
+  "lightly armored": FeatLightlyArmored,
+  "mage slayer": FeatMageSlayer,
+  "martial weapon training": FeatMartialWeaponTraining,
+  "moderately armored": FeatModeratelyArmored,
+  "medium armor master": FeatMediumArmorMaster,
+  "mounted combatant": FeatMountedCombatant,
+  "observant": FeatObservant,
+  "piercer": FeatPiercer,
+  "poisoner": FeatPoisoner,
+  "polearm master": FeatPolearmMaster
+  "resilient": FeatResilient,
+  "ritual caster": FeatRitualCaster,
+  "sentinel": FeatSentinel,
+  "shadow-touched": FeatShadowTouched,
+  "sharpshooter": FeatSharpshooter,
+  "shield master": FeatShieldMaster,
+  "skill expert": FeatSkillExpert,
+  "skulker": FeatSkulker,
+  "slasher": FeatSlasher,
+  "speedy": FeatSpeedy,
+  "spell sniper": FeatSpellSniper,
+  "telekinetic": FeatTelekinetic,
+  "telepathic": FeatTelepathic,
+  "war caster": FeatWarCaster,
+  "weapon master": FeatWeaponMaster
 };
 
 export const FEATS = [
@@ -203,14 +309,40 @@ export const FEAT_LABELS: {[key in keyof Feats]: string} = {
   "heavily armored": "Heavily Armored",
   "heavy armor master": "Heavy Armor Master",
   "healer": "Healer",
+  "keen mind": "Keen Mind",
   "inspiring leader": "Inspiring Leader",
+  "lightly armored": "Lightly Armored",
   "lucky": "Lucky",
+  "mage slayer": "Mage Slayer",
   "magic initiate": "Magic Initiate",
+  "martial weapon training": "Martial Weapon Training",
+  "medium armor master": "Medium Armor Master",
+  "moderately armored": "Moderately Armored",
+  "mounted combatant": "Mounted Combatant",
+  "observant": "Observant",
+  "piercer": "Piercer",
+  "poisoner": "Poisoner",
+  "polearm master": "Polearm Master",
+  "resilient": "Resilient",
+  "ritual caster": "Ritual Caster",
+  "sentinel": "Sentinel",
   "musician": "Musician",
   "savage attacker": "Savage Attacker",
+  "shadow-touched": "Shadow-Touched",
+  "sharpshooter": "Sharpshooter",
+  "shield master": "Shield Master",
   "skilled": "Skilled",
+  "skill expert": "Skill Expert",
+  "skulker": "Skulker",
+  "slasher": "Slasher",
+  "speedy": "Speedy",
+  "spell sniper": "Spell Sniper",
   "tavern brawler": "Tavern Brawler",
-  "tough": "Tough"
+  "telekinetic": "Telekinetic",
+  "telepathic": "Telepathic",
+  "tough": "Tough",
+  "war caster": "War Caster",
+  "weapon master": "Weapon Master"
 };
 
 export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
@@ -259,24 +391,104 @@ export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
     attribute: "str"
   },
   "inspiring leader": {attribute: "wis"},
+  "keen mind": {
+    skill: "arcana"
+  },
+  "lightly armored": {
+    attribute: "str"
+  },
   "lucky": {},
+  "mage slayer": {
+    attribute: "str"
+  },
   "magic initiate": {
     cantripClass: "cleric",
     cantrip1: "",
     cantrip2: "",
     spellcastingAbility: "wis"
   },
+  "martial weapon training": {
+    attribute: "str"
+  },
+  "medium armor master": {
+    attribute: "str"
+  },
+  "moderately armored": {
+    attribute: "str"
+  },
+  "mounted combatant": {
+    attribute: "str"
+  },
   "musician": {
     selection1: "bagpipes",
     selection2: "drum",
     selection3: "dulcimer",
   },
+  "observant": {
+    attribute: "int"
+  },
+  "piercer": {
+    attribute: "str"
+  },
+  "poisoner": {
+    attribute: "dex"
+  },
+  "polearm master": {
+    attribute: "str"
+  },
+  "resilient": {
+    attribute: "str"
+  },
+  "ritual caster": {
+    attribute: "int",
+    spell1: "",
+    spell2: "",
+    spell3: "",
+    spell4: "",
+    spell5: "",
+    spell6: "",
+  },
   "savage attacker": {},
+  "sentinel": {
+    attribute: "str"
+  },
+  "shadow-touched": {
+    attribute: "int"
+  },
+  "sharpshooter": {},
+  "shield master": {},
   "skilled": {
     selection1: "athletics",
     selection2: "acrobatics",
     selection3: "sleight of hand"
   },
+  "skill expert": {
+    attribute: "int",
+    skill: "animal handling",
+    expertise: "animal handling"
+  },
+  "skulker": {},
+  "slasher": {
+    attribute: "str"
+  },
+  "speedy": {
+    attribute: "dex"
+  },
+  "spell sniper": {
+    attribute: "int"
+  },
   "tavern brawler": {},
+  "telekinetic": {
+    attribute: "int"
+  },
+  "telepathic": {
+    attribute: "int"
+  },
+  "war caster": {
+    attribute: "int"
+  },
+  "weapon master": {
+    attribute: "str"
+  },
   "tough": {}
 };
