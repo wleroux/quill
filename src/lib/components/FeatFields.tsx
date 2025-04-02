@@ -64,12 +64,12 @@ export function FeatSkilledField({inline, value, onChange}: {inline?: boolean, v
   </FieldSet>
 }
 
-export function FeatField<T = Feat>({label, filter, value, onChange}: {label: string, filter?: (feat: Feat) => feat is T & Feat, value: OriginFeat, onChange: (value: T) => void}) {
+export function FeatFields<T = Feat>({label, filter, value, onChange}: {label: string, filter?: (feat: Feat) => feat is T & Feat, value?: OriginFeat, onChange: (value: T) => void}) {
   return <FieldSet inline>
     <FieldRow>
       <DropdownField
         label={label}
-        value={value.type}
+        value={value?.type}
         options={FEATS
           .map(feat => ({type: feat, data: DEFAULT_FEATS[feat]}) as Feat)
           .filter(feat => filter ? filter(feat) : true)
@@ -79,9 +79,9 @@ export function FeatField<T = Feat>({label, filter, value, onChange}: {label: st
          }} />
     </FieldRow>
 
-    {value.type === "crafter" && <FeatCrafterField value={value.data} onChange={(data) => onChange({type: "crafter", data} as T)} />}
-    {value.type === "skilled" && <FeatSkilledField value={value.data} onChange={(data) => onChange({type: "skilled", data} as T)} />}
-    {value.type === "musician" && <FeatMusicianField value={value.data} onChange={(data) => onChange({type: "musician", data} as T)} />}
-    {value.type === "magic initiate" && <FeatMagicInitiateField value={value.data} onChange={(data) => onChange({type: "magic initiate", data} as T)} />}
+    {value?.type === "crafter" && <FeatCrafterField value={value.data} onChange={(data) => onChange({type: "crafter", data} as T)} />}
+    {value?.type === "skilled" && <FeatSkilledField value={value.data} onChange={(data) => onChange({type: "skilled", data} as T)} />}
+    {value?.type === "musician" && <FeatMusicianField value={value.data} onChange={(data) => onChange({type: "musician", data} as T)} />}
+    {value?.type === "magic initiate" && <FeatMagicInitiateField value={value.data} onChange={(data) => onChange({type: "magic initiate", data} as T)} />}
   </FieldSet>
 }

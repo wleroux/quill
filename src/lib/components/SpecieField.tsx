@@ -26,7 +26,7 @@ import {
 } from "@/model/specie";
 import {DropdownField} from "@/lib/components/DropdownField";
 import {SKILL_LABEL, SKILLS} from "@/model/skill";
-import {FeatField} from "@/lib/components/FeatField";
+import {FeatFields} from "@/lib/components/FeatFields";
 import {FieldSet} from "@/lib/components/FieldSet";
 import {FieldRow} from "@/lib/components/FieldRow";
 import {isOriginFeat} from "@/model/feat";
@@ -110,7 +110,7 @@ export function SpecieHumanField({value, onChange}: {value: SpecieHuman, onChang
     <FieldRow>
     <DropdownField label="Skillful" value={value.skillful} options={SKILLS.map(skill => ({value: skill, label: SKILL_LABEL[skill]}))} onChange={ev => onChange({...value, skillful: ev.value})}/>
     </FieldRow>
-    <FeatField label="Versatile" filter={isOriginFeat} value={value.versatile} onChange={(versatile) => onChange({...value, versatile})} />
+    <FeatFields label="Versatile" filter={isOriginFeat} value={value.versatile} onChange={(versatile) => onChange({...value, versatile})} />
   </FieldSet>
 }
 
@@ -134,10 +134,10 @@ export function SpecieTieflingField({value, onChange}: {value: SpecieTiefling, o
   </FieldSet>
 }
 
-export function SpecieField({value, onChange}: {value: Specie, onChange: (value: Specie) => void}) {
+export function SpecieField({value, onChange}: {value?: Specie, onChange: (value: Specie | undefined) => void}) {
   return <FieldSet inline>
     <FieldRow>
-      <DropdownField label="Specie" value={value.type} onChange={ev => {
+      <DropdownField label="Specie" value={value?.type} onChange={ev => {
         onChange({
           type: ev.value,
           data: DEFAULT_SPECIE[ev.value as keyof Species]
@@ -145,14 +145,14 @@ export function SpecieField({value, onChange}: {value: Specie, onChange: (value:
       }} options={SPECIES.map(specie => ({value: specie, label: SPECIE_LABELS[specie]}))} />
     </FieldRow>
 
-    {value.type === "aasimar" && <SpecieAasimarField value={value.data} onChange={(value) => onChange({type: "aasimar", data: value})} />}
-    {value.type === "dragonborn" && <SpecieDragonbornField value={value.data} onChange={(value) => onChange({type: "dragonborn", data: value})} />}
-    {value.type === "dwarf" && <SpecieDwarfField value={value.data} onChange={(value) => onChange({type: "dwarf", data: value})} />}
-    {value.type === "elf" && <SpecieElfField value={value.data} onChange={(value) => onChange({type: "elf", data: value})} />}
-    {value.type === "gnome" && <SpecieGnomeField value={value.data} onChange={(value) => onChange({type: "gnome", data: value})} />}
-    {value.type === "goliath" && <SpecieGoliathField value={value.data} onChange={(value) => onChange({type: "goliath", data: value})} />}
-    {value.type === "human" && <SpecieHumanField value={value.data} onChange={(value) => onChange({type: "human", data: value})} />}
-    {value.type === "orc" && <SpecieOrcField value={value.data} onChange={(value) => onChange({type: "orc", data: value})} />}
-    {value.type === "tiefling" && <SpecieTieflingField value={value.data} onChange={(value) => onChange({type: "tiefling", data: value})} />}
+    {value?.type === "aasimar" && <SpecieAasimarField value={value.data} onChange={(value) => onChange({type: "aasimar", data: value})} />}
+    {value?.type === "dragonborn" && <SpecieDragonbornField value={value.data} onChange={(value) => onChange({type: "dragonborn", data: value})} />}
+    {value?.type === "dwarf" && <SpecieDwarfField value={value.data} onChange={(value) => onChange({type: "dwarf", data: value})} />}
+    {value?.type === "elf" && <SpecieElfField value={value.data} onChange={(value) => onChange({type: "elf", data: value})} />}
+    {value?.type === "gnome" && <SpecieGnomeField value={value.data} onChange={(value) => onChange({type: "gnome", data: value})} />}
+    {value?.type === "goliath" && <SpecieGoliathField value={value.data} onChange={(value) => onChange({type: "goliath", data: value})} />}
+    {value?.type === "human" && <SpecieHumanField value={value.data} onChange={(value) => onChange({type: "human", data: value})} />}
+    {value?.type === "orc" && <SpecieOrcField value={value.data} onChange={(value) => onChange({type: "orc", data: value})} />}
+    {value?.type === "tiefling" && <SpecieTieflingField value={value.data} onChange={(value) => onChange({type: "tiefling", data: value})} />}
   </FieldSet>
 }

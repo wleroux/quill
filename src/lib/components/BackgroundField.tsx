@@ -40,7 +40,7 @@ import {
 import {DropdownField} from "@/lib/components/DropdownField";
 import React from "react";
 import {FieldSet} from "@/lib/components/FieldSet";
-import {FeatCrafterField, FeatField, FeatMusicianField, FeatSkilledField} from "@/lib/components/FeatField";
+import {FeatCrafterField, FeatFields, FeatMusicianField, FeatSkilledField} from "@/lib/components/FeatFields";
 import {SkillField} from "@/lib/components/SkillField";
 import {AttributeField} from "@/lib/components/AttributeField";
 import {ToolField} from "@/lib/components/ToolField";
@@ -113,7 +113,7 @@ function BackgroundCustomField({value, onChange}: {value: BackgroundCustom, onCh
       <AttributeField label="Attribute" value={value.attribute2} onChange={(attribute) => onChange({...value, attribute2: attribute})}/>
       <AttributeField label="Attribute" value={value.attribute3} onChange={(attribute) => onChange({...value, attribute3: attribute})}/>
     </FieldRow>
-    <FeatField label="Origin Feat" filter={isOriginFeat} value={value.feat} onChange={feat => onChange({...value, feat: feat})}/>
+    <FeatFields label="Origin Feat" filter={isOriginFeat} value={value.feat} onChange={feat => onChange({...value, feat: feat})}/>
     <FieldRow>
       <SkillField label="Skill" value={value.skill1} onChange={(skill) => onChange({...value, skill1: skill})}/>
       <SkillField label="Skill" value={value.skill2} onChange={(skill) => onChange({...value, skill2: skill})}/>
@@ -276,31 +276,33 @@ function BackgroundWayfarerField({value, onChange}: {value: BackgroundWayfarer, 
   </FieldSet>
 }
 
-export function BackgroundField({
-  value, onChange}: {value: Background, onChange: (value: Background) => void}) {
+export function BackgroundField({value, onChange}: {
+  value?: Background,
+  onChange: (value: Background) => void
+}) {
   return <FieldSet inline>
     <FieldRow>
-      <DropdownField label="Background" value={value.type} onChange={ev => onChange({type: ev.value, data: DEFAULT_BACKGROUNDS[ev.value as keyof Backgrounds]} as Background)} options={BACKGROUNDS.map(background => ({
+      <DropdownField label="Background" value={value?.type} onChange={ev => onChange({type: ev.value, data: DEFAULT_BACKGROUNDS[ev.value as keyof Backgrounds]} as Background)} options={BACKGROUNDS.map(background => ({
         value: background, label: BACKGROUND_LABELS[background]
       }))} />
     </FieldRow>
 
-    {value.type === "acolyte" && <BackgroundAcolyteField value={value.data} onChange={(data) => onChange({type: "acolyte", data})} />}
-    {value.type === "artisan" && <BackgroundArtisanField value={value.data} onChange={(data) => onChange({type: "artisan", data})} />}
-    {value.type === "charlatan" && <BackgroundCharlatanField value={value.data} onChange={(data) => onChange({type: "charlatan", data})} />}
-    {value.type === "criminal" && <BackgroundCriminalField value={value.data} onChange={(data) => onChange({type: "criminal", data})} />}
-    {value.type === "custom" && <BackgroundCustomField value={value.data} onChange={(data) => onChange({type: "custom", data})} />}
-    {value.type === "entertainer" && <BackgroundEntertainerField value={value.data} onChange={(data) => onChange({type: "entertainer", data})} />}
-    {value.type === "farmer" && <BackgroundFarmerField value={value.data} onChange={(data) => onChange({type: "farmer", data})} />}
-    {value.type === "guard" && <BackgroundGuardField value={value.data} onChange={(data) => onChange({type: "guard", data})} />}
-    {value.type === "guide" && <BackgroundGuideField value={value.data} onChange={(data) => onChange({type: "guide", data})} />}
-    {value.type === "hermit" && <BackgroundHermitField value={value.data} onChange={(data) => onChange({type: "hermit", data})} />}
-    {value.type === "merchant" && <BackgroundMerchantField value={value.data} onChange={(data) => onChange({type: "merchant", data})} />}
-    {value.type === "noble" && <BackgroundNobleField value={value.data} onChange={(data) => onChange({type: "noble", data})} />}
-    {value.type === "sage" && <BackgroundSageField value={value.data} onChange={(data) => onChange({type: "sage", data})} />}
-    {value.type === "sailor" && <BackgroundSailorField value={value.data} onChange={(data) => onChange({type: "sailor", data})} />}
-    {value.type === "scribe" && <BackgroundScribeField value={value.data} onChange={(data) => onChange({type: "scribe", data})} />}
-    {value.type === "soldier" && <BackgroundSoldierField value={value.data} onChange={(data) => onChange({type: "soldier", data})} />}
-    {value.type === "wayfarer" && <BackgroundWayfarerField value={value.data} onChange={(data) => onChange({type: "wayfarer", data})} />}
+    {value?.type === "acolyte" && <BackgroundAcolyteField value={value.data} onChange={(data) => onChange({type: "acolyte", data})} />}
+    {value?.type === "artisan" && <BackgroundArtisanField value={value.data} onChange={(data) => onChange({type: "artisan", data})} />}
+    {value?.type === "charlatan" && <BackgroundCharlatanField value={value.data} onChange={(data) => onChange({type: "charlatan", data})} />}
+    {value?.type === "criminal" && <BackgroundCriminalField value={value.data} onChange={(data) => onChange({type: "criminal", data})} />}
+    {value?.type === "custom" && <BackgroundCustomField value={value.data} onChange={(data) => onChange({type: "custom", data})} />}
+    {value?.type === "entertainer" && <BackgroundEntertainerField value={value.data} onChange={(data) => onChange({type: "entertainer", data})} />}
+    {value?.type === "farmer" && <BackgroundFarmerField value={value.data} onChange={(data) => onChange({type: "farmer", data})} />}
+    {value?.type === "guard" && <BackgroundGuardField value={value.data} onChange={(data) => onChange({type: "guard", data})} />}
+    {value?.type === "guide" && <BackgroundGuideField value={value.data} onChange={(data) => onChange({type: "guide", data})} />}
+    {value?.type === "hermit" && <BackgroundHermitField value={value.data} onChange={(data) => onChange({type: "hermit", data})} />}
+    {value?.type === "merchant" && <BackgroundMerchantField value={value.data} onChange={(data) => onChange({type: "merchant", data})} />}
+    {value?.type === "noble" && <BackgroundNobleField value={value.data} onChange={(data) => onChange({type: "noble", data})} />}
+    {value?.type === "sage" && <BackgroundSageField value={value.data} onChange={(data) => onChange({type: "sage", data})} />}
+    {value?.type === "sailor" && <BackgroundSailorField value={value.data} onChange={(data) => onChange({type: "sailor", data})} />}
+    {value?.type === "scribe" && <BackgroundScribeField value={value.data} onChange={(data) => onChange({type: "scribe", data})} />}
+    {value?.type === "soldier" && <BackgroundSoldierField value={value.data} onChange={(data) => onChange({type: "soldier", data})} />}
+    {value?.type === "wayfarer" && <BackgroundWayfarerField value={value.data} onChange={(data) => onChange({type: "wayfarer", data})} />}
   </FieldSet>
 }

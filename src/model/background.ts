@@ -278,7 +278,7 @@ export const DEFAULT_BACKGROUNDS: {[key in keyof Backgrounds]: Backgrounds[key]}
     attribute2: "str",
     attribute3: "dex",
     feat: DEFAULT_FEATS["crafter"],
-    tool: "carpenter’s tools"
+    tool: "carpenter's tools"
   },
   "charlatan": {
     attribute1: "dex",
@@ -297,7 +297,7 @@ export const DEFAULT_BACKGROUNDS: {[key in keyof Backgrounds]: Backgrounds[key]}
     attribute3: "dex",
     skill1: "athletics",
     skill2: "acrobatics",
-    tool: "mason’s tools",
+    tool: "mason's tools",
     feat: {type: "alert", data: DEFAULT_FEATS["alert"]}
   },
   "entertainer": {

@@ -15,7 +15,7 @@ const dropdownPt: DropdownPassThroughOptions = {
     className: "flex flex-col gap-0.5 bg-[color:var(--background)] border border-[color:var(--foreground)]/50 shadow-lg rounded-md mt-2"
   },
   trigger: {
-    className: "pointer-events-none"
+    className: "pointer-events-none pr-4"
   },
   item: (options) => ({
     className: twMerge(

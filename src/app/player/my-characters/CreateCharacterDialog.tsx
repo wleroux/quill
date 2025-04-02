@@ -4,14 +4,22 @@ import {Stepper, StepperPassThroughOptions} from "primereact/stepper";
 import {StepperPanel, StepperPanelPassThroughOptions} from "primereact/stepperpanel";
 import React, {useState} from "react";
 import {twMerge} from "tailwind-merge";
-import {NumberField} from "@/lib/components/NumberField";
+import {AbilityScoreField} from "@/lib/components/AbilityScoreField";
 import {Button} from "@/lib/components/Button";
 import {SpecieField} from "@/lib/components/SpecieField";
-import {DefaultHuman, Specie} from "@/model/specie";
-import {Background, DEFAULT_BACKGROUNDS} from "@/model/background";
+import {Specie} from "@/model/specie";
+import {Background} from "@/model/background";
 import {BackgroundField} from "@/lib/components/BackgroundField";
 import {TextField} from "@/lib/components/TextField";
-import {ATTRIBUTES} from "@/model/attribute";
+import {Attribute, ATTRIBUTES} from "@/model/attribute";
+import {ClassLevelerField} from "@/lib/components/leveler/ClassLevelerField";
+import {Class, getClassLabel} from "@/model/class/Class";
+import {FieldSet} from "@/lib/components/FieldSet";
+import {Field} from "@/lib/components/Field";
+import {FieldRow} from "@/lib/components/FieldRow";
+import {SectionLabel} from "@/lib/components/SectionLabel";
+import {NumberField} from "@/lib/components/NumberField";
+import {DropdownField} from "@/lib/components/DropdownField";
 
 const stepperPt: StepperPassThroughOptions = {
   nav: {
@@ -40,7 +48,7 @@ const stepperPanelPt: StepperPanelPassThroughOptions = {
 };
 const modalPt: DialogPassThroughOptions = {
   root: {
-    className: "bg-[color:var(--background)] container border border-[color:var(--foreground)]/20 drop-shadow-lg rounded-md mt-32"
+    className: "bg-[color:var(--background)] container border border-[color:var(--foreground)]/20 drop-shadow-lg rounded-md mt-32 mb-40"
   },
   header: {
     className: "p-4 bg-black/40 rounded-t-md border-b border-[color:var(--foreground)]/20"
@@ -58,7 +66,7 @@ const modalPt: DialogPassThroughOptions = {
     className: "bg-transparent p-0"
   },
   mask: {
-    className: "bg-black/50 items-start",
+    className: "bg-black/50 items-start overflow-y-auto",
     style: {alignItems:"start"}
   }
 };
@@ -67,14 +75,11 @@ type NewCharacter = {
   name: string;
   token: string;
   startingLevel: 2 | 3;
-  str: number;
-  dex: number;
-  con: number;
-  int: number;
-  wis: number;
-  cha: number;
-  specie: Specie;
-  background: Background;
+  str: number; dex: number; con: number; int: number; wis: number; cha: number;
+  specie?: Specie;
+  background?: Background;
+  main?: Class<any>;
+  secondary?: Class<any>;
 };
 
 function getStatMod(value: number) {
@@ -105,20 +110,40 @@ function getRemainingPoints(character: NewCharacter) {
     - getPointCost(character.cha)
     ;
 }
+function getLevel(character: NewCharacter) {
+  return (character.main?.level ?? 0) + (character.secondary?.level ?? 0);
+}
+
+function getHighestBaseScore(character: NewCharacter, attribute: Attribute) {
+  const currentValue = character[attribute];
+  for (let i = currentValue; i <= 15; i ++) {
+    if (getRemainingPoints({
+      ...character,
+      [attribute]: i
+    }) < 0) return i - 1;
+  }
+  return 15;
+}
+
+function isValidCharacter(character: NewCharacter) {
+  if (character.name.length < 3) return false;
+  if (getRemainingPoints(character) !== 0) return false;
+  if (character.specie === undefined) return false;
+  if (character.background === undefined) return false;
+  if (getLevel(character) !== character.startingLevel) return false;
+  return true;
+}
 
 export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onClose?: () => void}) {
   const [character, setCharacter] = useState<NewCharacter>({
     name: "",
     token: "",
-    startingLevel: 2,
-    str: 10,
-    dex: 10,
-    con: 10,
-    int: 10,
-    wis: 10,
-    cha: 10,
-    specie: {type: "human", data: DefaultHuman},
-    background: {type: "farmer", data: DEFAULT_BACKGROUNDS["farmer"]}
+    startingLevel: 3,
+    str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10,
+    specie: undefined,
+    background: undefined,
+    main: undefined,
+    secondary: undefined
   });
 
   return <Dialog
@@ -145,10 +170,16 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
           <div className="flex flex-row gap-4 justify-around pb-2">
             {ATTRIBUTES.map(attribute => <div key={attribute} className="flex flex-col items-center gap-2">
                 <label htmlFor={attribute} className="text-lg font-[family-name:var(--font-audiowide)]">{attribute.toUpperCase()} {getStatMod(character[attribute])}</label>
-                <NumberField inputId={attribute} value={character[attribute]} onValueChange={ev => setCharacter(prev => ({
-                  ...prev,
-                  [attribute]: Math.min(Math.max(8, ev.value ?? 8), 15)
-                }))} maxFractionDigits={0} min={8} max={15} showButtons/>
+                <AbilityScoreField inputId={attribute} value={character[attribute]} onValueChange={ev => {
+                  const value = Math.min(Math.max(8, ev.value ?? 8), 15);
+                  setCharacter(prev => {
+                    if (getRemainingPoints({...prev, [attribute]: value}) < 0) return prev;
+                    return ({
+                      ...prev,
+                      [attribute]: Math.min(Math.max(8, ev.value ?? 8), 15)
+                    })
+                  })
+                }} maxFractionDigits={0} min={8} max={getHighestBaseScore(character, attribute)} showButtons />
               </div>
             )}
           </div>
@@ -166,12 +197,53 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
           <BackgroundField value={character.background} onChange={value => setCharacter(prev => ({...prev, background: value}))}/>
         </StepperPanel>
         <StepperPanel pt={stepperPanelPt} header="Classes">
-          Select Main Class
+          <FieldSet inline>
+            <FieldRow>
+              <DropdownField label="Starting Level" value={character.startingLevel} onChange={ev => setCharacter(prev => ({...prev, startingLevel: ev.value}))} options={[
+                {value: 2, label: "Level 2"},
+                {value: 3, label: "Level 3"},
+                {value: 5, label: "Level 5"},
+                {value: 9, label: "Level 9"},
+                {value: 13, label: "Level 13"},
+                {value: 17, label: "Level 17"},
+                {value: 20, label: "Level 20"}
+              ].filter(option => option.value >= getLevel(character))} />
+            </FieldRow>
+            {(character.main || character.secondary) && <Field>
+              <SectionLabel>Current Level</SectionLabel>
+              <FieldSet>
+                <FieldRow>
+                  {character.main && <NumberField label={`${getClassLabel(character.main)} ${character.main.level}`} min={character.secondary ? 1 : 0} max={character.main.level} value={character.main.level} onChange={(ev) => {
+                    setCharacter(prev => {
+                      if (!prev.main) return prev;
+                      if (ev.value === 0) {
+                        if (prev.secondary) return prev;
+                        return ({...prev, main: undefined});
+                      }
+                      return ({...prev, main: {...prev.main, level: ev.value} as Class<any>});
+                    });
+                  }} />}
+                  {character.secondary && <NumberField label={`${getClassLabel(character.secondary)} ${character.secondary.level}`} min={0} max={character.secondary.level} value={character.secondary.level} onChange={(ev) => {
+                    setCharacter(prev => {
+                      if (!prev.secondary) return prev;
+                      if (ev.value === 0) return ({...prev, secondary: undefined});
+                      return ({...prev, secondary: {...prev.secondary, level: ev.value} as Class<any>});
+                    });
+                  }} />}
+                </FieldRow>
+              </FieldSet>
+            </Field>}
+            {character.startingLevel > getLevel(character) && <ClassLevelerField
+              main={character.main}
+              secondary={character.secondary}
+              onChange={(main, secondary) => setCharacter(prev => ({...prev, main, secondary}))}
+            />}
+          </FieldSet>
         </StepperPanel>
       </Stepper>
     </div>}
     footer={<div className="flex flex-row justify-end">
-      <Button disabled={getRemainingPoints(character) !== 0} label="Create Character"/>
+      <Button disabled={!isValidCharacter(character)} label="Create Character"/>
     </div>}
   />;
 }

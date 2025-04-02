@@ -1,5 +1,6 @@
 import {Checkbox, CheckboxPassThroughOptions} from "primereact/checkbox";
 import React from "react";
+import {ulid} from "ulid";
 
 const checkboxPt: CheckboxPassThroughOptions = {
   box: {
@@ -14,17 +15,18 @@ const checkboxPt: CheckboxPassThroughOptions = {
 };
 
 export function CheckboxField({inputId, label, checked, onChange}: {
-  inputId: string,
+  inputId?: string,
   label: string,
   checked: boolean,
   onChange: (checked: boolean) => void
 }) {
+  const id = inputId ?? ulid();
   return <div className="flex align-items-center gap-2">
     <Checkbox
       pt={checkboxPt}
-      inputId={inputId}
+      inputId={id}
       checked={checked}
       onChange={ev => onChange(ev.checked ?? false)}/>
-    <label htmlFor={inputId} className="cursor-pointer">{label}</label>
+    <label htmlFor={id} className="cursor-pointer">{label}</label>
   </div>;
 }

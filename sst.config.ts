@@ -33,7 +33,7 @@ export default $config({
       },
       link: [discordClientID, discordClientSecret, discordToken, discordGuildID],
       dev: {
-        command: "pnpm run dev"
+        command: "next dev --turbopack"
       }
     });
 

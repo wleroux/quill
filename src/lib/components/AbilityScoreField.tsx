@@ -6,7 +6,7 @@ import {ulid} from "ulid";
 
 const inputNumberPt: InputNumberPassThroughOptions = {
   root: {
-    className: "bg-black/20 rounded-md flex-inline h-10 focus-within:outline hover:outline overflow-hidden border border-[color:var(--foreground)]/50",
+    className: "bg-black/20 rounded-md flex-inline h-16 focus-within:outline hover:outline",
   },
   incrementButton: {
     className: "rounded-tr-md border-t border-r border-b w-8 flex justify-center items-center border-[color:var(--foreground)]/50 hover:outline"
@@ -17,16 +17,16 @@ const inputNumberPt: InputNumberPassThroughOptions = {
   input: {
     root: ({
       className: twMerge(
-        "bg-transparent flex-inline py-2 px-4 border-0 h-10 border-r border-[color:var(--foreground)]/50 flex-1",
+        "rounded-l-md bg-transparent p-2 flex-1 w-16 text-xl font-bold text-center focus:ring-0 focus:outline-none  border-[color:var(--foreground)]/50",
       )
     })
   }
 };
 
-export function NumberField({label, ...props}: {label?: string} & InputNumberProps) {
+export function AbilityScoreField({label, ...props}: {label?: string} & InputNumberProps) {
   const inputId = props.inputId ?? ulid();
   return <Field>
     {label && <FieldLabel htmlFor={inputId}>{label}</FieldLabel>}
-    <InputNumber pt={inputNumberPt} {...props} inputId={inputId} showButtons />
+    <InputNumber pt={inputNumberPt} {...props} inputId={inputId} />
   </Field>
 }

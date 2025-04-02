@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.6.2",
   "scripts": {
     "build": "next build",
-    "dev": "next dev --turbopack",
+    "dev": "sst dev",
     "lint": "next lint",
     "start": "next start"
   },
