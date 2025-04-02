@@ -1,7 +1,7 @@
 import {MusicalInstrumentTool, Tool} from "@/model/tool";
 import {Skill} from "@/model/skill";
 import {Spell} from "@/model/spell";
-import {MentalAttribute} from "@/model/attribute";
+import {Attribute, MentalAttribute} from "@/model/attribute";
 
 type FeatAlert = {};
 export type CrafterTool =
@@ -86,7 +86,7 @@ export type OriginFeat = {
 }[keyof OriginFeats];
 
 export function isOriginFeat(feat: Feat): feat is OriginFeat {
-  return ORIGIN_FEATS.includes(feat.type);
+  return ORIGIN_FEATS.includes(feat.type as OriginFeat["type"]);
 }
 
 export const DefaultOriginFeat: OriginFeat = {
@@ -98,11 +98,18 @@ export const DefaultOriginFeat: OriginFeat = {
   }
 };
 
+export type FeatAbilityScoreImprovement = {
+  attribute1: Attribute;
+  attribute2: Attribute;
+};
+
 export const FEATS = [
+  "ability score improvement",
   ...ORIGIN_FEATS
 ] as const;
 
 export type Feats = OriginFeats & {
+  "ability score improvement": FeatAbilityScoreImprovement
 };
 
 export type Feat = {
@@ -113,6 +120,7 @@ export type Feat = {
 }[keyof Feats];
 
 export const FEAT_LABELS: {[key in keyof Feats]: string} = {
+  "ability score improvement": "Ability Score Improvement",
   "alert": "Alert",
   "crafter": "Crafter",
   "healer": "Healer",
@@ -126,6 +134,10 @@ export const FEAT_LABELS: {[key in keyof Feats]: string} = {
 };
 
 export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
+  "ability score improvement": {
+    attribute1: "str",
+    attribute2: "str"
+  },
   "alert": {},
   "crafter": {
     selection1: "carpenter's tools",

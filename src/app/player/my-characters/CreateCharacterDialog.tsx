@@ -147,6 +147,8 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
   });
 
   return <Dialog
+    focusOnShow={false}
+    draggable={false}
     modal
     visible={visible} onHide={onClose ? onClose : () => {}}
     pt={modalPt}
@@ -160,7 +162,7 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
           </div>
         </div>
         <div className="flex-1">
-          <TextField label="Name" value={character.name} onChange={(ev) => setCharacter(prev => ({...prev, name: ev.target.value}))}/>
+          <TextField label="Name" value={character.name} onChange={(ev) => setCharacter(prev => ({...prev, name: ev.target.value}))} autoFocus />
         </div>
       </div>
 

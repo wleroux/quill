@@ -1,4 +1,17 @@
-import {DEFAULT_FEATS, Feat, FEAT_LABELS, FeatCrafter, FeatMagicInitiate, FeatMusician, Feats, FEATS, FeatSkilled, isCrafterTool, OriginFeat} from "@/model/feat";
+import {
+  DEFAULT_FEATS,
+  Feat,
+  FEAT_LABELS,
+  FeatAbilityScoreImprovement,
+  FeatCrafter,
+  FeatMagicInitiate,
+  FeatMusician,
+  Feats,
+  FEATS,
+  FeatSkilled,
+  isCrafterTool,
+  OriginFeat
+} from "@/model/feat";
 import {DropdownField} from "@/lib/components/DropdownField";
 import {SkillOrToolField} from "@/lib/components/SkillOrToolField";
 import {FieldSet} from "@/lib/components/FieldSet";
@@ -15,6 +28,15 @@ export function FeatCrafterField({value, onChange, inline}: {value: FeatCrafter,
       <ToolField label="Artisan Tool" filter={isCrafterTool} value={value.selection1} onChange={(selection) => onChange({...value, selection1: selection})} />
       <ToolField label="Artisan Tool" filter={isCrafterTool} value={value.selection2} onChange={(selection) => onChange({...value, selection2: selection})} />
       <ToolField label="Artisan Tool" filter={isCrafterTool} value={value.selection3} onChange={(selection) => onChange({...value, selection3: selection})} />
+    </FieldRow>
+  </FieldSet>
+}
+
+export function FeatAbilityScoreImprovementField({value, onChange, inline}: {value: FeatAbilityScoreImprovement, onChange: (value: FeatAbilityScoreImprovement) => void, inline?: boolean}) {
+  return <FieldSet inline={inline}>
+    <FieldRow>
+      <AttributeField label="Ability Score" value={value.attribute1} onChange={(attribute1) => onChange({...value, attribute1})} />
+      <AttributeField label="Ability Score" value={value.attribute2} onChange={(attribute1) => onChange({...value, attribute1})} />
     </FieldRow>
   </FieldSet>
 }
@@ -64,7 +86,7 @@ export function FeatSkilledField({inline, value, onChange}: {inline?: boolean, v
   </FieldSet>
 }
 
-export function FeatFields<T = Feat>({label, filter, value, onChange}: {label: string, filter?: (feat: Feat) => feat is T & Feat, value?: OriginFeat, onChange: (value: T) => void}) {
+export function FeatFields<T = Feat>({label, filter, value, onChange}: {label: string, filter?: (feat: Feat) => feat is T & Feat, value?: T & Feat, onChange: (value: T) => void}) {
   return <FieldSet inline>
     <FieldRow>
       <DropdownField
@@ -79,6 +101,7 @@ export function FeatFields<T = Feat>({label, filter, value, onChange}: {label: s
          }} />
     </FieldRow>
 
+    {value?.type === "ability score improvement" && <FeatAbilityScoreImprovementField value={value.data} onChange={(data) => onChange({type: "ability score improvement", data} as T)} />}
     {value?.type === "crafter" && <FeatCrafterField value={value.data} onChange={(data) => onChange({type: "crafter", data} as T)} />}
     {value?.type === "skilled" && <FeatSkilledField value={value.data} onChange={(data) => onChange({type: "skilled", data} as T)} />}
     {value?.type === "musician" && <FeatMusicianField value={value.data} onChange={(data) => onChange({type: "musician", data} as T)} />}
