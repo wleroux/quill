@@ -1,16 +1,21 @@
 import {
   DEFAULT_FEATS,
+  ELEMENTAL_ADEPT_ENERGIES,
+  ELEMENTAL_ADEPT_ENERGY_LABELS,
   Feat,
   FEAT_LABELS,
   FeatAbilityScoreImprovement,
   FeatCrafter,
+  FeatElementalAdept,
+  FeatFeyTouched,
+  FeatGrappler,
+  FeatHeavilyArmored,
   FeatMagicInitiate,
   FeatMusician,
   Feats,
   FEATS,
   FeatSkilled,
-  isCrafterTool,
-  OriginFeat
+  isCrafterTool
 } from "@/model/feat";
 import {DropdownField} from "@/lib/components/DropdownField";
 import {SkillOrToolField} from "@/lib/components/SkillOrToolField";
@@ -18,9 +23,26 @@ import {FieldSet} from "@/lib/components/FieldSet";
 import {FieldRow} from "@/lib/components/FieldRow";
 import {AttributeField} from "@/lib/components/AttributeField";
 import {SpellField} from "@/lib/components/SpellField";
-import {isMentalAttribute} from "@/model/attribute";
+import {Attribute, isConWisAttribute, isMentalAttribute, isStrConAttribute, isStrDexAttribute, isWisChaAttribute} from "@/model/attribute";
 import {ToolField} from "@/lib/components/ToolField";
 import {isMusicalInstrumentTool} from "@/model/tool";
+
+export function FeatAbilityScoreImprovementField({value, onChange, inline}: {value: FeatAbilityScoreImprovement, onChange: (value: FeatAbilityScoreImprovement) => void, inline?: boolean}) {
+  return <FieldSet inline={inline}>
+    <FieldRow>
+      <AttributeField label="Ability Score" value={value.attribute1} onChange={(attribute1) => onChange({...value, attribute1})} />
+      <AttributeField label="Ability Score" value={value.attribute2} onChange={(attribute1) => onChange({...value, attribute1})} />
+    </FieldRow>
+  </FieldSet>
+}
+
+export function FeatAttributeField<T extends Attribute>({value, filter, onChange, inline}: {value: {attribute: T}, filter: (attribute: Attribute) => attribute is T, onChange: (value: {attribute: T}) => void, inline?: boolean}) {
+  return <FieldSet inline={inline}>
+    <FieldRow>
+      <AttributeField label="Ability Score" value={value.attribute} filter={filter} onChange={(attribute) => onChange({...value, attribute})} />
+    </FieldRow>
+  </FieldSet>
+}
 
 export function FeatCrafterField({value, onChange, inline}: {value: FeatCrafter, onChange: (value: FeatCrafter) => void, inline?: boolean}) {
   return <FieldSet inline={inline}>
@@ -32,11 +54,27 @@ export function FeatCrafterField({value, onChange, inline}: {value: FeatCrafter,
   </FieldSet>
 }
 
-export function FeatAbilityScoreImprovementField({value, onChange, inline}: {value: FeatAbilityScoreImprovement, onChange: (value: FeatAbilityScoreImprovement) => void, inline?: boolean}) {
+export function FeatElementalAdeptField({value, onChange, inline}: {value: FeatElementalAdept, onChange: (value: FeatElementalAdept) => void, inline?: boolean}) {
   return <FieldSet inline={inline}>
     <FieldRow>
-      <AttributeField label="Ability Score" value={value.attribute1} onChange={(attribute1) => onChange({...value, attribute1})} />
-      <AttributeField label="Ability Score" value={value.attribute2} onChange={(attribute1) => onChange({...value, attribute1})} />
+      <AttributeField label="Ability Score" value={value.attribute} filter={isMentalAttribute} onChange={(attribute) => onChange({...value, attribute})} />
+    </FieldRow>
+    <FieldRow>
+      <DropdownField label="Energy" value={value.energy} onChange={(ev) => onChange({...value, energy: ev.value})} options={ELEMENTAL_ADEPT_ENERGIES.map(type => ({
+        value: type,
+        label: ELEMENTAL_ADEPT_ENERGY_LABELS[type]
+      }))} />
+    </FieldRow>
+  </FieldSet>
+}
+
+export function FeatFeyTouchedField({value, onChange, inline}: {value: FeatFeyTouched, onChange: (value: FeatFeyTouched) => void, inline?: boolean}) {
+  return <FieldSet inline={inline}>
+    <FieldRow>
+      <AttributeField label="Ability Score" value={value.attribute} filter={isMentalAttribute} onChange={(attribute) => onChange({...value, attribute})} />
+    </FieldRow>
+    <FieldRow>
+      <SpellField label="Spell" value={value.spell} onChange={(spell) => onChange({...value, spell})} />
     </FieldRow>
   </FieldSet>
 }
@@ -93,16 +131,28 @@ export function FeatFields<T = Feat>({label, filter, value, onChange}: {label: s
         label={label}
         value={value?.type}
         options={FEATS
-          .map(feat => ({type: feat, data: DEFAULT_FEATS[feat]}) as Feat)
+          .map(feat => ({type: feat, data: DEFAULT_FEATS[feat as Feat["type"]]}) as Feat)
           .filter(feat => filter ? filter(feat) : true)
-          .map(feat => ({value: feat.type, label: FEAT_LABELS[feat.type]}))}
+          .map(feat => ({value: feat.type, label: FEAT_LABELS[feat.type]}))
+          .sort((a, b) => a.label.localeCompare(b.label))
+      }
          onChange={ev => {
           onChange({type: ev.value, data: DEFAULT_FEATS[ev.value as keyof Feats]} as T);
          }} />
     </FieldRow>
 
     {value?.type === "ability score improvement" && <FeatAbilityScoreImprovementField value={value.data} onChange={(data) => onChange({type: "ability score improvement", data} as T)} />}
+    {value?.type === "athlete" && <FeatAttributeField value={value.data} filter={isStrDexAttribute} onChange={(data) => onChange({type: "athlete", data} as T)} />}
+    {value?.type === "charger" && <FeatAttributeField value={value.data} filter={isStrDexAttribute} onChange={(data) => onChange({type: "charger", data} as T)} />}
+    {value?.type === "chef" && <FeatAttributeField value={value.data} filter={isConWisAttribute} onChange={(data) => onChange({type: "chef", data} as T)} />}
     {value?.type === "crafter" && <FeatCrafterField value={value.data} onChange={(data) => onChange({type: "crafter", data} as T)} />}
+    {value?.type === "dual wielder" && <FeatAttributeField value={value.data} filter={isStrDexAttribute} onChange={(data) => onChange({type: "dual wielder", data} as T)} />}
+    {value?.type === "elemental adept" && <FeatElementalAdeptField value={value.data} onChange={(data) => onChange({type: "elemental adept", data} as T)} />}
+    {value?.type === "fey-touched" && <FeatFeyTouchedField value={value.data} onChange={(data) => onChange({type: "fey-touched", data} as T)} />}
+    {value?.type === "grappler" && <FeatAttributeField value={value.data} filter={isStrDexAttribute} onChange={(data) => onChange({type: "grappler", data} as T)} />}
+    {value?.type === "heavily armored" && <FeatAttributeField value={value.data} filter={isStrConAttribute} onChange={(data) => onChange({type: "heavily armored", data} as T)} />}
+    {value?.type === "heavy armor master" && <FeatAttributeField value={value.data} filter={isStrConAttribute} onChange={(data) => onChange({type: "heavy armor master", data} as T)} />}
+    {value?.type === "inspiring leader" && <FeatAttributeField value={value.data} filter={isWisChaAttribute} onChange={(data) => onChange({type: "inspiring leader", data} as T)} />}
     {value?.type === "skilled" && <FeatSkilledField value={value.data} onChange={(data) => onChange({type: "skilled", data} as T)} />}
     {value?.type === "musician" && <FeatMusicianField value={value.data} onChange={(data) => onChange({type: "musician", data} as T)} />}
     {value?.type === "magic initiate" && <FeatMagicInitiateField value={value.data} onChange={(data) => onChange({type: "magic initiate", data} as T)} />}

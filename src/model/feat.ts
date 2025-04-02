@@ -1,7 +1,7 @@
 import {MusicalInstrumentTool, Tool} from "@/model/tool";
 import {Skill} from "@/model/skill";
 import {Spell} from "@/model/spell";
-import {Attribute, MentalAttribute} from "@/model/attribute";
+import {Attribute, ConWisAttribute, MentalAttribute, StrConAttribute, StrDexAttribute, WisChaAttribute} from "@/model/attribute";
 
 type FeatAlert = {};
 export type CrafterTool =
@@ -102,15 +102,81 @@ export type FeatAbilityScoreImprovement = {
   attribute1: Attribute;
   attribute2: Attribute;
 };
+export type FeatActor = {};
+
+export type FeatAttribute<T extends Attribute> = {
+  attribute: T
+}
+export type FeatAthlete = FeatAttribute<StrDexAttribute>;
+export type FeatCharger = FeatAttribute<StrDexAttribute>;
+export type FeatChef = FeatAttribute<ConWisAttribute>;
+export type FeatDefensiveDuelist = {};
+export type FeatDualWielder = FeatAttribute<StrDexAttribute>;
+export type FeatDurable = {};
+
+export const ELEMENTAL_ADEPT_ENERGIES = [
+  "acid", "cold", "fire", "lightning", "thunder"
+] as const;
+export type ElementalAdeptEnergy = typeof ELEMENTAL_ADEPT_ENERGIES[number];
+export const ELEMENTAL_ADEPT_ENERGY_LABELS: {[key in ElementalAdeptEnergy]: string} = {
+  "acid": "Acid",
+  "cold": "Cold",
+  "fire": "Fire",
+  "lightning": "Lightning",
+  "thunder": "Thunder"
+};
+export type FeatElementalAdept = FeatAttribute<MentalAttribute> & {
+  energy: ElementalAdeptEnergy;
+};
+
+export type FeatFeyTouched = FeatAttribute<MentalAttribute> & {
+  spell: Spell;
+};
+
+export type FeatGrappler = FeatAttribute<StrDexAttribute>;
+export type FeatGreatWeaponMaster = {};
+export type FeatHeavilyArmored = FeatAttribute<StrConAttribute>;
+export type FeatHeavyArmorMaster = FeatAttribute<StrConAttribute>;
+export type FeatInspiringLeader = FeatAttribute<WisChaAttribute>;
+
+export const GENERAL_FEATS = [
+  "ability score improvement",
+  "actor",
+  "athlete",
+  "charger",
+  "chef",
+  "defensive duelist",
+  "durable",
+  "elemental adept",
+  "fey-touched",
+  "grappler",
+  "heavily armored",
+  "inspiring leader"
+];
+export type GeneralFeats = {
+  "actor": FeatActor
+  "ability score improvement": FeatAbilityScoreImprovement,
+  "athlete": FeatAthlete,
+  "charger": FeatCharger,
+  "chef": FeatChef,
+  "defensive duelist": FeatDefensiveDuelist
+  "dual wielder": FeatDualWielder,
+  "durable": FeatDurable,
+  "elemental adept": FeatElementalAdept,
+  "fey-touched": FeatFeyTouched,
+  "grappler": FeatGrappler,
+  "great weapon master": FeatGreatWeaponMaster,
+  "heavily armored": FeatHeavilyArmored,
+  "heavy armor master": FeatHeavyArmorMaster,
+  "inspiring leader": FeatInspiringLeader
+};
 
 export const FEATS = [
-  "ability score improvement",
+  ...GENERAL_FEATS,
   ...ORIGIN_FEATS
 ] as const;
 
-export type Feats = OriginFeats & {
-  "ability score improvement": FeatAbilityScoreImprovement
-};
+export type Feats = OriginFeats & GeneralFeats;
 
 export type Feat = {
   [key in keyof Feats]: {
@@ -121,9 +187,23 @@ export type Feat = {
 
 export const FEAT_LABELS: {[key in keyof Feats]: string} = {
   "ability score improvement": "Ability Score Improvement",
+  "actor": "Actor",
+  "athlete": "Athlete",
   "alert": "Alert",
+  "charger": "Charger",
+  "chef": "Chef",
   "crafter": "Crafter",
+  "defensive duelist": "Defensive Duelist",
+  "dual wielder": "Dual Wielder",
+  "durable": "Durable",
+  "elemental adept": "Elemental Adept",
+  "fey-touched": "Fey-Touched",
+  "grappler": "Grappler",
+  "great weapon master": "Great Weapon Master",
+  "heavily armored": "Heavily Armored",
+  "heavy armor master": "Heavy Armor Master",
   "healer": "Healer",
+  "inspiring leader": "Inspiring Leader",
   "lucky": "Lucky",
   "magic initiate": "Magic Initiate",
   "musician": "Musician",
@@ -138,13 +218,47 @@ export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
     attribute1: "str",
     attribute2: "str"
   },
+  "actor": {},
   "alert": {},
+  "athlete": {
+    attribute: "str"
+  },
+  "charger": {
+    attribute: "str"
+  },
+  "chef": {
+    attribute: "con"
+  },
   "crafter": {
     selection1: "carpenter's tools",
     selection2: "leatherworker's tools",
     selection3: "mason's tools"
   },
+  "defensive duelist": {},
+  "dual wielder": {
+    attribute: "str"
+  },
+  "durable": {},
+  "elemental adept": {
+    attribute: "int",
+    energy: "acid"
+  },
+  "fey-touched": {
+    attribute: "int",
+    spell: ""
+  },
+  "grappler": {
+    attribute: "str"
+  },
+  "great weapon master": {},
+  "heavily armored": {
+    attribute: "str"
+  },
   "healer": {},
+  "heavy armor master": {
+    attribute: "str"
+  },
+  "inspiring leader": {attribute: "wis"},
   "lucky": {},
   "magic initiate": {
     cantripClass: "cleric",
