@@ -7,6 +7,7 @@ import {Button} from "@/lib/components/Button";
 import {ClassSorcererLevelerField} from "@/lib/components/leveler/ClassSorcererLevelerField";
 import {SectionLabel} from "@/lib/components/SectionLabel";
 import {ClassBarbarianLevelerField} from "@/lib/components/leveler/ClassBarbarianLevelerField";
+import {ClassBardLevelerField} from "@/lib/components/leveler/ClassBardLevelerField";
 
 export function ClassLevelerField({main, secondary, onChange}: {
   main?: Class<any>; secondary?: Class<any>;
@@ -46,6 +47,7 @@ export function ClassLevelerField({main, secondary, onChange}: {
       <FieldSet inline>
         <SectionLabel>{getClassLabel(value)} {value.level}</SectionLabel>
         {value.type === "barbarian" && <ClassBarbarianLevelerField value={value} isStartingClass={main === undefined || main.type === value.type} onChange={(value) => setValue(value)} />}
+        {value.type === "bard" && <ClassBardLevelerField value={value} isStartingClass={main === undefined} onChange={(value) => setValue(value)} />}
         {value.type === "sorcerer" && <ClassSorcererLevelerField value={value} isStartingClass={main === undefined || main.type === value.type} onChange={(value) => setValue(value)} />}
       </FieldSet>
 

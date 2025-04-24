@@ -1,7 +1,5 @@
-import {Spell, SpellReplacement} from "@/model/spell";
 import {DEFAULT_FEATS, Feat} from "@/model/feat";
 import {Class, CLASS_LABELS} from "@/model/class/Class";
-import {Metamagic, MetamagicReplacement} from "@/model/Metamagic";
 import {Skill} from "@/model/skill";
 
 export const BARBARIAN_SUBCLASSES = [
