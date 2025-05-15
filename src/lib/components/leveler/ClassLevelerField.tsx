@@ -10,6 +10,7 @@ import {ClassBarbarianLevelerField} from "@/lib/components/leveler/ClassBarbaria
 import {ClassBardLevelerField} from "@/lib/components/leveler/ClassBardLevelerField";
 import {ClassClericLevelerField} from "@/lib/components/leveler/ClassClericLevelerField";
 import {ClassDruidLevelerField} from "@/lib/components/leveler/ClassDruidLevelerField";
+import {ClassFighterLevelerField} from "@/lib/components/leveler/ClassFighterLevelerField";
 
 export function ClassLevelerField({main, secondary, onChange}: {
   main?: Class<any>; secondary?: Class<any>;
@@ -52,6 +53,7 @@ export function ClassLevelerField({main, secondary, onChange}: {
         {value.type === "bard" && <ClassBardLevelerField value={value} isStartingClass={main === undefined} onChange={(value) => setValue(value)} />}
         {value.type === "cleric" && <ClassClericLevelerField value={value} isStartingClass={main === undefined} onChange={(value) => setValue(value)} />}
         {value.type === "druid" && <ClassDruidLevelerField value={value} isStartingClass={main === undefined} onChange={(value) => setValue(value)} />}
+        {value.type === "fighter" && <ClassFighterLevelerField value={value} isStartingClass={main === undefined} onChange={(value) => setValue(value)} />}
         {value.type === "sorcerer" && <ClassSorcererLevelerField value={value} isStartingClass={main === undefined || main.type === value.type} onChange={(value) => setValue(value)} />}
       </FieldSet>
 

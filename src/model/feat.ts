@@ -13,7 +13,9 @@ import {
   WisChaAttribute
 } from "@/model/attribute";
 
-type FeatAlert = {};
+type FeatGeneric = {};
+
+type FeatAlert = FeatGeneric;
 export type CrafterTool =
   | "carpenter's tools"
   | "leatherworker's tools"
@@ -40,8 +42,8 @@ export type FeatCrafter = {
   selection2: CrafterTool;
   selection3: CrafterTool;
 };
-type FeatHealer = {};
-type FeatLucky = {};
+type FeatHealer = FeatGeneric;
+type FeatLucky = FeatGeneric;
 export type FeatMagicInitiate = {
   cantripClass: "cleric" | "druid" | "wizard";
   cantrip1: Spell;
@@ -53,14 +55,14 @@ export type FeatMusician = {
   selection2: MusicalInstrumentTool;
   selection3: MusicalInstrumentTool;
 };
-type FeatSavageAttacker = {};
+type FeatSavageAttacker = FeatGeneric;
 export type FeatSkilled = {
   selection1: (Skill | Tool);
   selection2: (Skill | Tool);
   selection3: (Skill | Tool);
 };
-type FeatTavernBrawler = {};
-type FeatTough = {};
+type FeatTavernBrawler = FeatGeneric;
+type FeatTough = FeatGeneric;
 
 export type OriginFeats = {
   "alert": FeatAlert,
@@ -112,7 +114,7 @@ export type FeatAbilityScoreImprovement = {
   attribute1: Attribute;
   attribute2: Attribute;
 };
-export type FeatActor = {};
+export type FeatActor = FeatGeneric;
 
 export type FeatAttribute<T extends Attribute> = {
   attribute: T
@@ -120,9 +122,9 @@ export type FeatAttribute<T extends Attribute> = {
 export type FeatAthlete = FeatAttribute<StrDexAttribute>;
 export type FeatCharger = FeatAttribute<StrDexAttribute>;
 export type FeatChef = FeatAttribute<ConWisAttribute>;
-export type FeatDefensiveDuelist = {};
+export type FeatDefensiveDuelist = FeatGeneric;
 export type FeatDualWielder = FeatAttribute<StrDexAttribute>;
-export type FeatDurable = {};
+export type FeatDurable = FeatGeneric;
 
 export const ELEMENTAL_ADEPT_ENERGIES = [
   "acid", "cold", "fire", "lightning", "thunder"
@@ -144,7 +146,7 @@ export type FeatFeyTouched = FeatAttribute<MentalAttribute> & {
 };
 
 export type FeatGrappler = FeatAttribute<StrDexAttribute>;
-export type FeatGreatWeaponMaster = {};
+export type FeatGreatWeaponMaster = FeatGeneric;
 export type FeatHeavilyArmored = FeatAttribute<StrConAttribute>;
 export type FeatHeavyArmorMaster = FeatAttribute<StrConAttribute>;
 export type FeatInspiringLeader = FeatAttribute<WisChaAttribute>;
@@ -277,12 +279,49 @@ export type GeneralFeats = {
   "weapon master": FeatWeaponMaster
 };
 
+export const FIGHTING_STYLE_FEATS = [
+  "archery",
+  "blind fighting",
+  "defense",
+  "dueling",
+  "great weapon fighting",
+  "interception",
+  "protection",
+  "thrown weapon fighting",
+  "two-weapon fighting",
+  "unarmed fighting"
+] as const;
+export type FightingStyleFeats = {
+  "archery": FeatGeneric,
+  "blind fighting": FeatGeneric,
+  "defense": FeatGeneric,
+  "dueling": FeatGeneric,
+  "great weapon fighting": FeatGeneric,
+  "interception": FeatGeneric,
+  "protection": FeatGeneric,
+  "thrown weapon fighting": FeatGeneric,
+  "two-weapon fighting": FeatGeneric,
+  "unarmed fighting": FeatGeneric
+};
+export type FightingStyleFeat = {
+  [key in keyof OriginFeats]: {
+    type: key,
+    data: OriginFeats[key]
+  }
+}[keyof OriginFeats];
+
+
+export function isFightingStyleFeat(feat: Feat): feat is FightingStyleFeat {
+  return FIGHTING_STYLE_FEATS.includes(feat.type as keyof FightingStyleFeats);
+}
+
 export const FEATS = [
   ...GENERAL_FEATS,
-  ...ORIGIN_FEATS
+  ...ORIGIN_FEATS,
+  ...FIGHTING_STYLE_FEATS
 ] as const;
 
-export type Feats = OriginFeats & GeneralFeats;
+export type Feats = OriginFeats & GeneralFeats & FightingStyleFeats;
 
 export type Feat = {
   [key in keyof Feats]: {
@@ -296,21 +335,27 @@ export const FEAT_LABELS: {[key in keyof Feats]: string} = {
   "actor": "Actor",
   "athlete": "Athlete",
   "alert": "Alert",
+  "archery": "Archery",
+  "blind fighting": "Blind Fighting",
   "charger": "Charger",
   "chef": "Chef",
   "crafter": "Crafter",
+  "defense": "Defense",
   "defensive duelist": "Defensive Duelist",
   "dual wielder": "Dual Wielder",
+  "dueling": "Dueling",
   "durable": "Durable",
   "elemental adept": "Elemental Adept",
   "fey-touched": "Fey-Touched",
   "grappler": "Grappler",
+  "great weapon fighting": "Great Weapon Fighting",
   "great weapon master": "Great Weapon Master",
   "heavily armored": "Heavily Armored",
   "heavy armor master": "Heavy Armor Master",
   "healer": "Healer",
   "keen mind": "Keen Mind",
   "inspiring leader": "Inspiring Leader",
+  "interception": "Interception",
   "lightly armored": "Lightly Armored",
   "lucky": "Lucky",
   "mage slayer": "Mage Slayer",
@@ -323,6 +368,7 @@ export const FEAT_LABELS: {[key in keyof Feats]: string} = {
   "piercer": "Piercer",
   "poisoner": "Poisoner",
   "polearm master": "Polearm Master",
+  "protection": "Protection",
   "resilient": "Resilient",
   "ritual caster": "Ritual Caster",
   "sentinel": "Sentinel",
@@ -340,9 +386,12 @@ export const FEAT_LABELS: {[key in keyof Feats]: string} = {
   "tavern brawler": "Tavern Brawler",
   "telekinetic": "Telekinetic",
   "telepathic": "Telepathic",
+  "thrown weapon fighting": "Thrown Weapon Fighting",
   "tough": "Tough",
+  "two-weapon fighting": "Two-Weapon Fighting",
+  "unarmed fighting": "Unarmed Fighting",
   "war caster": "War Caster",
-  "weapon master": "Weapon Master"
+  "weapon master": "Weapon Master",
 };
 
 export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
@@ -351,10 +400,12 @@ export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
     attribute2: "str"
   },
   "actor": {},
+  "archery": {},
   "alert": {},
   "athlete": {
     attribute: "str"
   },
+  "blind fighting": {},
   "charger": {
     attribute: "str"
   },
@@ -366,10 +417,12 @@ export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
     selection2: "leatherworker's tools",
     selection3: "mason's tools"
   },
+  "defense": {},
   "defensive duelist": {},
   "dual wielder": {
     attribute: "str"
   },
+  "dueling": {},
   "durable": {},
   "elemental adept": {
     attribute: "int",
@@ -383,6 +436,7 @@ export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
     attribute: "str"
   },
   "great weapon master": {},
+  "great weapon fighting": {},
   "heavily armored": {
     attribute: "str"
   },
@@ -391,6 +445,7 @@ export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
     attribute: "str"
   },
   "inspiring leader": {attribute: "wis"},
+  "interception": {},
   "keen mind": {
     skill: "arcana"
   },
@@ -436,6 +491,7 @@ export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
   "polearm master": {
     attribute: "str"
   },
+  "protection": {},
   "resilient": {
     attribute: "str"
   },
@@ -484,6 +540,9 @@ export const DEFAULT_FEATS: {[key in keyof Feats]: Feats[key]} = {
   "telepathic": {
     attribute: "int"
   },
+  "thrown weapon fighting": {},
+  "two-weapon fighting": {},
+  "unarmed fighting": {},
   "war caster": {
     attribute: "int"
   },

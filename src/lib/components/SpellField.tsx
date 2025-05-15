@@ -13,7 +13,7 @@ export function SpellField({label, value, onChange}: {label?: string, value?: Sp
   } />
 }
 
-export function SpellReplacementFields({value, onChange}: {value?: SpellReplacement, onChange: (value?: SpellReplacement) => void}) {
+export function SpellReplacementFields({label, value, onChange}: {label?: string, value?: SpellReplacement, onChange: (value?: SpellReplacement) => void}) {
   const [temp, setTemp] = useState<Partial<SpellReplacement> | undefined>(value);
   useEffect(() => {
     if (value === temp) return;
@@ -23,12 +23,12 @@ export function SpellReplacementFields({value, onChange}: {value?: SpellReplacem
 
   return <>
     <FieldRow>
-      <CheckboxField label="Replace Spell" checked={temp !== undefined} onChange={(ev) => {
+      <CheckboxField label={label ?? "Replace Spell"} checked={temp !== undefined} onChange={(ev) => {
         setTemp(ev ? {from: undefined, to: undefined} : undefined);
       }} />
     </FieldRow>
     {temp !== undefined && <FieldRow>
-      <SpellField label="Replace Spell..." value={temp.from} onChange={from => setTemp({...temp, from})} />
+      <SpellField label={`${label ?? "Replace Spell"}...`} value={temp.from} onChange={from => setTemp({...temp, from})} />
       <SpellField label="... With" value={temp.from} onChange={from => setTemp({...temp, from})} />
     </FieldRow>}
   </>
