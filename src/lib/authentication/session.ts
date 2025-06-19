@@ -28,6 +28,6 @@ export async function decrypt(session: string | undefined): Promise<Session | un
     })
     return payload as Session;
   } catch (error) {
-    throw error;
+    return undefined;
   }
 }

@@ -49,8 +49,7 @@ export async function Navigation() {
   const model: MenuItem[] = [];
   if (player) {
     model.push({label: "Player", items: [
-      {label: "My Characters", url: "/player/my-characters"},
-      {label: "My Homesteads", url: "/player/my-homesteads"}
+      {label: "My Characters", url: "/player/my-characters"}
     ]});
   }
   if (gameMaster) {
@@ -63,19 +62,14 @@ export async function Navigation() {
   }
   if (scribe) {
     model.push({label: "Scribe", items: [
-        {label: "Players", url: "/scribe/players"},
-        {label: "Games", url: "/scribe/games"}
-      ]})
+      {label: "Players", url: "/scribe/players"},
+      {label: "Games", url: "/scribe/games"}
+    ]})
   }
   if (admin) {
     model.push({label: "Admin", items: [
       {label: "Creatures", url: "/admin/regional-creatures"},
       {label: "Encounters", url: "/admin/regional-encounters"},
-      {label: "Species", url: "/admin/species"},
-      {label: "Backgrounds", url: "/admin/backgrounds"},
-      {label: "Classes", url: "/admin/classes"},
-      {label: "Items", url: "/admin/items"},
-      {label: "Spells", url: "/admin/spells"},
       {label: "Settings", url: "/admin/settings"},
     ]});
   }

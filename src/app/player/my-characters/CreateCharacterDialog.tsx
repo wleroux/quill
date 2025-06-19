@@ -2,34 +2,39 @@ import {PageTitle} from "@/lib/components/PageTitle";
 import {Dialog, DialogPassThroughOptions} from "primereact/dialog";
 import {Stepper, StepperPassThroughOptions} from "primereact/stepper";
 import {StepperPanel, StepperPanelPassThroughOptions} from "primereact/stepperpanel";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {twMerge} from "tailwind-merge";
-import {AbilityScoreField} from "@/lib/components/AbilityScoreField";
 import {Button} from "@/lib/components/Button";
-import {SpecieField} from "@/lib/components/SpecieField";
-import {Specie} from "@/model/specie";
-import {Background} from "@/model/background";
-import {BackgroundField} from "@/lib/components/BackgroundField";
-import {TextField} from "@/lib/components/TextField";
-import {Attribute, ATTRIBUTES} from "@/model/attribute";
-import {ClassLevelerField} from "@/lib/components/leveler/ClassLevelerField";
-import {Class, getClassLabel} from "@/model/class/Class";
-import {FieldSet} from "@/lib/components/FieldSet";
-import {Field} from "@/lib/components/Field";
-import {FieldRow} from "@/lib/components/FieldRow";
-import {SectionLabel} from "@/lib/components/SectionLabel";
-import {NumberField} from "@/lib/components/NumberField";
-import {DropdownField} from "@/lib/components/DropdownField";
+import {SpecieField} from "@/model/source/choice/specie/SpecieField";
+import {startingStatProcessor} from "@/model/source/choice/starting-stat/StartingStatProcessor";
+import {CharacterDecision} from "@/model/player/character/CharacterDecision";
+import {NameField} from "@/model/source/choice/name/NameField";
+import {NameDecision} from "@/model/source/choice/name/NameDecision";
+import {CharacterChoice} from "@/model/player/character/CharacterChoice";
+import {DEFAULT_CHARACTER} from "@/model/player/character/Character";
+import {StartingStatDecision} from "@/model/source/choice/starting-stat/StartingStatDecision";
+import {StartingStatField} from "@/model/source/choice/starting-stat/StartingStatField";
+import {SpecieDecision} from "@/model/source/choice/specie/SpecieDecision";
+import {specieProcessor} from "@/model/source/choice/specie/SpecieProcessor";
+import {BackgroundField} from "@/model/source/choice/background/BackgroundField";
+import {BackgroundDecision} from "@/model/source/choice/background/BackgroundDecision";
+import {backgroundProcessor} from "@/model/source/choice/background/BackgroundProcessor";
+import {Spacer} from "@/lib/components/Spacer";
+import {characterProcessor} from "@/model/player/character/CharacterProcessor";
+import {nameProcessor} from "@/model/source/choice/name/NameProcessor";
+import {LevelField} from "@/model/source/choice/level/LevelField";
+import {LevelDecision} from "@/model/source/choice/level/LevelDecision";
+import {levelProcessor} from "@/model/source/choice/level/LevelProcessor";
 
 const stepperPt: StepperPassThroughOptions = {
   nav: {
-    className: "gap-8 border-b border-[color:var(--foreground)]/20 font-[family-name:var(--font-audiowide)] flex flex-row p-4 overflow-hidden overflow-x-auto bg-black/10"
+    className: "gap-8 border-b border-[color:var(--foreground)]/20 font-[family-name:var(--font-audiowide)] flex flex-row p-4 overflow-hidden overflow-x-auto bg-black/10 justify-around"
   },
   stepperpanel: {
     className: "flex flex-row"
   },
   panelContainer: {
-    className: "p-4"
+    className: "p-4 flex flex-col gap-4"
   },
 };
 const stepperPanelPt: StepperPanelPassThroughOptions = {
@@ -71,80 +76,35 @@ const modalPt: DialogPassThroughOptions = {
   }
 };
 
-type NewCharacter = {
-  name: string;
-  token: string;
-  startingLevel: 2 | 3;
-  str: number; dex: number; con: number; int: number; wis: number; cha: number;
-  specie?: Specie;
-  background?: Background;
-  main?: Class<any>;
-  secondary?: Class<any>;
-};
 
-function getStatMod(value: number) {
-  const v = Math.floor((value - 10) / 2);
-  if (v < 0) return `${v}`;
-  return `+${v}`;
-}
-
-function getPointCost(value: number) {
-  if (value === 8) return 0;
-  if (value === 9) return 1;
-  if (value === 10) return 2;
-  if (value === 11) return 3;
-  if (value === 12) return 4;
-  if (value === 13) return 5;
-  if (value === 14) return 7;
-  if (value === 15) return 9;
-  return Number.POSITIVE_INFINITY;
-}
-
-function getRemainingPoints(character: NewCharacter) {
-  return 27
-    - getPointCost(character.str)
-    - getPointCost(character.dex)
-    - getPointCost(character.con)
-    - getPointCost(character.int)
-    - getPointCost(character.wis)
-    - getPointCost(character.cha)
-    ;
-}
-function getLevel(character: NewCharacter) {
-  return (character.main?.level ?? 0) + (character.secondary?.level ?? 0);
-}
-
-function getHighestBaseScore(character: NewCharacter, attribute: Attribute) {
-  const currentValue = character[attribute];
-  for (let i = currentValue; i <= 15; i ++) {
-    if (getRemainingPoints({
-      ...character,
-      [attribute]: i
-    }) < 0) return i - 1;
-  }
-  return 15;
-}
-
-function isValidCharacter(character: NewCharacter) {
-  if (character.name.length < 3) return false;
-  if (getRemainingPoints(character) !== 0) return false;
-  if (character.specie === undefined) return false;
-  if (character.background === undefined) return false;
-  if (getLevel(character) !== character.startingLevel) return false;
-  return true;
+function isValidCharacter(character: CharacterDecision) {
+  return characterProcessor(DEFAULT_CHARACTER, CharacterChoice, character).valid;
 }
 
 export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onClose?: () => void}) {
-  const [character, setCharacter] = useState<NewCharacter>({
-    name: "",
-    token: "",
-    startingLevel: 3,
-    str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10,
-    specie: undefined,
-    background: undefined,
-    main: undefined,
-    secondary: undefined
+  const [name, setName] = useState<NameDecision | undefined>(undefined);
+  const [startingStat, setStartingStat] = useState<StartingStatDecision>({
+    type: "starting-stat",
+    data: {str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10}
   });
+  const [specie, setSpecie] = useState<SpecieDecision | undefined>(undefined);
+  const [background, setBackground] = useState<BackgroundDecision | undefined>(undefined);
+  const [level1, setLevel1] = useState<LevelDecision | undefined>(undefined);
+  const [level2, setLevel2] = useState<LevelDecision | undefined>(undefined);
+  const [level3, setLevel3] = useState<LevelDecision | undefined>(undefined);
+
+  const [activeStep, setActiveStep] = useState(0);
+  const [currentLevel, setCurrentLevel] = useState<number>(0);
+  const stepper = useRef<Stepper>(null);
+
+  let character = DEFAULT_CHARACTER;
+  if (name && nameProcessor(character, CharacterChoice.data.choices[0], name).valid) character = nameProcessor(character, CharacterChoice.data.choices[0], name).orThrow();
+  if (activeStep > 0) character = startingStatProcessor(character, CharacterChoice.data.choices[1], startingStat).orThrow();
+  if (activeStep > 1 && specie) character = specieProcessor(character, CharacterChoice.data.choices[2], specie).orThrow();
+  if (activeStep > 2 && background) character = backgroundProcessor(character, CharacterChoice.data.choices[3], background).orThrow();
+  if (activeStep > 2 && currentLevel > 0) character = levelProcessor(character, CharacterChoice.data.choices[4], level1!).orThrow();
+  if (activeStep > 2 && currentLevel > 1) character = levelProcessor(character, CharacterChoice.data.choices[5], level2!).orThrow();
+  if (activeStep > 2 && currentLevel > 2) character = levelProcessor(character, CharacterChoice.data.choices[6], level3!).orThrow();
 
   return <Dialog
     focusOnShow={false}
@@ -162,90 +122,66 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
           </div>
         </div>
         <div className="flex-1">
-          <TextField label="Name" value={character.name} onChange={(ev) => setCharacter(prev => ({...prev, name: ev.target.value}))} autoFocus />
+          <NameField choice={CharacterChoice.data.choices[0]} value={name} onChange={setName} />
         </div>
       </div>
 
       {/** @ts-ignore */}
-      <Stepper orientation="horizontal" pt={stepperPt}>
+      <Stepper ref={stepper} orientation="horizontal" pt={stepperPt} linear activeStep={activeStep} onChangeStep={ev => setActiveStep(ev.index)}>
         <StepperPanel pt={stepperPanelPt} header="Base Stats">
-          <div className="flex flex-row gap-4 justify-around pb-2">
-            {ATTRIBUTES.map(attribute => <div key={attribute} className="flex flex-col items-center gap-2">
-                <label htmlFor={attribute} className="text-lg font-[family-name:var(--font-audiowide)]">{attribute.toUpperCase()} {getStatMod(character[attribute])}</label>
-                <AbilityScoreField inputId={attribute} value={character[attribute]} onValueChange={ev => {
-                  const value = Math.min(Math.max(8, ev.value ?? 8), 15);
-                  setCharacter(prev => {
-                    if (getRemainingPoints({...prev, [attribute]: value}) < 0) return prev;
-                    return ({
-                      ...prev,
-                      [attribute]: Math.min(Math.max(8, ev.value ?? 8), 15)
-                    })
-                  })
-                }} maxFractionDigits={0} min={8} max={getHighestBaseScore(character, attribute)} showButtons />
-              </div>
-            )}
-          </div>
-          <div className="flex flex-row justify-end text-sm opacity-75 flex flex-row gap-2 pt-4 italic">
-            <span>Points Remaining</span>
-            <span className={twMerge(
-              getRemainingPoints(character) < 0 && "text-red-400"
-            )}>{getRemainingPoints(character)} / 27</span>
-          </div>
+          <StartingStatField choice={CharacterChoice.data.choices[1]} value={startingStat} onChange={setStartingStat} />
         </StepperPanel>
         <StepperPanel pt={stepperPanelPt} header="Specie">
-          <SpecieField value={character.specie} onChange={value => setCharacter(prev => ({...prev, specie: value}))}/>
+          <SpecieField value={character} choice={CharacterChoice.data.choices[2]} decision={specie} onChange={setSpecie} />
         </StepperPanel>
         <StepperPanel pt={stepperPanelPt} header="Background">
-          <BackgroundField value={character.background} onChange={value => setCharacter(prev => ({...prev, background: value}))}/>
+          <BackgroundField value={character} choice={CharacterChoice.data.choices[3]} decision={background} onChange={setBackground} />
         </StepperPanel>
         <StepperPanel pt={stepperPanelPt} header="Classes">
-          <FieldSet inline>
-            <FieldRow>
-              <DropdownField label="Starting Level" value={character.startingLevel} onChange={ev => setCharacter(prev => ({...prev, startingLevel: ev.value}))} options={[
-                {value: 2, label: "Level 2"},
-                {value: 3, label: "Level 3"},
-                {value: 5, label: "Level 5"},
-                {value: 9, label: "Level 9"},
-                {value: 13, label: "Level 13"},
-                {value: 17, label: "Level 17"},
-                {value: 20, label: "Level 20"}
-              ].filter(option => option.value >= getLevel(character))} />
-            </FieldRow>
-            {(character.main || character.secondary) && <Field>
-              <SectionLabel>Current Level</SectionLabel>
-              <FieldSet>
-                <FieldRow>
-                  {character.main && <NumberField label={`${getClassLabel(character.main)} ${character.main.level}`} min={character.secondary ? 1 : 0} max={character.main.level} value={character.main.level} onChange={(ev) => {
-                    setCharacter(prev => {
-                      if (!prev.main) return prev;
-                      if (ev.value === 0) {
-                        if (prev.secondary) return prev;
-                        return ({...prev, main: undefined});
-                      }
-                      return ({...prev, main: {...prev.main, level: ev.value} as Class<any>});
-                    });
-                  }} />}
-                  {character.secondary && <NumberField label={`${getClassLabel(character.secondary)} ${character.secondary.level}`} min={0} max={character.secondary.level} value={character.secondary.level} onChange={(ev) => {
-                    setCharacter(prev => {
-                      if (!prev.secondary) return prev;
-                      if (ev.value === 0) return ({...prev, secondary: undefined});
-                      return ({...prev, secondary: {...prev.secondary, level: ev.value} as Class<any>});
-                    });
-                  }} />}
-                </FieldRow>
-              </FieldSet>
-            </Field>}
-            {character.startingLevel > getLevel(character) && <ClassLevelerField
-              main={character.main}
-              secondary={character.secondary}
-              onChange={(main, secondary) => setCharacter(prev => ({...prev, main, secondary}))}
-            />}
-          </FieldSet>
+          <PageTitle>Level {currentLevel + 1}</PageTitle>
+          {currentLevel === 0 && <LevelField value={character} choice={CharacterChoice.data.choices[4]} decision={level1} onChange={setLevel1} />}
+          {currentLevel === 1 && <LevelField value={character} choice={CharacterChoice.data.choices[5]} decision={level2} onChange={setLevel2} />}
+          {currentLevel === 2 && <LevelField value={character} choice={CharacterChoice.data.choices[6]} decision={level3} onChange={setLevel3} />}
         </StepperPanel>
       </Stepper>
     </div>}
-    footer={<div className="flex flex-row justify-end">
-      <Button disabled={!isValidCharacter(character)} label="Create Character"/>
+    footer={<div className="flex flex-row w-full gap-4">
+      {activeStep !== 0 && currentLevel === 0 && <Button icon="pi pi-chevron-left" label="Prev" disabled={activeStep === 0} onClick={(ev) => {
+        if (currentLevel === 0) setLevel1(undefined);
+        stepper.current?.prevCallback(ev);
+      }} />}
+      {activeStep !== 0 && currentLevel !== 0 && <Button icon="pi pi-chevron-left" label="Prev" disabled={activeStep === 0} onClick={(ev) => {
+        if (currentLevel === 2) setLevel3(undefined);
+        if (currentLevel === 1) setLevel2(undefined);
+        setCurrentLevel(level => level - 1);
+      }} />}
+      <Spacer />
+
+      {activeStep !== 3 && <Button icon="pi pi-chevron-right" iconPos="right" label="Next" className={"flex-row-reverse"} disabled={
+        (activeStep === 0 && !startingStatProcessor(character, CharacterChoice.data.choices[1], startingStat).valid) ||
+        (activeStep === 1 && (specie === undefined || !specieProcessor(character, CharacterChoice.data.choices[2], specie).valid)) ||
+        (activeStep === 2 && (background === undefined || !backgroundProcessor(character, CharacterChoice.data.choices[3], background).valid))
+      } onClick={(ev) => {
+        stepper.current?.nextCallback(ev);
+      }} />}
+
+      {activeStep === 3 && currentLevel === 0 && <Button disabled={!levelProcessor(character, CharacterChoice.data.choices[4], level1).valid} label="Level Up" onClick={() => setCurrentLevel(1)}/>}
+      {activeStep === 3 && currentLevel === 1 && <Button disabled={!levelProcessor(character, CharacterChoice.data.choices[5], level2).valid} label="Level Up" onClick={() => setCurrentLevel(2)}/>}
+
+      {activeStep === 3 && currentLevel >= 1 && <Button disabled={!isValidCharacter({
+        type: "character",
+        data: {
+          decisions: {
+            "name": name,
+            "starting-stat": startingStat,
+            "specie": specie,
+            "background": background,
+            "level::1": level1,
+            "level::2": level2,
+            "level::3": level3
+          }
+        }
+      })} label="Create Character"/>}
     </div>}
   />;
 }
