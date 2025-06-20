@@ -2,7 +2,7 @@ import {Choice} from "@/model/source/choice/Choice";
 import {choiceProcessor} from "@/model/source/choice/ChoiceProcessor";
 import {ChoiceField} from "@/model/source/choice/ChoiceField";
 import {FieldSet} from "@/lib/components/FieldSet";
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {Decision} from "@/model/source/choice/Decision";
 import {ChoiceID} from "./ChoiceID";
 

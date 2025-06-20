@@ -1,4 +1,4 @@
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {ExpertiseChoice} from "@/model/source/choice/expertise/ExpertiseChoice";
 import {ExpertiseDecision} from "@/model/source/choice/expertise/ExpertiseDecision";
 import {Processor, ProcessorError} from "@/model/processor/Processor";

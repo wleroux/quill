@@ -1,7 +1,7 @@
 import {DropdownField} from "@/lib/components/DropdownField";
 import {ExpertiseDecision} from "@/model/source/choice/expertise/ExpertiseDecision";
 import {ExpertiseChoice} from "@/model/source/choice/expertise/ExpertiseChoice";
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {useEffect} from "react";
 import {SKILL_IDS, SKILLS} from "@/model/source/Skill";
 

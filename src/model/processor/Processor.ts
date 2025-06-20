@@ -1,4 +1,4 @@
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {Result} from "@/model/processor/Result";
 
 export class ProcessorError {

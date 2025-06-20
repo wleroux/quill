@@ -1,6 +1,6 @@
 import {FeatCategory, FeatID} from "@/model/source/model/Feat";
 import {REPOSITORY} from "@/model/source/index";
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {Condition} from "@/model/source/condition/Condition";
 
 export function featType(...types: FeatCategory[]): Condition<FeatID> {

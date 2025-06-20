@@ -5,7 +5,7 @@ import {REDIRECT_URL} from "@/lib/authentication/redirectUrl";
 import {encrypt} from "@/lib/authentication/session";
 import {UserDiscordClient} from "@/lib/discord/UserDiscordClient";
 import {Oauth2DiscordClient} from "@/lib/discord/Oauth2DiscordClient";
-import {BotDiscordClient} from "@/lib/discord/BotDiscordClient";
+import {botDiscordClient} from "@/lib/discord/BotDiscordClient";
 
 export default async function authMiddleware(req: NextRequest) {
   if (req.nextUrl.pathname === "/auth/signin") {
@@ -34,10 +34,10 @@ export default async function authMiddleware(req: NextRequest) {
       const userinfo = await new UserDiscordClient(token.access_token).GetCurrentAuthorizationInformation();
       if (userinfo.user === undefined) return NextResponse.next();
 
-      const member = await new BotDiscordClient(Resource.DiscordToken.value).getGuildMember(Resource.DiscordGuildID.value, userinfo.user!.id);
+      const member = await botDiscordClient.getGuildMember(Resource.DiscordGuildID.value, userinfo.user!.id);
       if (!member) return NextResponse.next();
 
-      const roles = await new BotDiscordClient(Resource.DiscordToken.value).getGuildRoles(Resource.DiscordGuildID.value);
+      const roles = await botDiscordClient.getGuildRoles(Resource.DiscordGuildID.value);
       const adminRole = roles.find(role => role.name === "Admin");
       const scribeRole = roles.find(role => role.name === "Scribe");
       const gameMasterRole = roles.find(role => role.name === "Game Master");

@@ -1,4 +1,4 @@
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {Condition} from "@/model/source/condition/Condition";
 
 export function not<T>(condition: Condition<T>): Condition<T> {

@@ -7,9 +7,9 @@ import {AttributeChoice} from "@/model/source/choice/attribute/AttributeChoice";
 import {MetamagicChoice} from "@/model/source/choice/metamagic/MetamagicChoice";
 import {MetamagicReplacementChoice} from "@/model/source/choice/metamagic-replacement/MetamagicReplacementChoice";
 import {SimpleChoice} from "@/model/source/choice/simple/SimpleChoice";
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {ExpertiseChoice} from "@/model/source/choice/expertise/ExpertiseChoice";
-import {BackgroundAttributeChoice} from "@/model/source/choice/background-attribute/BackgroundAttributeChoice";
+import {BackgroundAttributeChoice} from "@/model/character/create/background/background-attribute/BackgroundAttributeChoice";
 import {SkillOrToolChoice} from "@/model/source/choice/skill-or-tool/SkillOrToolChoice";
 import {Condition} from "@/model/source/condition/Condition";
 

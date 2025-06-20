@@ -8,7 +8,7 @@ import {SpellReplacementDecision} from "@/model/source/choice/spell-replacement/
 import {SpellDecision} from "@/model/source/choice/spell/SpellDecision";
 import {ExpertiseDecision} from "@/model/source/choice/expertise/ExpertiseDecision";
 import {SimpleDecision} from "@/model/source/choice/simple/SimpleDecision";
-import {BackgroundAttributeDecision} from "@/model/source/choice/background-attribute/BackgroundAttributeDecision";
+import {BackgroundAttributeDecision} from "@/model/character/create/background/background-attribute/BackgroundAttributeDecision";
 import {SkillOrToolDecision} from "@/model/source/choice/skill-or-tool/SkillOrToolDecision";
 
 export type Decision =

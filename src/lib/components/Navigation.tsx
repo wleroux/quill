@@ -53,25 +53,10 @@ export async function Navigation() {
     ]});
   }
   if (gameMaster) {
-    model.push({label: "Game Master", items: [
-      {label: "My Creatures", url: "/game-master/my-creatures"},
-      {label: "My Encounters", url: "/game-master/my-encounters"},
-      {label: "My Contracts", url: "/game-master/my-contracts"},
-      {label: "My Games", url: "/game-master/my-games"},
-    ]});
   }
   if (scribe) {
-    model.push({label: "Scribe", items: [
-      {label: "Players", url: "/scribe/players"},
-      {label: "Games", url: "/scribe/games"}
-    ]})
   }
   if (admin) {
-    model.push({label: "Admin", items: [
-      {label: "Creatures", url: "/admin/regional-creatures"},
-      {label: "Encounters", url: "/admin/regional-encounters"},
-      {label: "Settings", url: "/admin/settings"},
-    ]});
   }
 
   const userID = await getUserID();

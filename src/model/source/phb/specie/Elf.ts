@@ -23,6 +23,7 @@ export const PHB_SPECIE_ELF: Specie = {
       options: ELVEN_LINEAGES.map(optionID => ({optionID, label: ELVEN_LINEAGE_LABELS[optionID]}))
     }},
     {type: "skill", data: {
+      label: "Keen Senses",
       choiceID: "elf::skill::skill-1",
       condition: is<SkillID>("insight", "perception", "survival")
     }}

@@ -13,10 +13,12 @@ export const PHB_SPECIE_HUMAN: Specie = {
       ]
     }},
     {type: "feat", data: {
+      label: "Versatile",
       choiceID: "human::feat::feat-1",
       condition: featType("origin")
     }},
     {type: "skill", data: {
+      label: "Skillful",
       choiceID: "human::skill::skill-1"
     }}
   ]

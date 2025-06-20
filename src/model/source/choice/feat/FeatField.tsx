@@ -3,7 +3,7 @@ import {FieldSet} from "@/lib/components/FieldSet";
 import {FeatDecision} from "@/model/source/choice/feat/FeatDecision";
 import {FeatChoice} from "@/model/source/choice/feat/FeatChoice";
 import {REPOSITORY} from "@/model/source/index";
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {useEffect} from "react";
 import {ChoicesField} from "@/model/source/choice/ChoicesField";
 

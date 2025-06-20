@@ -198,6 +198,7 @@ const PHB_BACKGROUND_GUARD: Background = {
       condition: is<SkillID>("perception")
     }},
     {type: "tool", data: {
+      label: "Gaming Set",
       choiceID: "guard::tool::tool-1",
       condition: toolType("gaming set")
     }}
@@ -298,6 +299,7 @@ const PHB_BACKGROUND_NOBLE: Background = {
       condition: is<SkillID>("persuasion")
     }},
     {type: "tool", data: {
+      label: "Gaming Set",
       choiceID: "noble::tool::tool-1",
       condition: toolType("gaming set")
     }}
@@ -401,6 +403,7 @@ const PHB_BACKGROUND_SOLDIER: Background = {
       condition: is<SkillID>("intimidation")
     }},
     {type: "tool", data: {
+      label: "Gaming Set",
       choiceID: "soldier::tool::tool-1",
       condition: toolType("gaming set")
     }}

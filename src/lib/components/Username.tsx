@@ -1,6 +1,6 @@
 import {Snowflake} from "discord-api-types/v10";
 import {Resource} from "sst";
-import {BotDiscordClient} from "@/lib/discord/BotDiscordClient";
+import {botDiscordClient} from "@/lib/discord/BotDiscordClient";
 
 const AVATAR_BASE_URL = "https://cdn.discordapp.com"
 function getGuildAvatar(userId: string, discriminator: string, userAvatar: string | null | undefined, guildId: string, memberAvatar: string | null | undefined) {
@@ -17,17 +17,15 @@ function getGuildAvatar(userId: string, discriminator: string, userAvatar: strin
 
 export async function getUserName(userID: Snowflake) {
   if (userID === undefined) return "";
-  const client = new BotDiscordClient(Resource.DiscordToken.value);
   const guildID = Resource.DiscordGuildID.value;
-  const member = await client.getGuildMember(guildID, userID);
+  const member = await botDiscordClient.getGuildMember(guildID, userID);
   if (member === undefined) return `${userID}`;
   return member.nick ?? member.user.username ?? member.user.id ?? "";
 }
 
 export async function Username({userID}: {userID: Snowflake}) {
-  const client = new BotDiscordClient(Resource.DiscordToken.value);
   const guildID = Resource.DiscordGuildID.value;
-  const member = await client.getGuildMember(guildID, userID);
+  const member = await botDiscordClient.getGuildMember(guildID, userID);
 
   if (!member) {
     return <span>{userID}</span>

@@ -1,5 +1,5 @@
 import {LevelID} from "@/model/source/model/Level";
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {REPOSITORY} from "@/model/source/index";
 
 function getAncestorLevels(levelID: LevelID): LevelID[] {

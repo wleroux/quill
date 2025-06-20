@@ -2,7 +2,7 @@ import {DropdownField} from "@/lib/components/DropdownField";
 import {ToolChoice} from "@/model/source/choice/tool/ToolChoice";
 import {ToolDecision} from "@/model/source/choice/tool/ToolDecision";
 import {REPOSITORY} from "@/model/source/index";
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {useEffect} from "react";
 
 export function ToolField({character, choice, value, onChange}: {character: Character, choice: ToolChoice, value: ToolDecision | undefined, onChange: (value: ToolDecision | undefined) => void}) {

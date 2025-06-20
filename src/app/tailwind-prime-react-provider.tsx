@@ -1,8 +1,9 @@
 "use client";
 
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {APIOptions, PrimeReactProvider} from "primereact/api";
 import Tailwind from "primereact/passthrough/tailwind";
-import {PropsWithChildren} from "react";
+import {PropsWithChildren, useMemo} from "react";
 import {twMerge} from "tailwind-merge";
 
 const tailwindConfig: Partial<APIOptions> = {
@@ -17,7 +18,10 @@ const tailwindConfig: Partial<APIOptions> = {
 };
 
 export function TailwindPrimeReactProvider(props: PropsWithChildren<{ }>) {
-  return <PrimeReactProvider value={tailwindConfig}>
-    {props.children}
-  </PrimeReactProvider>
+  const queryClient = useMemo(() => new QueryClient(), []);
+  return <QueryClientProvider client={queryClient}>
+    <PrimeReactProvider value={tailwindConfig}>
+      {props.children}
+    </PrimeReactProvider>
+  </QueryClientProvider>
 }

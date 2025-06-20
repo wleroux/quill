@@ -1,4 +1,4 @@
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {AttributeChoice} from "@/model/source/choice/attribute/AttributeChoice";
 import {AttributeDecision} from "@/model/source/choice/attribute/AttributeDecision";
 import {DropdownField} from "@/lib/components/DropdownField";

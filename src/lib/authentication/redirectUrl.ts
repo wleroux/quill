@@ -1,2 +1,3 @@
+import { Resource } from "sst/resource";
 
-export const REDIRECT_URL = "http://localhost:3000/auth/callback";
+export const REDIRECT_URL = `${Resource.REDIRECT_URL.value}/auth/callback`;

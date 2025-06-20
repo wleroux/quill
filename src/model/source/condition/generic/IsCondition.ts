@@ -1,4 +1,4 @@
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {Condition} from "@/model/source/condition/Condition";
 
 export function is<T>(...targets: T[]): Condition<T> {

@@ -1,3 +1,4 @@
+"use client";
 import {PageTitle} from "@/lib/components/PageTitle";
 import {Dialog, DialogPassThroughOptions} from "primereact/dialog";
 import {Stepper, StepperPassThroughOptions} from "primereact/stepper";
@@ -5,26 +6,29 @@ import {StepperPanel, StepperPanelPassThroughOptions} from "primereact/stepperpa
 import React, {useRef, useState} from "react";
 import {twMerge} from "tailwind-merge";
 import {Button} from "@/lib/components/Button";
-import {SpecieField} from "@/model/source/choice/specie/SpecieField";
-import {startingStatProcessor} from "@/model/source/choice/starting-stat/StartingStatProcessor";
-import {CharacterDecision} from "@/model/player/character/CharacterDecision";
-import {NameField} from "@/model/source/choice/name/NameField";
-import {NameDecision} from "@/model/source/choice/name/NameDecision";
-import {CharacterChoice} from "@/model/player/character/CharacterChoice";
-import {DEFAULT_CHARACTER} from "@/model/player/character/Character";
-import {StartingStatDecision} from "@/model/source/choice/starting-stat/StartingStatDecision";
-import {StartingStatField} from "@/model/source/choice/starting-stat/StartingStatField";
-import {SpecieDecision} from "@/model/source/choice/specie/SpecieDecision";
-import {specieProcessor} from "@/model/source/choice/specie/SpecieProcessor";
-import {BackgroundField} from "@/model/source/choice/background/BackgroundField";
-import {BackgroundDecision} from "@/model/source/choice/background/BackgroundDecision";
-import {backgroundProcessor} from "@/model/source/choice/background/BackgroundProcessor";
+import {SpecieField} from "@/model/character/create/specie/SpecieField";
+import {startingStatProcessor} from "@/model/character/create/starting-stat/StartingStatProcessor";
+import {CharacterCreationDecision} from "@/model/character/create/CharacterCreationDecision";
+import {NameField} from "@/model/character/name/NameField";
+import {NameDecision} from "@/model/character/name/NameDecision";
+import {CharacterCreationChoice} from "@/model/character/create/CharacterCreationChoice";
+import {INITIAL_CHARACTER} from "@/model/character/Character";
+import {StartingStatDecision} from "@/model/character/create/starting-stat/StartingStatDecision";
+import {StartingStatField} from "@/model/character/create/starting-stat/StartingStatField";
+import {SpecieDecision} from "@/model/character/create/specie/SpecieDecision";
+import {specieProcessor} from "@/model/character/create/specie/SpecieProcessor";
+import {BackgroundField} from "@/model/character/create/background/BackgroundField";
+import {BackgroundDecision} from "@/model/character/create/background/BackgroundDecision";
+import {backgroundProcessor} from "@/model/character/create/background/BackgroundProcessor";
 import {Spacer} from "@/lib/components/Spacer";
-import {characterProcessor} from "@/model/player/character/CharacterProcessor";
-import {nameProcessor} from "@/model/source/choice/name/NameProcessor";
-import {LevelField} from "@/model/source/choice/level/LevelField";
-import {LevelDecision} from "@/model/source/choice/level/LevelDecision";
-import {levelProcessor} from "@/model/source/choice/level/LevelProcessor";
+import {characterCreationProcessor} from "@/model/character/create/CharacterCreationProcessor";
+import {nameProcessor} from "@/model/character/name/NameProcessor";
+import {LevelField} from "@/model/character/level/LevelField";
+import {LevelDecision} from "@/model/character/level/LevelDecision";
+import {levelProcessor} from "@/model/character/level/LevelProcessor";
+import {createCharacterAction} from "@/actions/CharactersActions";
+import { useRouter } from "next/navigation";
+import {FieldSet} from "@/lib/components/FieldSet";
 
 const stepperPt: StepperPassThroughOptions = {
   nav: {
@@ -77,8 +81,8 @@ const modalPt: DialogPassThroughOptions = {
 };
 
 
-function isValidCharacter(character: CharacterDecision) {
-  return characterProcessor(DEFAULT_CHARACTER, CharacterChoice, character).valid;
+function isValidCharacter(character: CharacterCreationDecision) {
+  return characterCreationProcessor(INITIAL_CHARACTER, CharacterCreationChoice, character).valid;
 }
 
 export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onClose?: () => void}) {
@@ -96,15 +100,31 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
   const [activeStep, setActiveStep] = useState(0);
   const [currentLevel, setCurrentLevel] = useState<number>(0);
   const stepper = useRef<Stepper>(null);
+  const router = useRouter();
 
-  let character = DEFAULT_CHARACTER;
-  if (name && nameProcessor(character, CharacterChoice.data.choices[0], name).valid) character = nameProcessor(character, CharacterChoice.data.choices[0], name).orThrow();
-  if (activeStep > 0) character = startingStatProcessor(character, CharacterChoice.data.choices[1], startingStat).orThrow();
-  if (activeStep > 1 && specie) character = specieProcessor(character, CharacterChoice.data.choices[2], specie).orThrow();
-  if (activeStep > 2 && background) character = backgroundProcessor(character, CharacterChoice.data.choices[3], background).orThrow();
-  if (activeStep > 2 && currentLevel > 0) character = levelProcessor(character, CharacterChoice.data.choices[4], level1!).orThrow();
-  if (activeStep > 2 && currentLevel > 1) character = levelProcessor(character, CharacterChoice.data.choices[5], level2!).orThrow();
-  if (activeStep > 2 && currentLevel > 2) character = levelProcessor(character, CharacterChoice.data.choices[6], level3!).orThrow();
+  let character = INITIAL_CHARACTER;
+  if (name && nameProcessor(character, CharacterCreationChoice.data.choices[0], name).valid) character = nameProcessor(character, CharacterCreationChoice.data.choices[0], name).orThrow();
+  if (activeStep > 0) character = startingStatProcessor(character, CharacterCreationChoice.data.choices[1], startingStat).orThrow();
+  if (activeStep > 1 && specie) character = specieProcessor(character, CharacterCreationChoice.data.choices[2], specie).orThrow();
+  if (activeStep > 2 && background) character = backgroundProcessor(character, CharacterCreationChoice.data.choices[3], background).orThrow();
+  if (activeStep > 2 && currentLevel > 0) character = levelProcessor(character, CharacterCreationChoice.data.choices[4], level1!).orThrow();
+  if (activeStep > 2 && currentLevel > 1) character = levelProcessor(character, CharacterCreationChoice.data.choices[5], level2!).orThrow();
+  if (activeStep > 2 && currentLevel > 2) character = levelProcessor(character, CharacterCreationChoice.data.choices[6], level3!).orThrow();
+
+  const characterDecision: CharacterCreationDecision = {
+    type: "character",
+    data: {
+      decisions: {
+        "name": name!,
+        "starting-stat": startingStat!,
+        "specie": specie!,
+        "background": background!,
+        "level::1": level1!,
+        "level::2": level2!,
+        "level::3": level3
+      }
+    }
+  };
 
   return <Dialog
     focusOnShow={false}
@@ -115,33 +135,27 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
     header={<PageTitle>New Character</PageTitle>}
     children={<div className="flex flex-col gap-0">
       <div className="px-4 py-4 border-b border-[color:var(--foreground)]/20 flex flex-row gap-4 items-end">
-        <div className="flex-0 shrink-0">
-          <div
-            className="w-18 h-18 rounded-md bg-black/20 flex items-center justify-center aspect-square border border-[color:var(--foreground)]/50 hover:outline overflow-hidden cursor-pointer">
-            <span className="pi pi-image text-xl"/>
-          </div>
-        </div>
-        <div className="flex-1">
-          <NameField choice={CharacterChoice.data.choices[0]} value={name} onChange={setName} />
-        </div>
+        <FieldSet inline className="flex-1">
+          <NameField choice={CharacterCreationChoice.data.choices[0]} value={name} onChange={setName} />
+        </FieldSet>
       </div>
 
       {/** @ts-ignore */}
       <Stepper ref={stepper} orientation="horizontal" pt={stepperPt} linear activeStep={activeStep} onChangeStep={ev => setActiveStep(ev.index)}>
         <StepperPanel pt={stepperPanelPt} header="Base Stats">
-          <StartingStatField choice={CharacterChoice.data.choices[1]} value={startingStat} onChange={setStartingStat} />
+          <StartingStatField choice={CharacterCreationChoice.data.choices[1]} value={startingStat} onChange={setStartingStat} />
         </StepperPanel>
         <StepperPanel pt={stepperPanelPt} header="Specie">
-          <SpecieField value={character} choice={CharacterChoice.data.choices[2]} decision={specie} onChange={setSpecie} />
+          <SpecieField value={character} choice={CharacterCreationChoice.data.choices[2]} decision={specie} onChange={setSpecie} />
         </StepperPanel>
         <StepperPanel pt={stepperPanelPt} header="Background">
-          <BackgroundField value={character} choice={CharacterChoice.data.choices[3]} decision={background} onChange={setBackground} />
+          <BackgroundField value={character} choice={CharacterCreationChoice.data.choices[3]} decision={background} onChange={setBackground} />
         </StepperPanel>
         <StepperPanel pt={stepperPanelPt} header="Classes">
           <PageTitle>Level {currentLevel + 1}</PageTitle>
-          {currentLevel === 0 && <LevelField value={character} choice={CharacterChoice.data.choices[4]} decision={level1} onChange={setLevel1} />}
-          {currentLevel === 1 && <LevelField value={character} choice={CharacterChoice.data.choices[5]} decision={level2} onChange={setLevel2} />}
-          {currentLevel === 2 && <LevelField value={character} choice={CharacterChoice.data.choices[6]} decision={level3} onChange={setLevel3} />}
+          {currentLevel === 0 && <LevelField value={character} choice={CharacterCreationChoice.data.choices[4]} decision={level1} onChange={setLevel1} />}
+          {currentLevel === 1 && <LevelField value={character} choice={CharacterCreationChoice.data.choices[5]} decision={level2} onChange={setLevel2} />}
+          {currentLevel === 2 && <LevelField value={character} choice={CharacterCreationChoice.data.choices[6]} decision={level3} onChange={setLevel3} />}
         </StepperPanel>
       </Stepper>
     </div>}
@@ -158,30 +172,23 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
       <Spacer />
 
       {activeStep !== 3 && <Button icon="pi pi-chevron-right" iconPos="right" label="Next" className={"flex-row-reverse"} disabled={
-        (activeStep === 0 && !startingStatProcessor(character, CharacterChoice.data.choices[1], startingStat).valid) ||
-        (activeStep === 1 && (specie === undefined || !specieProcessor(character, CharacterChoice.data.choices[2], specie).valid)) ||
-        (activeStep === 2 && (background === undefined || !backgroundProcessor(character, CharacterChoice.data.choices[3], background).valid))
+        (activeStep === 0 && !startingStatProcessor(character, CharacterCreationChoice.data.choices[1], startingStat).valid) ||
+        (activeStep === 1 && (specie === undefined || !specieProcessor(character, CharacterCreationChoice.data.choices[2], specie).valid)) ||
+        (activeStep === 2 && (background === undefined || !backgroundProcessor(character, CharacterCreationChoice.data.choices[3], background).valid))
       } onClick={(ev) => {
         stepper.current?.nextCallback(ev);
       }} />}
 
-      {activeStep === 3 && currentLevel === 0 && <Button disabled={!levelProcessor(character, CharacterChoice.data.choices[4], level1).valid} label="Level Up" onClick={() => setCurrentLevel(1)}/>}
-      {activeStep === 3 && currentLevel === 1 && <Button disabled={!levelProcessor(character, CharacterChoice.data.choices[5], level2).valid} label="Level Up" onClick={() => setCurrentLevel(2)}/>}
+      {activeStep === 3 && currentLevel === 0 && <Button disabled={!levelProcessor(character, CharacterCreationChoice.data.choices[4], level1).valid} label="Level Up" onClick={() => setCurrentLevel(1)}/>}
+      {activeStep === 3 && currentLevel === 1 && <Button disabled={!levelProcessor(character, CharacterCreationChoice.data.choices[5], level2).valid} label="Level Up" onClick={() => setCurrentLevel(2)}/>}
 
-      {activeStep === 3 && currentLevel >= 1 && <Button disabled={!isValidCharacter({
-        type: "character",
-        data: {
-          decisions: {
-            "name": name,
-            "starting-stat": startingStat,
-            "specie": specie,
-            "background": background,
-            "level::1": level1,
-            "level::2": level2,
-            "level::3": level3
-          }
-        }
-      })} label="Create Character"/>}
+      {activeStep === 3 && currentLevel >= 1 && <Button disabled={!isValidCharacter(characterDecision)} label="Create Character" onClick={() => {
+        createCharacterAction(characterDecision).then(id => {
+          onClose?.();
+          router.refresh();
+        }).catch(error => console.error(error));
+
+      }}/>}
     </div>}
   />;
 }

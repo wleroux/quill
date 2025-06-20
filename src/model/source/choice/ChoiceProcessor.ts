@@ -9,7 +9,7 @@ import {expertiseProcessor} from "@/model/source/choice/expertise/ExpertiseProce
 import {attributeProcessor} from "@/model/source/choice/attribute/AttributeProcessor";
 import {metamagicProcessor} from "@/model/source/choice/metamagic/MetamagicProcessor";
 import {metamagicReplacementProcessor} from "@/model/source/choice/metamagic-replacement/MetamagicReplacementProcessor";
-import {backgroundAttributeProcessor} from "@/model/source/choice/background-attribute/BackgroundAttributeProcessor";
+import {backgroundAttributeProcessor} from "@/model/character/create/background/background-attribute/BackgroundAttributeProcessor";
 import {skillOrToolProcessor} from "@/model/source/choice/skill-or-tool/SkillOrToolProcessor";
 import {spellReplacementProcessor} from "@/model/source/choice/spell-replacement/SpellReplacementProcessor";
 import {Processor, ProcessorError} from "@/model/processor/Processor";

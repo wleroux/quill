@@ -26,8 +26,16 @@ declare module "sst" {
       "type": "sst.aws.Service"
       "url": string
     }
+    "QuillTable": {
+      "name": string
+      "type": "sst.aws.Dynamo"
+    }
     "QuillVPC": {
       "type": "sst.aws.Vpc"
+    }
+    "REDIRECT_URL": {
+      "type": "sst.sst.Linkable"
+      "value": string
     }
   }
 }

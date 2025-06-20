@@ -2,7 +2,7 @@ import {DropdownField} from "@/lib/components/DropdownField";
 import {SkillDecision} from "@/model/source/choice/skill/SkillDecision";
 import {SkillChoice} from "@/model/source/choice/skill/SkillChoice";
 import {SKILL_IDS, SKILLS} from "@/model/source/Skill";
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 import {useEffect} from "react";
 
 export function SkillField({character, choice, value, onChange}: {character: Character, choice: SkillChoice, value: SkillDecision | undefined, onChange: (value: SkillDecision | undefined) => void}) {

@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import {REPOSITORY} from "@/model/source/index";
 import {SpellChoice} from "@/model/source/choice/spell/SpellChoice";
 import {SpellDecision} from "@/model/source/choice/spell/SpellDecision";
-import {Character} from "@/model/player/character/Character";
+import {Character} from "@/model/character/Character";
 
 export function SpellField({character, choice, value, onChange}: {character: Character, choice: SpellChoice, value: SpellDecision | undefined, onChange: (value: SpellDecision | undefined) => void}) {
   const VALID_SPELLS = Object.keys(REPOSITORY.SPELLS)
