@@ -14,7 +14,6 @@ export async function createCharacterAction(decisions: CharacterCreationDecision
 }
 
 export async function getCharactersAction(): Promise<{[characterID: CharacterID]: Character}> {
-  queueProcessor.wake();
   const userID = await getUserID();
   if (!userID) return {};
   return Object.fromEntries(await Promise.all(

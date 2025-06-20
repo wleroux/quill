@@ -20,8 +20,10 @@ export function ChoicesField({value, choices, decisions, onChange}: {
 
   let group: React.ReactNode[] = [];
   const jsx: React.ReactNode[] = [];
-  for (let index = 0; index < enabledChoices.length; index ++) {
-    const choice = enabledChoices[index];
+  for (let index = 0; index < choices.length; index ++) {
+    const choice = choices[index];
+    if (choice.data.enabled !== undefined && !choice.data.enabled(undefined, value)) continue;
+
     let prevCharacter = value;
     const decision = decisions[choice.data.choiceID];
     if (choiceProcessor(prevCharacter, choice, decision).valid) {
@@ -32,8 +34,8 @@ export function ChoicesField({value, choices, decisions, onChange}: {
       [choice.data.choiceID]: choiceValue!
     }))} />);
 
-    let isLastOfType = (enabledChoices.length === index + 1) || (enabledChoices[index].data.label ?? enabledChoices[index].type) !== (enabledChoices[index + 1].data.label ?? enabledChoices[index + 1].type);
-    if (isLastOfType) {
+    let isLastOfType = (choices.length === index + 1) || (choices[index].data.label ?? choices[index].type) !== (choices[index + 1].data.label ?? choices[index + 1].type);
+    if (isLastOfType && group.length > 0) {
       jsx.push(<FieldSet key={index} inline>{group}</FieldSet>);
       group = [];
     }

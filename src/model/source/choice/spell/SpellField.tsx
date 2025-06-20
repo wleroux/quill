@@ -11,10 +11,10 @@ export function SpellField({character, choice, value, onChange}: {character: Cha
     .filter(spellID => choice.data.condition === undefined || choice.data.condition(spellID, character));
 
   useEffect(() => {
-    if (value === undefined && VALID_SPELLS.length === 1) {
+    if ((value === undefined || !VALID_SPELLS.includes(value.data.spellID)) && VALID_SPELLS.length === 1) {
       onChange({type: "spell", data: {spellID: VALID_SPELLS[0]}})
     }
-  }, [value === undefined]);
+  }, [value === undefined || !VALID_SPELLS.includes(value?.data.spellID)]);
 
   return <DropdownField label={choice.data.label ?? "Spell"} value={value?.data.spellID} onChange={ev => onChange({type: "spell", data: {spellID: ev.value}})} options={
     VALID_SPELLS
