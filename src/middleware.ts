@@ -63,6 +63,7 @@ export default async function authMiddleware(req: NextRequest) {
   return NextResponse.next();
 }
 
+
 export const config = {
   runtime: 'nodejs',
   matcher: [
