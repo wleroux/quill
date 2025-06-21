@@ -22,6 +22,7 @@ export default $config({
     });
     const discordClientSecret = new sst.Secret("DiscordClientSecret");
     const discordToken = new sst.Secret("DiscordToken");
+    const discordPublicKey = new sst.Secret("DiscordPublicKey");
 
     const domain = $app.stage === "production" ? "newdawncoalition.com" : `${$app.stage}.quill.newdawncoalition.com`;
     const redirectUrl = new sst.Linkable("REDIRECT_URL", {
@@ -46,7 +47,7 @@ export default $config({
         domain: domain,
         ports: [{listen: "80/http", redirect: "443/https"}, {listen: "443/https", forward: "3000/http"}]
       },
-      link: [discordClientID, discordClientSecret, discordToken, discordGuildID, redirectUrl, table],
+      link: [discordClientID, discordClientSecret, discordToken, discordGuildID, discordPublicKey, redirectUrl, table],
       dev: {
         command: "next dev --turbopack"
       }

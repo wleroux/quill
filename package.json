@@ -14,6 +14,7 @@
     "@aws-sdk/lib-dynamodb": "^3.830.0",
     "@tanstack/react-query": "^5.80.10",
     "discord-api-types": "^0.37.119",
+    "discord-interactions": "^4.3.0",
     "jose": "^6.0.8",
     "next": "canary",
     "next-auth": "^4.24.11",

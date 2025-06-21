@@ -17,6 +17,10 @@ declare module "sst" {
       "type": "sst.sst.Linkable"
       "value": string
     }
+    "DiscordPublicKey": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "DiscordToken": {
       "type": "sst.sst.Secret"
       "value": string
