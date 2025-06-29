@@ -1,7 +1,6 @@
 "use client";
 import {PageTitle} from "@/lib/components/PageTitle";
 import {SectionLabel} from "@/lib/components/SectionLabel";
-import {Game} from "@/model/dm/game/Game";
 import {Button} from "@/lib/components/Button";
 import {Spacer} from "@/lib/components/Spacer";
 import React, {useState} from "react";
@@ -10,6 +9,7 @@ import {Field} from "@/lib/components/Field";
 import {FieldLabel} from "@/lib/components/FieldLabel";
 import {FieldSet} from "@/lib/components/FieldSet";
 import {StringField} from "@/lib/components/StringField";
+import { Game } from "@/model/game/Game";
 
 function GameSlot({value}: {
   value: Game
