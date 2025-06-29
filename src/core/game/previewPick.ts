@@ -9,9 +9,9 @@ import {getGameListChance} from "@/core/game/pick/getChanceOfPick";
 import {getValidLists} from "@/core/game/pick/getValidLists";
 
 
-export async function createPickList(channelID: Snowflake, gameMasterID: Snowflake, options?: {
-  minPlayers?: number,
-  maxPlayers?: number
+export async function createPickList(channelID: Snowflake, gameMasterID: Snowflake, options: {
+  minPlayers: number,
+  maxPlayers: number
 }): Promise<Result<GameList[], string>> {
   // VALIDATE CHANNEL
   const channel = await botDiscordClient.getChannel(channelID);
@@ -24,7 +24,7 @@ export async function createPickList(channelID: Snowflake, gameMasterID: Snowfla
     return ErrorResult.of("Pick List must be in the Upcoming Games category");
 
   // GET VALID LISTS
-  const validLists = await getValidLists(channelID, options?.minPlayers ?? 3, options?.maxPlayers ?? 6);
+  const validLists = (await getValidLists(channelID, options.minPlayers, options.maxPlayers)).filter(list => list.listMakerID !== gameMasterID);
 
   // Calculate Individual Odds
   const playerIDs: PlayerID[] = validLists.flatMap(list => list.characters).map(character => character.ownerID).reduce((list, a) => {

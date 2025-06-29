@@ -19,7 +19,7 @@ export const gameMasterPickCommand = new SubcommandHandler(
   async (request, context) => {
     const userID = context.member!.user.id;
     const channelID = context.channel_id!;
-    const minPlayers = Math.max(1, MIN_PLAYERS.get(request, () => 3));
+    const minPlayers = Math.max(3, MIN_PLAYERS.get(request, () => 3));
     const maxPlayers = Math.min(MAX_PLAYERS.get(request, () => 6), 6);
     const result = await createPickList(channelID, userID, {minPlayers, maxPlayers});
     if (!result.valid) return userErrorMessage("Cannot Pick List", result.error, context.member!);

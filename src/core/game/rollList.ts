@@ -10,7 +10,8 @@ import {getGameRangeDisplay} from "./pick/PickIteration";
 
 export async function rollList(gameMasterID: PlayerID, channelID: Snowflake, minPlayers: number, maxPlayers: number): Promise<Result<GameList, string>> {
   const channel = await botDiscordClient.getChannel(channelID);
-  const validLists = await getValidLists(channelID, minPlayers, maxPlayers);
+  const validLists = (await getValidLists(channelID, minPlayers, maxPlayers))
+    .filter(list => list.listMakerID !== gameMasterID);
   if (validLists.length === 0) return ErrorResult.of(`There are no valid lists.`);
 
   const [iterations, pickedList] = await rollGameList(validLists);
