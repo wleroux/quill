@@ -6,8 +6,13 @@ import {SpellID} from "@/model/source/model/Spell";
 import {ToolID} from "@/model/source/model/Tool";
 import {AttributeID} from "@/model/source/model/Attribute";
 import {LevelID} from "@/model/source/model/Level";
+import {CharacterID} from "@/model/character/CharacterID";
+import { Snowflake } from "discord-api-types/v10";
 
 export type Character = {
+  id: CharacterID;
+  ownerID: Snowflake;
+  revision: number,
   name: string;
   level: number;
   specieID: string;
@@ -24,7 +29,10 @@ export type Character = {
   tools: ToolID[];
 };
 
-export const INITIAL_CHARACTER: Character = {
+export const INITIAL_CHARACTER = (id: CharacterID, ownerID: Snowflake): Character => ({
+  id,
+  revision: 0,
+  ownerID: ownerID,
   name: "Unknown",
   level: 0,
   retired: false,
@@ -39,4 +47,4 @@ export const INITIAL_CHARACTER: Character = {
   skills: [],
   spells: {},
   tools: [],
-};
+});

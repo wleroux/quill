@@ -3,27 +3,37 @@ import 'server-only';
 import {getUserID} from "@/lib/authentication/getUserID";
 import {Character} from "@/model/character/Character";
 import {CharacterCreationDecision} from "@/model/character/create/CharacterCreationDecision";
-import {createCharacter, getCharacterByID, getCharacterIDsByUserID, retireCharacter} from "@/core/Character";
+import {CharacterRepository} from "@/core/character/CharacterRepository";
 import {CharacterID} from '@/model/character/CharacterID';
-import {queueProcessor} from "@/lib/queue/QueueProcessor";
+import {createCharacter} from '@/core/character/createCharacter';
+import {retireCharacter} from '@/core/character/retireCharacter';
+import {withMetadata} from "@/core/RequestContext";
+import {ulid} from "ulid";
 
 export async function createCharacterAction(decisions: CharacterCreationDecision) {
   const userID = await getUserID();
   if (!userID) return undefined;
-  return await createCharacter(userID, decisions);
+  const result = await withMetadata({
+    requestID: ulid(),
+    userID: userID,
+    workflow: "CREATE-CHARACTER"
+  }, () => createCharacter(userID, decisions));
+  if (!result.valid) throw new Error(result.error);
+  return result.value;
 }
 
-export async function getCharactersAction(): Promise<{[characterID: CharacterID]: Character}> {
+export async function getCharactersAction(): Promise<Character[]> {
   const userID = await getUserID();
-  if (!userID) return {};
-  return Object.fromEntries(await Promise.all(
-    (await getCharacterIDsByUserID(userID))
-      .map(async (characterID) => [characterID, await getCharacterByID(characterID)])
-  ));
+  if (userID === undefined) return [];
+  return CharacterRepository.getCharactersByUserID(userID);
 }
 
 export async function retireCharacterAction(characterID: CharacterID) {
   const authorizingUserID = await getUserID();
   if (!authorizingUserID) return false;
-  return retireCharacter(characterID, authorizingUserID);
+  return withMetadata({
+    userID: authorizingUserID,
+    workflow: "RETIRE-CHARACTER",
+    requestID: ulid()
+  }, () => retireCharacter(characterID, authorizingUserID));
 }

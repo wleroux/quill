@@ -7,17 +7,16 @@ import {Button} from "@/lib/components/Button";
 import {CreateCharacterDialog} from "@/app/player/my-characters/CreateCharacterDialog";
 import {REPOSITORY} from "@/model/source/index";
 import {twMerge} from "tailwind-merge";
-import {CharacterID} from "@/model/character/CharacterID";
 import {useMutation} from "@tanstack/react-query";
 import {useRouter} from "next/navigation";
 import {retireCharacterAction} from "@/actions/CharactersActions";
 import {ConfirmPopup} from "primereact/confirmpopup";
 
-function CharacterSlot({id, value, active}: {id: CharacterID, value: Character, active?: boolean}) {
+function CharacterSlot({value, active}: {value: Character, active?: boolean}) {
   const router = useRouter();
   const retireMutation = useMutation({
     mutationFn: async () => {
-      return retireCharacterAction(id);
+      return retireCharacterAction(value.id);
     },
     onSuccess: () => {
       router.refresh();
@@ -60,13 +59,11 @@ function CharacterSlot({id, value, active}: {id: CharacterID, value: Character, 
   </div>
 }
 
-export function MyCharacters({characters}: {characters: {[characterID: CharacterID]: Character}}) {
+export function MyCharacters({characters}: {characters: Character[]}) {
   const [createNewCharacterDialog, setCreateNewCharacterDialog] = React.useState<boolean>(false);
 
-  const ACTIVE_CHARACTERS = Object.keys(characters)
-    .filter(characterID => !characters[characterID].retired);
-  const RETIRED_CHARACTERS = Object.keys(characters)
-    .filter(characterID => characters[characterID].retired);
+  const ACTIVE_CHARACTERS = characters.filter(character => !character.retired);
+  const RETIRED_CHARACTERS = characters.filter(character => character.retired);
 
   return <>
     <div className="flex flex-row items-center">
@@ -89,15 +86,13 @@ export function MyCharacters({characters}: {characters: {[characterID: Character
     {ACTIVE_CHARACTERS.length > 0 && <>
       <PageTitle>Active Character</PageTitle>
       <div className="flex flex-row gap-4 justify-around justify-items-center flex-wrap">
-        {ACTIVE_CHARACTERS
-          .map(characterID => <CharacterSlot key={characterID} id={characterID} value={characters[characterID]} active />)}
+        {ACTIVE_CHARACTERS.map(character => <CharacterSlot key={character.id} value={character} active />)}
       </div>
     </>}
     {RETIRED_CHARACTERS.length > 0 && <>
       <PageTitle>Retired Characters</PageTitle>
       <div className="flex flex-row gap-4 justify-around justify-items-center flex-wrap">
-        {RETIRED_CHARACTERS
-          .map(characterID => <CharacterSlot key={characterID} id={characterID} value={characters[characterID]} />)}
+        {RETIRED_CHARACTERS.map(character => <CharacterSlot key={character.id} value={character} />)}
       </div>
     </>}
   </>

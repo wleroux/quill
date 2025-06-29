@@ -1,20 +1,19 @@
 import "server-only";
-import {APIInteraction, InteractionResponseType, InteractionType, MessageFlags} from "discord-api-types/v10";
+import {APIInteraction} from "discord-api-types/v10";
 import {verifyKey} from "discord-interactions";
 import {NextApiRequest, NextApiResponse} from "next";
 import {Resource} from "sst/resource";
 import {IncomingHttpHeaders} from "node:http";
 import {buffer} from "node:stream/consumers";
+import {rootCommand} from "@/pages/api/discord/RootCommand";
+import {ulid} from "ulid";
+import {withMetadata} from "@/core/RequestContext";
+import {interactionToString} from "./interactionToString";
 
 export const config = {
   api: {
     bodyParser: false
   },
-}
-
-
-function discordInteraction(request: APIInteraction) {
-  throw new Error("Invalid Request");
 }
 
 function getHeader(value: IncomingHttpHeaders, key: string, defaultValue: string) {
@@ -37,7 +36,7 @@ export default async function handler(
   }
   const signature: string = getHeader(req.headers, "x-signature-ed25519", "");
   const timestamp: string = getHeader(req.headers, 'x-signature-timestamp', "");
-  if (!verifyKey(body, signature, timestamp, Resource.DiscordPublicKey.value)) {
+  if (!await verifyKey(body, signature, timestamp, Resource.DiscordPublicKey.value)) {
     res
       .status(401)
       .send(`Bad request signature: ${body}`);
@@ -45,38 +44,14 @@ export default async function handler(
   }
 
   // Process Message
-  const content = (JSON.parse(body) || {}) as APIInteraction;
-
-  // Respond to Pings
-  if (content.type === InteractionType.Ping) {
-    res
-      .status(200)
-      .setHeader("content-type", "application/json")
-      .send(JSON.stringify({type: InteractionResponseType.Pong}));
-    return;
-  }
-
-  try {
-    const response = discordInteraction(content)
-    res
-      .status(200)
-      .setHeader("content-type", "application/json")
-      .send(JSON.stringify(response))
-  } catch (error) {
-    console.error(error);
-    res
-      .status(200)
-      .setHeader("content-type", "application/json")
-      .send(JSON.stringify({
-        type: InteractionResponseType.ChannelMessageWithSource,
-        data: {
-          embeds: [{
-            title: "Internal Server Error",
-            description: "An unexpected error with the bot has occurred and an admin has been notified.",
-            color: 0xeb7968,
-          }],
-          flags: MessageFlags.Ephemeral
-        }
-      }));
-  }
+  const request = (JSON.parse(body) || {}) as APIInteraction;
+  const requestID = ulid();
+  res
+    .status(200)
+    .setHeader("content-type", "application/json")
+    .send(JSON.stringify(await withMetadata({
+      requestID,
+      workflow: interactionToString(request),
+      userID: request.member!.user.id,
+    }, () => rootCommand.handle(request))))
 }

@@ -38,7 +38,7 @@ export default async function authMiddleware(req: NextRequest) {
       if (!member) return NextResponse.next();
 
       const roles = await botDiscordClient.getGuildRoles(Resource.DiscordGuildID.value);
-      const adminRole = roles.find(role => role.name === "Admin");
+      const adminRole = roles.find(role => role.name === "bot overlord");
       const scribeRole = roles.find(role => role.name === "Scribe");
       const gameMasterRole = roles.find(role => role.name === "Game Master");
 

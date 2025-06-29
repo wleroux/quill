@@ -53,10 +53,16 @@ export async function Navigation() {
     ]});
   }
   if (gameMaster) {
+    // model.push({label: "Game Master", items: [
+    //   {label: "My Games", url: "/game-master/my-games"}
+    // ]})
   }
   if (scribe) {
   }
   if (admin) {
+    model.push({label: "Admin", items: [
+      {label: "Discord", url: "/admin/discord"}
+    ]})
   }
 
   const userID = await getUserID();

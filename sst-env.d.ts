@@ -25,6 +25,11 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "QuillInteractions": {
+      "name": string
+      "type": "sst.aws.Function"
+      "url": string
+    }
     "QuillService": {
       "service": string
       "type": "sst.aws.Service"

@@ -1,6 +1,5 @@
 "use client";
 import {PageTitle} from "@/lib/components/PageTitle";
-import {Dialog, DialogPassThroughOptions} from "primereact/dialog";
 import {Stepper, StepperPassThroughOptions} from "primereact/stepper";
 import {StepperPanel, StepperPanelPassThroughOptions} from "primereact/stepperpanel";
 import React, {useRef, useState} from "react";
@@ -27,8 +26,9 @@ import {LevelField} from "@/model/character/level/LevelField";
 import {LevelDecision} from "@/model/character/level/LevelDecision";
 import {levelProcessor} from "@/model/character/level/LevelProcessor";
 import {createCharacterAction} from "@/actions/CharactersActions";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 import {FieldSet} from "@/lib/components/FieldSet";
+import {Modal} from "@/lib/components/Modal";
 
 const stepperPt: StepperPassThroughOptions = {
   nav: {
@@ -55,34 +55,11 @@ const stepperPanelPt: StepperPanelPassThroughOptions = {
     )
   })
 };
-const modalPt: DialogPassThroughOptions = {
-  root: {
-    className: "bg-[color:var(--background)] container border border-[color:var(--foreground)]/20 drop-shadow-lg rounded-md mt-32 mb-40"
-  },
-  header: {
-    className: "p-4 bg-black/40 rounded-t-md border-b border-[color:var(--foreground)]/20"
-  },
-  headerTitle: {
-    className: "flex-1"
-  },
-  closeButton: {
-    className: "cursor-pointer border rounded-md border border-[color:var(--foreground)]/50 hover:outline"
-  },
-  footer: {
-    className: "p-4 bg-black/40 rounded-b-md border-t border-[color:var(--foreground)]/20"
-  },
-  content: {
-    className: "bg-transparent p-0"
-  },
-  mask: {
-    className: "bg-black/50 items-start overflow-y-auto",
-    style: {alignItems:"start"}
-  }
-};
+
 
 
 function isValidCharacter(character: CharacterCreationDecision) {
-  return characterCreationProcessor(INITIAL_CHARACTER, CharacterCreationChoice, character).valid;
+  return characterCreationProcessor(INITIAL_CHARACTER("", ""), CharacterCreationChoice, character).valid;
 }
 
 export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onClose?: () => void}) {
@@ -102,7 +79,7 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
   const stepper = useRef<Stepper>(null);
   const router = useRouter();
 
-  let character = INITIAL_CHARACTER;
+  let character = INITIAL_CHARACTER("", "");
   if (name && nameProcessor(character, CharacterCreationChoice.data.choices[0], name).valid) character = nameProcessor(character, CharacterCreationChoice.data.choices[0], name).orThrow();
   if (activeStep > 0) character = startingStatProcessor(character, CharacterCreationChoice.data.choices[1], startingStat).orThrow();
   if (activeStep > 1 && specie) character = specieProcessor(character, CharacterCreationChoice.data.choices[2], specie).orThrow();
@@ -126,12 +103,8 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
     }
   };
 
-  return <Dialog
-    focusOnShow={false}
-    draggable={false}
-    modal
-    visible={visible} onHide={onClose ? onClose : () => {}}
-    pt={modalPt}
+  return <Modal
+    visible={visible} onClose={onClose}
     header={<PageTitle>New Character</PageTitle>}
     children={<div className="flex flex-col gap-0">
       <div className="px-4 py-4 border-b border-[color:var(--foreground)]/20 flex flex-row gap-4 items-end">

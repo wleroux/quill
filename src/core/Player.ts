@@ -1,25 +1,20 @@
 import {Snowflake} from "discord-api-types/v10";
-import {getCharacterByID, getCharacterIDsByUserID} from "@/core/Character";
 import {botDiscordClient} from "@/lib/discord/BotDiscordClient";
 import {Resource} from "sst/resource";
+import {CharacterRepository} from "@/core/character/CharacterRepository";
 
 const MANAGED_ROLES = [
   "Player", "Initiate", "Adept", "Vanguard", "Exemplar", "Harbinger"
 ];
 
 export async function refreshDiscordRoles(userID: Snowflake) {
-  const characterIDs = await getCharacterIDsByUserID(userID);
-  console.log(`Getting Characters: ${characterIDs}`)
-  const characters = Object.fromEntries(await Promise.all(
-    characterIDs.map(async (characterID) => [characterID, await getCharacterByID(characterID)])
-  ));
+  const characters = await CharacterRepository.getCharactersByUserID(userID);
 
   // Calculate Necessary Roles
   const roles = new Set();
-  if (characterIDs.length > 0)
+  if (characters.length > 0)
     roles.add("Player");
-  for (const characterID of characterIDs) {
-    const character = characters[characterID];
+  for (const character of characters) {
     if (character.retired) continue;
 
     if (character.level <= 4) roles.add("Initiate");

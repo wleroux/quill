@@ -41,12 +41,19 @@ export default $config({
 
     const vpc = new sst.aws.Vpc("QuillVPC");
     const cluster = new sst.aws.Cluster("QuillCluster", {vpc});
+    if ($dev) new sst.aws.Function("QuillInteractions", {
+      handler: "src/pages/api/discord/lambda.handler",
+      url: true,
+      link: [discordClientID, discordClientSecret, discordToken, discordGuildID, discordPublicKey, redirectUrl, table],
+    });
+
     const service = new sst.aws.Service("QuillService", {
       cluster,
       loadBalancer: {
         domain: domain,
-        ports: [{listen: "80/http", redirect: "443/https"}, {listen: "443/https", forward: "3000/http"}]
+        ports: [{listen: "80/http", redirect: "443/https"}, {listen: "443/https", forward: "3000/http"}],
       },
+
       link: [discordClientID, discordClientSecret, discordToken, discordGuildID, discordPublicKey, redirectUrl, table],
       dev: {
         command: "next dev --turbopack"
@@ -54,7 +61,7 @@ export default $config({
     });
 
     return {
-      url: service.url
+      url: service.url,
     };
   },
   console: {
