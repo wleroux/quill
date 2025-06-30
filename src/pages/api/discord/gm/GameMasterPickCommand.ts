@@ -4,7 +4,7 @@ import {userErrorMessage} from "@/pages/api/discord/message/userErrorMessage";
 import {simpleEmbedMessage} from "@/pages/api/discord/message/simpleEmbedMessage";
 
 const MIN_PLAYERS = new NumberCommandOption("min-players", "Minimum number of players (default: 3)", {
-  // min: 3,
+  min: 3,
   max: 6
 });
 const MAX_PLAYERS = new NumberCommandOption("max-players", "Maximum number of players (default: 6)", {

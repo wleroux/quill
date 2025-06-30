@@ -34,7 +34,7 @@ export async function handler(event: APIGatewayProxyEventV2): Promise<APIGateway
     body: JSON.stringify(await withMetadata({
       requestID,
       workflow: interactionToString(request),
-      userID: request.user?.id!,
+      userID: request.member?.user.id ?? request.user?.id ?? "0000"
     }, () => rootCommand.handle(request)))
   };
 }
