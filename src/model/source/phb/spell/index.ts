@@ -1956,4 +1956,4 @@ export default {
     "level": 2,
     "school": "Enchantment"
   }
-} as const satisfies {[spellID: SpellID]: Spell};
+} as const as {[spellID: SpellID]: Spell};

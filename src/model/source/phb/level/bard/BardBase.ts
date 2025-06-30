@@ -1,4 +1,4 @@
-import {Level, LevelID} from "@/model/source/model/Level";
+import {ClassID, Level} from "@/model/source/model/Level";
 import {isMainClass, noClasses} from "@/model/source/choice/Choice";
 import {bardSkill} from "@/model/source/phb/level/bard/BardSkillCondition";
 import {bardCantripSpell} from "@/model/source/phb/level/bard/BardSpellCondition";
@@ -119,4 +119,4 @@ const PHB_BARD_2: Level = {
 export default {
   "Bard 1": PHB_BARD_1,
   "Bard 2": PHB_BARD_2
-} as const satisfies {[levelID: LevelID]: Level};
+} as const satisfies {[levelID: ClassID]: Level};

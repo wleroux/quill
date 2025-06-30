@@ -1,4 +1,4 @@
-import {Level, LevelID} from "@/model/source/model/Level";
+import {Level, ClassID} from "@/model/source/model/Level";
 import {isMainClass, noClasses} from "@/model/source/choice/Choice";
 import {barbarianSkills} from "@/model/source/phb/level/barbarian/BarbarianSkillCondition";
 import {minStat} from "@/model/source/condition/attribute/minStat";
@@ -29,4 +29,4 @@ const PHB_BARBARIAN_2: Level = {
 export default {
   "Barbarian 1": PHB_BARBARIAN_1,
   "Barbarian 2": PHB_BARBARIAN_2,
-} as const satisfies {[levelID: LevelID]: Level};
+} as const satisfies {[levelID: ClassID]: Level};

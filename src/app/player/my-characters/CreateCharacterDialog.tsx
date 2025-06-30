@@ -72,7 +72,6 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
   const [background, setBackground] = useState<BackgroundDecision | undefined>(undefined);
   const [level1, setLevel1] = useState<LevelDecision | undefined>(undefined);
   const [level2, setLevel2] = useState<LevelDecision | undefined>(undefined);
-  const [level3, setLevel3] = useState<LevelDecision | undefined>(undefined);
 
   const [activeStep, setActiveStep] = useState(0);
   const [currentLevel, setCurrentLevel] = useState<number>(0);
@@ -86,7 +85,6 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
   if (activeStep > 2 && background) character = backgroundProcessor(character, CharacterCreationChoice.data.choices[3], background).orThrow();
   if (activeStep > 2 && currentLevel > 0) character = levelProcessor(character, CharacterCreationChoice.data.choices[4], level1!).orThrow();
   if (activeStep > 2 && currentLevel > 1) character = levelProcessor(character, CharacterCreationChoice.data.choices[5], level2!).orThrow();
-  if (activeStep > 2 && currentLevel > 2) character = levelProcessor(character, CharacterCreationChoice.data.choices[6], level3!).orThrow();
 
   const characterDecision: CharacterCreationDecision = {
     type: "character",
@@ -97,8 +95,7 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
         "specie": specie!,
         "background": background!,
         "level::1": level1!,
-        "level::2": level2!,
-        "level::3": level3
+        "level::2": level2!
       }
     }
   };
@@ -128,7 +125,6 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
           <PageTitle>Level {currentLevel + 1}</PageTitle>
           {currentLevel === 0 && <LevelField value={character} choice={CharacterCreationChoice.data.choices[4]} decision={level1} onChange={setLevel1} />}
           {currentLevel === 1 && <LevelField value={character} choice={CharacterCreationChoice.data.choices[5]} decision={level2} onChange={setLevel2} />}
-          {currentLevel === 2 && <LevelField value={character} choice={CharacterCreationChoice.data.choices[6]} decision={level3} onChange={setLevel3} />}
         </StepperPanel>
       </Stepper>
     </div>}
@@ -138,7 +134,6 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
         stepper.current?.prevCallback(ev);
       }} />}
       {activeStep !== 0 && currentLevel !== 0 && <Button icon="pi pi-chevron-left" label="Prev" disabled={activeStep === 0} onClick={(ev) => {
-        if (currentLevel === 2) setLevel3(undefined);
         if (currentLevel === 1) setLevel2(undefined);
         setCurrentLevel(level => level - 1);
       }} />}
@@ -153,14 +148,11 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
       }} />}
 
       {activeStep === 3 && currentLevel === 0 && <Button disabled={!levelProcessor(character, CharacterCreationChoice.data.choices[4], level1).valid} label="Level Up" onClick={() => setCurrentLevel(1)}/>}
-      {activeStep === 3 && currentLevel === 1 && <Button disabled={!levelProcessor(character, CharacterCreationChoice.data.choices[5], level2).valid} label="Level Up" onClick={() => setCurrentLevel(2)}/>}
-
       {activeStep === 3 && currentLevel >= 1 && <Button disabled={!isValidCharacter(characterDecision)} label="Create Character" onClick={() => {
         createCharacterAction(characterDecision).then(id => {
           onClose?.();
           router.refresh();
         }).catch(error => console.error(error));
-
       }}/>}
     </div>}
   />;

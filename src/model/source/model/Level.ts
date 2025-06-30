@@ -1,11 +1,11 @@
 import {Choice} from "@/model/source/choice/Choice";
 import {Condition} from "@/model/source/condition/Condition";
 
-export type LevelID = string;
+export type ClassID = string;
 
 export type Level = {
   label: string;
-  replace?: LevelID;
+  replace?: ClassID;
   prerequisite?: Condition<any>;
   choices: Choice[];
 };

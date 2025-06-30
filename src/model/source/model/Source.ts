@@ -6,13 +6,13 @@ import {Metamagic, MetamagicID} from "./Metamagic";
 import {Maneuver, ManeuverID} from "./Maneuver";
 import {Tool, ToolID} from "./Tool";
 import {Item, ItemID} from "./Item";
-import {Level, LevelID} from "@/model/source/model/Level";
+import {Level, ClassID} from "@/model/source/model/Level";
 
 export type Source = {
   BACKGROUNDS?: {[backgroundID: BackgroundID]: Background};
   FEATS?: {[featID: FeatID]: Feat};
   ITEMS?: {[itemID: ItemID]: Item};
-  LEVELS: {[levelID: LevelID]: Level};
+  LEVELS: {[levelID: ClassID]: Level};
   MANEUVERS?: {[maneuverID: ManeuverID]: Maneuver};
   METAMAGICS?: {[metamagicID: MetamagicID]: Metamagic};
   SPECIES?: {[specieID: SpecieID]: Specie};

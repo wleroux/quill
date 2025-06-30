@@ -4,7 +4,77 @@ import {BackgroundChoice} from "@/model/character/create/background/BackgroundCh
 import {minTextLength} from "@/model/source/condition/text/MinLengthCondition";
 import {NameChoice} from "@/model/character/name/NameChoice";
 import {LevelChoice} from "@/model/character/level/LevelChoice";
-import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
+import {initiateMundaneItem, majorCommonItem, minorCommonItem} from "@/model/source/condition/item/itemTypeCondition";
+
+const LEVEL_1: LevelChoice = {
+  type: "level",
+  data: {
+    choiceID: "level::1",
+    enabled: (_, character) => character.level === 0,
+    choices: [
+      {type: "class", data: {
+        choiceID: "class::1",
+      }},
+      {type: "item", data: {
+        label: "Mundane Item",
+        choiceID: "level::item::mundane-1",
+        condition: initiateMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Mundane Item",
+        choiceID: "level::item::mundane-2",
+        condition: initiateMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Mundane Item",
+        choiceID: "level::item::mundane-3",
+        condition: initiateMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Major Common Item",
+        choiceID: "level::item::major-common-1",
+        condition: majorCommonItem
+      }},
+      {type: "item", data: {
+        label: "Minor Common Item",
+        choiceID: "level::item::minor-common-1",
+        condition: minorCommonItem
+      }}
+    ]
+  }
+};
+const LEVEL_2: LevelChoice = {
+  type: "level",
+  data: {
+    choiceID: "level::2",
+    enabled: (_, character) => character.level === 1,
+    choices: [
+      {type: "class", data: {
+        choiceID: "class::2",
+      }},
+      {type: "item", data: {
+        label: "Mundane Item",
+        choiceID: "level::item::mundane-4",
+        condition: initiateMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Mundane Item",
+        choiceID: "level::item::mundane-5",
+        condition: initiateMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Mundane Item",
+        choiceID: "level::item::mundane-6",
+        condition: initiateMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Minor Common Item",
+        choiceID: "level::item::minor-common-2",
+        condition: minorCommonItem
+      }}
+    ]
+  }
+};
 
 export const CharacterCreationChoice = {
   data: {
@@ -26,16 +96,8 @@ export const CharacterCreationChoice = {
         choiceID: "background",
         condition: undefined
       }} satisfies BackgroundChoice,
-      {type: "level", data: {
-        choiceID: "level::1",
-      }} satisfies LevelChoice,
-      {type: "level", data: {
-        choiceID: "level::2",
-      }} satisfies LevelChoice,
-      {type: "level", data: {
-        choiceID: "level::3",
-        required: alwaysFalse()
-      }} satisfies LevelChoice,
+      LEVEL_1,
+      LEVEL_2
     ]
   }
 } as const;

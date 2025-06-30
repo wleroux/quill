@@ -5,9 +5,11 @@ import {ChoiceID} from "@/model/source/choice/ChoiceID";
 import {SpellID} from "@/model/source/model/Spell";
 import {ToolID} from "@/model/source/model/Tool";
 import {AttributeID} from "@/model/source/model/Attribute";
-import {LevelID} from "@/model/source/model/Level";
+import {ClassID} from "@/model/source/model/Level";
 import {CharacterID} from "@/model/character/CharacterID";
-import { Snowflake } from "discord-api-types/v10";
+import {Snowflake} from "discord-api-types/v10";
+import {ItemID} from "@/model/source/model/Item";
+import {Decision} from "@/model/source/choice/Decision";
 
 export type Character = {
   id: CharacterID;
@@ -22,8 +24,12 @@ export type Character = {
   choices: {[choiceID: ChoiceID]: string};
   expertise: SkillID[];
   feats: FeatID[];
-  levels: LevelID[];
+  levels: ClassID[];
   skills: SkillID[];
+  items: {
+    itemID: ItemID;
+    decisions: {[choiceID: ChoiceID]: Decision}
+  }[];
   metamagics: {[sourceID: string]: MetamagicID};
   spells: {[sourceID: string]: SpellID; };
   tools: ToolID[];
@@ -40,6 +46,7 @@ export const INITIAL_CHARACTER = (id: CharacterID, ownerID: Snowflake): Characte
   backgroundID: "",
   stats: {str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10},
   choices: {},
+  items: [],
   expertise: [],
   feats: [],
   levels: [],

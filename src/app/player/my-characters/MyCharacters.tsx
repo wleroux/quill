@@ -39,7 +39,7 @@ function CharacterSlot({value, active}: {value: Character, active?: boolean}) {
         <strong>Background:</strong> {REPOSITORY.BACKGROUNDS[value.backgroundID]?.label}
       </div>
       <div>
-        <strong>Class:</strong> {value.levels.map(levelID => REPOSITORY.LEVELS[levelID].label).join(" / ")}
+        <strong>Class:</strong> {value.levels.map(classID => REPOSITORY.CLASSES[classID].label).join(" / ")}
       </div>
     </div>
     {!value.retired && <div className="absolute right-4 top-4">
