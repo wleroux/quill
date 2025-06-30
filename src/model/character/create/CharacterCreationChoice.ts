@@ -16,32 +16,32 @@ const LEVEL_1: LevelChoice = {
         choiceID: "class::1",
       }},
       {type: "item", data: {
-        label: "Mundane Item",
+        label: "Mundane Item (max 50gp)",
         choiceID: "level::item::mundane-1",
         condition: initiateMundaneItem
       }},
       {type: "item", data: {
-        label: "Mundane Item",
+        label: "Mundane Item (max 50gp)",
         choiceID: "level::item::mundane-2",
         condition: initiateMundaneItem
       }},
       {type: "item", data: {
-        label: "Mundane Item",
+        label: "Mundane Item (max 50gp)",
         choiceID: "level::item::mundane-3",
         condition: initiateMundaneItem
       }},
       {type: "item", data: {
-        label: "Mundane Item",
+        label: "Mundane Item (max 50gp)",
         choiceID: "level::item::mundane-4",
         condition: initiateMundaneItem
       }},
       {type: "item", data: {
-        label: "Mundane Item",
+        label: "Mundane Item (max 50gp)",
         choiceID: "level::item::mundane-5",
         condition: initiateMundaneItem
       }},
       {type: "item", data: {
-        label: "Mundane Item",
+        label: "Mundane Item (max 50gp)",
         choiceID: "level::item::mundane-6",
         condition: initiateMundaneItem
       }},
