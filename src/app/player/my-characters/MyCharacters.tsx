@@ -50,7 +50,7 @@ function CharacterSlot({value, active}: { value: Character, active?: boolean }) 
   )}>
     <div className={twMerge(
       "flex-1 flex flex-row p-4 rounded-t-md h-24 box-content gap-4",
-      active && "bg-black/50"
+      active && "bg-black/20 dark:bg-black/50"
     )}>
       <span className={twMerge("pi pi-user w-24 h-24 text-[96px]", !active && "opacity-50")}/>
       <div className={twMerge("w-full", !active && "opacity-50")}>
@@ -127,7 +127,7 @@ function CharacterSlot({value, active}: { value: Character, active?: boolean }) 
     </div>}
     {!value.retired && <div className="absolute right-4 top-4">
       <ConfirmPopup pt={{
-        root: {className: "bg-red-950 border border-red-400/50 p-4 mt-4 gap-4 flex flex-col"},
+        root: {className: "bg-red-800 border-red-400/50 text-red-50 dark:bg-red-950 border dark:border-red-400/50 p-4 mt-4 gap-4 flex flex-col"},
         message: {className: "pl-4 text-red-100"},
         icon: {className: "text-red-100"}
       }} target={retireButtonRef.current ?? undefined} visible={visible} onHide={() => setVisible(false)}

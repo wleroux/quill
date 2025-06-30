@@ -17,7 +17,7 @@ const navigationMenuPassthrough: MenubarPassThroughOptions = {
     className: "hidden"
   },
   menu: {
-    className: "flex flex-row gap-4 bg-transparent flex-1 relative py-0 sm:flex-row flex-nowrap"
+    className: "flex flex-row gap-4 bg-transparent flex-1 relative py-0 sm:flex-row flex-nowrap shadow-none"
   },
   menuitem: {
     className: "relative py-1 w-fit"

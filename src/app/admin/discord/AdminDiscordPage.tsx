@@ -17,7 +17,7 @@ const TOAST_PASSTHROUGH: ToastPassThroughOptions = {
     const message = options.state.messages[options.index].message;
     return ({
       className: twMerge(
-        "bg-black pl-4 pr-2 py-1 rounded-md mb-2 border border-white/40 w-fit mx-auto drop-shadow-lg",
+        "bg-white dark:bg-black pl-4 pr-2 py-1 rounded-md mb-2 border border-black/40 dark:border-white/40 w-fit mx-auto drop-shadow-lg",
         message.severity === "error" && "bg-red-950 border border-red-500/40 text-red-100"
       )
     })
