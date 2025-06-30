@@ -61,12 +61,12 @@ const PHB_FEAT_MAGIC_INITIATE_CLERIC: Feat = {
     {type: "spell", data: {
       choiceID: "magic initiate (cleric)::spell::cantrip-1",
       sourceID: "magic initiate (cleric)::spell::cantrip-1",
-      condition: clericCantripSpell()
+      condition: clericCantripSpell
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (cleric)::spell::cantrip-2",
       sourceID: "magic initiate (cleric)::spell::cantrip-2",
-      condition: clericCantripSpell()
+      condition: clericCantripSpell
     }}
   ]
 };

@@ -21,7 +21,7 @@ export const PHB_POISONERS_KIT: Tool = {
   type: undefined
 };
 export const PHB_THIEVES_TOOLS: Tool = {
-  label: "Thieves'' Tools",
+  label: "Thieves' Tools",
   type: undefined
 };
 
