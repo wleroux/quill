@@ -31,6 +31,21 @@ const LEVEL_1: LevelChoice = {
         condition: initiateMundaneItem
       }},
       {type: "item", data: {
+        label: "Mundane Item",
+        choiceID: "level::item::mundane-4",
+        condition: initiateMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Mundane Item",
+        choiceID: "level::item::mundane-5",
+        condition: initiateMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Mundane Item",
+        choiceID: "level::item::mundane-6",
+        condition: initiateMundaneItem
+      }},
+      {type: "item", data: {
         label: "Major Common Item",
         choiceID: "level::item::major-common-1",
         condition: majorCommonItem
@@ -51,21 +66,6 @@ const LEVEL_2: LevelChoice = {
     choices: [
       {type: "class", data: {
         choiceID: "class::2",
-      }},
-      {type: "item", data: {
-        label: "Mundane Item",
-        choiceID: "level::item::mundane-4",
-        condition: initiateMundaneItem
-      }},
-      {type: "item", data: {
-        label: "Mundane Item",
-        choiceID: "level::item::mundane-5",
-        condition: initiateMundaneItem
-      }},
-      {type: "item", data: {
-        label: "Mundane Item",
-        choiceID: "level::item::mundane-6",
-        condition: initiateMundaneItem
       }},
       {type: "item", data: {
         label: "Minor Common Item",
