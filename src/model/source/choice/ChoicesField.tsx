@@ -36,9 +36,13 @@ export function ChoicesField({value, choices, decisions, onChange}: {
 
     let isLastOfType = (choices.length === index + 1) || (choices[index].data.label ?? choices[index].type) !== (choices[index + 1].data.label ?? choices[index + 1].type);
     if (isLastOfType && group.length > 0) {
-      jsx.push(<FieldSet key={index} inline>{group}</FieldSet>);
+      jsx.push(<FieldSet key={jsx.length} inline>{group}</FieldSet>);
       group = [];
     }
+  }
+  if (group.length !== 0) {
+    jsx.push(<FieldSet key={jsx.length} inline>{group}</FieldSet>);
+    group = [];
   }
 
   return <FieldSet>

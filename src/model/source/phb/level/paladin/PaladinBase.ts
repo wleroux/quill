@@ -16,6 +16,7 @@ const PHB_PALADIN_1: Level = {
   choices: [
     {type: "skill", data: {
       choiceID: "paladin::skill::skill-1",
+      enabled: isMainClass(),
       condition: paladinSkills
     }},
     {type: "skill", data: {
@@ -39,7 +40,7 @@ const PHB_PALADIN_2: Level = {
       ]
     }},
     {type: "feat", data: {
-      label: "Fighting Style",
+      label: "Fighting Style Feat",
       choiceID: "paladin::fighting-style::feat-1",
       enabled: selectedChoice("paladin::fighting-style::2", "feat"),
       condition: featType("fighting style")
@@ -48,14 +49,14 @@ const PHB_PALADIN_2: Level = {
       label: "Cantrip",
         sourceID: "paladin::blessed-warrior::cantrip-1",
       choiceID: "paladin::blessed-warrior::cantrip-1",
-      enabled: selectedChoice("paladin::fighting-style::2", "blssed warrior"),
+      enabled: selectedChoice("paladin::fighting-style::2", "blessed warrior"),
       condition: clericCantripSpell
     }},
     {type: "spell", data: {
       label: "Cantrip",
       sourceID: "paladin::blessed-warrior::cantrip-2",
       choiceID: "paladin::blessed-warrior::cantrip-2",
-      enabled: selectedChoice("paladin::fighting-style::2", "blssed warrior"),
+      enabled: selectedChoice("paladin::fighting-style::2", "blessed warrior"),
       condition: clericCantripSpell
     }}
   ]

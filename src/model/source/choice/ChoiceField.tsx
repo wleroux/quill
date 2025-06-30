@@ -17,25 +17,25 @@ import {ExpertiseField} from "@/model/source/choice/expertise/ExpertiseField";
 export function ChoiceField({character, choice, decision, onChange}: {character: Character, choice: Choice, decision: Decision | undefined, onChange: (value: Decision | undefined) => void}) {
   if (choice.data.enabled && !choice.data.enabled(undefined, character)) return <></>
 
-  if (choice.type === "attribute" && (decision?.type === undefined || decision?.type === "attribute")) {
+  if (choice.type === "attribute" && (decision === undefined || decision?.type === "attribute")) {
     return <AttributeField character={character} choice={choice} decision={decision} onChange={onChange} />
-  } else if (choice.type === "background-attribute" && (decision?.type === undefined || decision?.type === "background-attribute")) {
+  } else if (choice.type === "background-attribute" && (decision === undefined || decision?.type === "background-attribute")) {
     return <BackgroundAttributeField character={character} choice={choice} value={decision} onChange={onChange} />
-  } else if (choice.type === "simple" && (decision?.type === undefined || decision?.type === "simple")) {
+  } else if (choice.type === "simple" && (decision === undefined || decision.type === "simple")) {
     return <SimpleField choice={choice} value={decision} onChange={onChange}/>
   } else if (choice.type === "expertise" && (decision === undefined || decision.type === "expertise")) {
     return <ExpertiseField value={character} choice={choice} decision={decision} onChange={onChange} />
-  } else if (choice.type === "feat" && (decision?.type === undefined || decision?.type === "feat")) {
+  } else if (choice.type === "feat" && (decision === undefined || decision.type === "feat")) {
     return <FeatField character={character} choice={choice} value={decision} onChange={onChange} />
-  } else if (choice.type === "skill" && (decision?.type === undefined || decision?.type === "skill")) {
+  } else if (choice.type === "skill" && (decision === undefined || decision.type === "skill")) {
     return <SkillField character={character} choice={choice} value={decision} onChange={onChange}/>
-  } else if (choice.type === "skill-or-tool" && (decision?.type === undefined || decision?.type === "skill-or-tool")) {
+  } else if (choice.type === "skill-or-tool" && (decision === undefined || decision?.type === "skill-or-tool")) {
     return <SkillOrToolField character={character} choice={choice} decision={decision} onChange={onChange} />
-  } else if (choice.type === "spell" && (decision?.type === undefined || decision?.type === "spell")) {
+  } else if (choice.type === "spell" && (decision === undefined || decision.type === "spell")) {
     return <SpellField character={character} choice={choice} value={decision} onChange={onChange}/>
-  } else if (choice.type === "spell-replacement" && (decision?.type === undefined || decision?.type === "spell-replacement")) {
+  } else if (choice.type === "spell-replacement" && (decision === undefined || decision?.type === "spell-replacement")) {
     return <SpellReplacementFields value={character} choice={choice} decision={decision} onChange={(fn) => onChange(fn(decision))} />
-  } else if (choice.type === "tool" && (decision?.type === undefined || decision?.type === "tool")) {
+  } else if (choice.type === "tool" && (decision === undefined || decision.type === "tool")) {
     return <ToolField character={character} choice={choice} value={decision} onChange={onChange} />
   }
 
