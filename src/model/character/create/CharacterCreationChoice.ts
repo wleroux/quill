@@ -10,7 +10,7 @@ const LEVEL_1: LevelChoice = {
   type: "level",
   data: {
     choiceID: "level::1",
-    enabled: (_, character) => character.level === 0,
+    enabled: (_, character) => character.levels.length === 0,
     choices: [
       {type: "class", data: {
         choiceID: "class::1",
@@ -47,7 +47,7 @@ const LEVEL_2: LevelChoice = {
   type: "level",
   data: {
     choiceID: "level::2",
-    enabled: (_, character) => character.level === 1,
+    enabled: (_, character) => character.levels.length === 1,
     choices: [
       {type: "class", data: {
         choiceID: "class::2",

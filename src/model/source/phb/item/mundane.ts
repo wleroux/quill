@@ -1167,13 +1167,6 @@ export default {
     label: "Antimatter Rifle",
     choices: [],
   },
-  "Arrow": {
-    tier: "Minor",
-    rarity: "Mundane",
-    label: "Arrow",
-    choices: [],
-    value: 5
-  },
   "Arrows (20)": {
     tier: "Minor",
     rarity: "Mundane",
@@ -1207,13 +1200,6 @@ export default {
     label: "Blowgun",
     choices: [],
     value: 10_00
-  },
-  "Bolt": {
-    tier: "Minor",
-    rarity: "Mundane",
-    label: "Bolt",
-    choices: [],
-    value: 5
   },
   "Bolts (20)": {
     tier: "Minor",
@@ -1284,19 +1270,6 @@ export default {
     label: "Dulcimer",
     choices: [],
     value: 25_00
-  },
-  "Energy Cell": {
-    tier: "Minor",
-    rarity: "Mundane",
-    label: "Energy Cell",
-    choices: [],
-  },
-  "Firearm Bullet": {
-    tier: "Minor",
-    rarity: "Mundane",
-    label: "Firearm Bullet",
-    choices: [],
-    value: 30
   },
   "Firearm Bullets (10)": {
     tier: "Minor",
@@ -1505,13 +1478,6 @@ export default {
     choices: [],
     value: 500_00
   },
-  "Needle": {
-    tier: "Minor",
-    rarity: "Mundane",
-    label: "Needle",
-    choices: [],
-    value: 2
-  },
   "Needles (50)": {
     tier: "Minor",
     rarity: "Mundane",
@@ -1662,12 +1628,6 @@ export default {
     label: "Sling",
     choices: [],
     value: 10
-  },
-  "Sling Bullet": {
-    tier: "Minor",
-    rarity: "Mundane",
-    label: "Sling Bullet",
-    choices: []
   },
   "Sling Bullets (20)": {
     tier: "Minor",

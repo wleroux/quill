@@ -21,13 +21,13 @@ export const featProcessor: Processor<FeatChoice, FeatDecision | undefined> = (v
       return ErrorResult.of([new ProcessorError("INVALID FEAT", [choice.data.choiceID], choice, decision)]);
     if (feat.prerequisite !== undefined && !feat.prerequisite.evaluate(value, value))
       return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
-    if (value.feats.includes(decision.data.featID) && !feat.repeatable)
+    if (value.feats.some(feat => feat.featID === decision.data.featID) && !feat.repeatable)
       return ErrorResult.of([new ProcessorError("NON-REPEATABLE FEAT", [choice.data.choiceID], choice, decision)]);
 
     // VALIDATE FEAT CHOICES
     value = {
       ...value,
-      feats: [...value.feats, decision.data.featID],
+      feats: [...value.feats, decision.data],
       choices: {...value.choices, [choice.data.choiceID]: decision.data.featID}
     };
     for (const featChoice of feat.choices) {

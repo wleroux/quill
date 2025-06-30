@@ -10,29 +10,27 @@ import {CharacterID} from "@/model/character/CharacterID";
 import {Snowflake} from "discord-api-types/v10";
 import {ItemID} from "@/model/source/model/Item";
 import {Decision} from "@/model/source/choice/Decision";
+import {SpecieID} from "@/model/source/model/Specie";
+import {BackgroundID} from "@/model/source/model/Background";
 
 export type Character = {
   id: CharacterID;
   ownerID: Snowflake;
   revision: number,
   name: string;
-  level: number;
-  specieID: string;
-  backgroundID: string;
   retired: boolean;
   stats: {[attributeID in AttributeID]: number};
-  choices: {[choiceID: ChoiceID]: string};
-  expertise: SkillID[];
-  feats: FeatID[];
-  levels: ClassID[];
+  specie: {specieID: SpecieID, decisions: {[choiceID: ChoiceID]: Decision}};
+  background: {backgroundID: BackgroundID, decisions: {[choiceID: ChoiceID]: Decision}};
+  feats: {featID: FeatID, decisions: {[choiceID: ChoiceID]: Decision}}[];
+  items: {itemID: ItemID; decisions: {[choiceID: ChoiceID]: Decision}}[];
+  levels: {classID: ClassID, decisions: {[choiceID: ChoiceID]: Decision}}[];
   skills: SkillID[];
-  items: {
-    itemID: ItemID;
-    decisions: {[choiceID: ChoiceID]: Decision}
-  }[];
+  expertise: SkillID[];
   metamagics: {[sourceID: string]: MetamagicID};
-  spells: {[sourceID: string]: SpellID; };
+  spells: {[sourceID: string]: SpellID};
   tools: ToolID[];
+  choices: {[choiceID: ChoiceID]: string};
 };
 
 export const INITIAL_CHARACTER = (id: CharacterID, ownerID: Snowflake): Character => ({
@@ -40,10 +38,9 @@ export const INITIAL_CHARACTER = (id: CharacterID, ownerID: Snowflake): Characte
   revision: 0,
   ownerID: ownerID,
   name: "Unknown",
-  level: 0,
   retired: false,
-  specieID: "",
-  backgroundID: "",
+  specie: {specieID: "", decisions: {}},
+  background: {backgroundID: "", decisions: {}},
   stats: {str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10},
   choices: {},
   items: [],

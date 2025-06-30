@@ -17,10 +17,10 @@ export async function refreshDiscordRoles(userID: Snowflake) {
   for (const character of characters) {
     if (character.retired) continue;
 
-    if (character.level <= 4) roles.add("Initiate");
-    else if (character.level <= 8) roles.add("Adept");
-    else if (character.level <= 12) roles.add("Vanguard");
-    else if (character.level <= 16) roles.add("Exemplar");
+    if (character.levels.length <= 4) roles.add("Initiate");
+    else if (character.levels.length <= 8) roles.add("Adept");
+    else if (character.levels.length <= 12) roles.add("Vanguard");
+    else if (character.levels.length <= 16) roles.add("Exemplar");
     else roles.add("Harbinger");
   }
 

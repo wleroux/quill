@@ -7,7 +7,7 @@ import {Character} from "@/model/character/Character";
 import {ClassChoice} from "@/model/character/level/class/ClassChoice";
 import {ClassDecision} from "@/model/character/level/class/ClassDecision";
 import {ClassID} from "@/model/source/model/Level";
-import {addLevel, canMulticlass} from "./ClassProcessor";
+import {canMulticlass} from "./ClassProcessor";
 
 export function ClassField({value, choice, decision, onChange}: {
   value: Character,
@@ -17,8 +17,14 @@ export function ClassField({value, choice, decision, onChange}: {
 }) {
   const VALID_CLASSES = Object.keys(REPOSITORY.CLASSES)
     .filter(levelID => {
-      const level = REPOSITORY.CLASSES[levelID];
-      return (level.replace === undefined || value.levels.includes(level.replace));
+      const _class = REPOSITORY.CLASSES[levelID];
+      if (_class.replace) {
+        if (!value.levels.some(level => level.classID === _class.replace))
+          return false;
+        if (value.levels.some(level => REPOSITORY.CLASSES[level.classID].replace === _class.replace))
+          return false;
+      }
+      return true;
     })
     .filter(canMulticlass(value.levels, value)
       ? (_) => true
@@ -39,17 +45,20 @@ export function ClassField({value, choice, decision, onChange}: {
       onChange(() => ({type: "class", data: {classID: ev.target.value as ClassID, decisions: {}}} satisfies ClassDecision));
     }} />
 
-    {_class && decision && decision && <ChoicesField value={
-      {...value, level: value.level + 1, levels: addLevel(value.levels, decision.data.classID)}
-    } choices={_class.choices} decisions={decision.data.decisions} onChange={fn => onChange((prev?: ClassDecision): ClassDecision | undefined => {
-      if (prev === undefined) return undefined;
-      return ({
-        ...prev,
-        data: {
-          ...prev.data,
-          decisions: fn(prev.data.decisions)
-        }
-      });
-    })} />}
+    {_class && decision && decision && <ChoicesField
+      value={{...value, levels: [...value.levels, decision.data]}}
+      choices={_class.choices}
+      decisions={decision.data.decisions}
+      onChange={fn => onChange((prev?: ClassDecision): ClassDecision | undefined => {
+        if (prev === undefined) return undefined;
+        return ({
+          ...prev,
+          data: {
+            ...prev.data,
+            decisions: fn(prev.data.decisions)
+          }
+        });
+      })}
+    />}
   </FieldSet>
 }

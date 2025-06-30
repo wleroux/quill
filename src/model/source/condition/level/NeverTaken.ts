@@ -15,6 +15,6 @@ function getAncestorLevels(levelID: ClassID): ClassID[] {
   return ancestors;
 }
 
-export function neverTaken(levelID: ClassID, value: Character): boolean {
-  return !value.levels.flatMap(levelID => getAncestorLevels(levelID)).includes(levelID);
+export function neverTaken(classID: ClassID, value: Character): boolean {
+  return !value.levels.some(level => level.classID === classID);
 }

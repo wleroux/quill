@@ -9,7 +9,7 @@ import {ChoicesField} from "@/model/source/choice/ChoicesField";
 
 export function FeatField({character, choice, value, onChange}: {character: Character, choice: FeatChoice, value: FeatDecision | undefined, onChange: (value: FeatDecision | undefined) => void}) {
   const validFeats = Object.keys(REPOSITORY.FEATS)
-    .filter(featID => !character.feats.includes(featID) || REPOSITORY.FEATS[featID].repeatable)
+    .filter(featID => !character.feats.some(feat => feat.featID === featID) || REPOSITORY.FEATS[featID].repeatable)
     .filter(featID => choice.data.condition === undefined || choice.data.condition(featID, character))
     .filter(featID => REPOSITORY.FEATS[featID].prerequisite?.(character, character) ?? true);
 

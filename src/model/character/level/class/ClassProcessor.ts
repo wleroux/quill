@@ -8,18 +8,17 @@ import {ClassChoice} from "@/model/character/level/class/ClassChoice";
 import {ClassDecision} from "@/model/character/level/class/ClassDecision";
 import {Character} from "@/model/character/Character";
 
-export function canMulticlass(levelIDs: ClassID[], value: Character): boolean {
-  if (levelIDs.length >= 2) return false;
-
-  for (let levelID of levelIDs) {
+export function canMulticlass(levels: Character["levels"], value: Character): boolean {
+  if (levels.length >= 2) return false;
+  for (let level of levels) {
     // get root level
-    let level = REPOSITORY.CLASSES[levelID];
-    do {
-      if (level.replace) levelID = level.replace;
-      level = REPOSITORY.CLASSES[levelID];
-    } while (level.replace !== undefined);
+    let _class = REPOSITORY.CLASSES[level.classID];
+    while (_class.replace) {
+      _class = REPOSITORY.CLASSES[_class.replace];
+    }
 
-    if (level.prerequisite && !level.prerequisite(undefined, value)) {
+    // check if they still are eligible
+    if (_class.prerequisite && !_class.prerequisite(undefined, value)) {
       return false;
     }
   }
@@ -51,14 +50,18 @@ export const classProcessor: Processor<ClassChoice, ClassDecision | undefined> =
   }
 
   // Validate Level
-  const dndClass = REPOSITORY.CLASSES[decision.data.classID];
-  if (dndClass === undefined)
+  const _class = REPOSITORY.CLASSES[decision.data.classID];
+  if (_class === undefined)
     return ErrorResult.of([new ProcessorError("INVALID LEVEL", [choice.data.choiceID], choice, decision)]);
   if (!neverTaken(decision.data.classID, value))
     return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
-  if (dndClass.replace && !value.levels.includes(dndClass.replace))
-    return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
-  if (dndClass.prerequisite && !dndClass.prerequisite(undefined, value))
+  if (_class.replace) {
+    if (!value.levels.some(level => level.classID === _class.replace))
+      return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
+    if (value.levels.some(level => REPOSITORY.CLASSES[level.classID].replace === _class.replace))
+      return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
+  }
+  if (_class.prerequisite && !_class.prerequisite(undefined, value))
     return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
   if (choice.data.condition && !choice.data.condition(decision.data.classID, value))
     return ErrorResult.of([new ProcessorError("UNMET CONDITION", [choice.data.choiceID], choice, decision)]);
@@ -70,8 +73,8 @@ export const classProcessor: Processor<ClassChoice, ClassDecision | undefined> =
   }
 
   // Validate Level Choices
-  value = {...value, level: value.level + 1, levels: addLevel(value.levels, decision.data.classID)}
-  for (const levelChoice of dndClass.choices) {
+  value = {...value, levels: [...value.levels, decision.data]};
+  for (const levelChoice of _class.choices) {
     const choiceDecision = decision.data.decisions[levelChoice.data.choiceID];
     const result = choiceProcessor(value, levelChoice, choiceDecision).mapError(errors => errors.map(error => error.extend(choice.data.choiceID)));
     if (!result.valid) return result;

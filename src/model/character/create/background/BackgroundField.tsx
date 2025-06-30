@@ -28,19 +28,22 @@ export function BackgroundField({value, choice, decision, onChange}: {
         data: {backgroundID, decisions: {}}
       }));
     }} options={VALID_BACKGROUND.map(backgroundID => ({value: backgroundID, label: REPOSITORY.BACKGROUNDS[backgroundID].label}))} />
-    {background && decision && <ChoicesField value={
-      {...value, backgroundID: decision.data.backgroundID}
-    } choices={background.choices} decisions={decision.data.decisions} onChange={(fn) => {
-      onChange(prev => {
-        if (prev === undefined) return undefined;
-        return ({
-          ...prev,
-          data: {
-            ...prev.data,
-            decisions: fn(prev.data.decisions)
-          }
+    {background && decision && <ChoicesField
+      value={{...value, background: decision.data}}
+      choices={background.choices}
+      decisions={decision.data.decisions}
+      onChange={(fn) => {
+        onChange(prev => {
+          if (prev === undefined) return undefined;
+          return ({
+            ...prev,
+            data: {
+              ...prev.data,
+              decisions: fn(prev.data.decisions)
+            }
+          })
         })
-      })
-    }} />}
+      }}
+    />}
   </FieldSet>
 }

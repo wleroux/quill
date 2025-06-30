@@ -19,7 +19,7 @@ export const specieProcessor: Processor<SpecieChoice, SpecieDecision | undefined
     return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
 
   // Validate Specie Choices
-  value = {...value, specieID: decision.data.specieID};
+  value = {...value, specie: decision.data};
   for (const specieChoice of specie.choices) {
     const choiceDecision = decision.data.decisions[specieChoice.data.choiceID];
     const result = choiceProcessor(value, specieChoice, choiceDecision).mapError(errors => errors.map(error => error.extend(choice.data.choiceID)));

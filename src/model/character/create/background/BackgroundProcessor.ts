@@ -20,7 +20,7 @@ export const backgroundProcessor: Processor<BackgroundChoice, BackgroundDecision
     return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
 
   // Validate Background Choices
-  let result = ValidResult.of({...value, backgroundID: decision.data.backgroundID});
+  let result = ValidResult.of({...value, background: decision.data});
   for (const backgroundChoice of background.choices) {
     const backgroundChoiceDecision = decision.data.decisions[backgroundChoice.data.choiceID];
     result = result.flatMap(

@@ -25,17 +25,20 @@ export function SpecieField({value, choice, decision, onChange}: {
         data: {specieID, decisions: {}}
       }));
     }} options={VALID_SPECIES.map(specieID => ({value: specieID, label: REPOSITORY.SPECIES[specieID].label}))} />
-    {specie && decision && <ChoicesField value={
-      {...value, specieID: decision.data.specieID}
-    } choices={specie.choices} decisions={decision.data.decisions} onChange={fn => onChange(prev => {
-      if (prev === undefined) return undefined;
-      return ({
-        ...prev,
-        data: {
-          ...prev.data,
-          decisions: fn(prev.data.decisions)
-        }
-      })
-    })} />}
+    {specie && decision && <ChoicesField
+      value={{...value, specie: decision.data}}
+      choices={specie.choices}
+      decisions={decision.data.decisions}
+      onChange={fn => onChange(prev => {
+        if (prev === undefined) return undefined;
+        return ({
+          ...prev,
+          data: {
+            ...prev.data,
+            decisions: fn(prev.data.decisions)
+          }
+        })
+      })}
+    />}
   </FieldSet>
 }

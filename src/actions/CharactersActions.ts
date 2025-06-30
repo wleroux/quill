@@ -31,9 +31,14 @@ export async function getCharactersAction(): Promise<Character[]> {
 export async function retireCharacterAction(characterID: CharacterID) {
   const authorizingUserID = await getUserID();
   if (!authorizingUserID) return false;
-  return withMetadata({
+  const result = await withMetadata({
     userID: authorizingUserID,
     workflow: "RETIRE-CHARACTER",
     requestID: ulid()
   }, () => retireCharacter(characterID, authorizingUserID));
+  if (result.valid) {
+    return result.value;
+  } else {
+    throw new Error(result.error);
+  }
 }

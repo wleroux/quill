@@ -19,7 +19,7 @@ export async function getList(message: APIMessage, minPlayers: number, maxPlayer
 
   const validGameTiers = GAME_TIERS.flatMap((tier): [GameTier, Character[]][] => {
     const tierPlayerCharacters = availableCharacters.map(playerCharacters => {
-      return playerCharacters.filter(character => getTier(character.level) === tier);
+      return playerCharacters.filter(character => getTier(character.levels.length) === tier);
     });
 
     if (!tierPlayerCharacters.every(playerCharacters => playerCharacters.length > 0)) return [];
