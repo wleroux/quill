@@ -52,6 +52,6 @@ export default async function handler(
     .send(JSON.stringify(await withMetadata({
       requestID,
       workflow: interactionToString(request),
-      userID: request.member!.user.id,
+      userID: request.member?.user.id ?? request.user?.id ?? "0000",
     }, () => rootCommand.handle(request))))
 }
