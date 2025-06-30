@@ -86,12 +86,12 @@ const PHB_FEAT_MAGIC_INITIATE_DRUID: Feat = {
     {type: "spell", data: {
       choiceID: "magic initiate (druid)::spell::cantrip-1",
       sourceID: "magic initiate (druid)::spell::cantrip-1",
-      condition: druidCantripSpell()
+      condition: druidCantripSpell
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (druid)::spell::cantrip-2",
       sourceID: "magic initiate (druid)::spell::cantrip-2",
-      condition: druidCantripSpell()
+      condition: druidCantripSpell
     }}
   ]
 };

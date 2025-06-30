@@ -20,7 +20,7 @@ const PHB_FEAT_ABILITY_SCORE_INCREASE: Feat = {
 const PHB_FEAT_ACTOR: Feat = {
   label: "Actor",
   prerequisite: minStat("cha", 13),
-  category: "origin",
+  category: "general",
   choices: [
     {type: "attribute", data: {
       choiceID: "actor::attribute::attribute-1",
