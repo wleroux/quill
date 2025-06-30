@@ -7,7 +7,7 @@ import {Character} from "@/model/character/Character";
 import {ClassChoice} from "@/model/character/level/class/ClassChoice";
 import {ClassDecision} from "@/model/character/level/class/ClassDecision";
 import {ClassID} from "@/model/source/model/Level";
-import {addLevel} from "./ClassProcessor";
+import {addLevel, canMulticlass} from "./ClassProcessor";
 
 export function ClassField({value, choice, decision, onChange}: {
   value: Character,
@@ -20,6 +20,10 @@ export function ClassField({value, choice, decision, onChange}: {
       const level = REPOSITORY.CLASSES[levelID];
       return (level.replace === undefined || value.levels.includes(level.replace));
     })
+    .filter(canMulticlass(value.levels, value)
+      ? (_) => true
+      : (levelID) => (REPOSITORY.CLASSES[levelID].replace !== undefined)
+    )
     .filter(levelID => choice.data.condition === undefined || choice.data.condition(levelID, value))
     .filter(levelID => {
       const level = REPOSITORY.CLASSES[levelID];
