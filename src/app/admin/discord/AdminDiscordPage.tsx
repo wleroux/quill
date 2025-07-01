@@ -6,7 +6,6 @@ import {useMutation} from "@tanstack/react-query";
 import {Toast, ToastPassThroughOptions} from "primereact/toast";
 import {useRef} from "react";
 import {twMerge} from "tailwind-merge";
-import {refreshDiscordCommandsAction} from "@/actions/AdminActions";
 
 const TOAST_PASSTHROUGH: ToastPassThroughOptions = {
   root: {
@@ -28,7 +27,7 @@ export function AdminDiscordPage() {
   const toast = useRef<Toast>(null);
   const refreshCommandMutation = useMutation({
     mutationFn: async () => {
-      return refreshDiscordCommandsAction();
+      return fetch("/api/discord/refresh", {method: "POST"});
     },
     onSuccess: () => {
       toast.current?.show({

@@ -1,7 +1,7 @@
 import {Character} from "@/model/character/Character";
 import React from "react";
 import {PageTitle} from "@/lib/components/PageTitle";
-import {CharacterProfile} from "@/app/scribe/characters/CharacterProfile";
+import {CharacterProfile} from "@/app/player/my-characters/CharacterProfile";
 
 export function ScribeCharacters({characters}: {characters: Character[]}) {
   const ACTIVE_CHARACTERS = characters.filter(character => !character.retired);

@@ -8,7 +8,6 @@ import Image from "next/image";
 import {isAdministrator, isAuthenticated, isGameMaster, isScribe} from "@/lib/authentication/isAuthenticated";
 import {getUserID} from "@/lib/authentication/getUserID";
 import {MenuItem} from "primereact/menuitem";
-import { cookies } from "next/headers";
 
 const navigationMenuPassthrough: MenubarPassThroughOptions = {
   root: {
@@ -45,8 +44,7 @@ const userManuPassthrough: MenubarPassThroughOptions = {
 };
 
 export async function Navigation() {
-  const token = (await cookies()).get("token")?.value;
-  const [player, scribe, gameMaster, admin] = await Promise.all([isAuthenticated(token), isScribe(token), isGameMaster(token), isAdministrator(token)]);
+  const [player, scribe, gameMaster, admin] = await Promise.all([isAuthenticated(), isScribe(), isGameMaster(), isAdministrator()]);
 
   const model: MenuItem[] = [];
   if (player) {

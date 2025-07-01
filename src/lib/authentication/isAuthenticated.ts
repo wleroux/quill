@@ -1,18 +1,18 @@
 "use server";
 import {getSession} from "@/lib/authentication/getSession";
 
-export async function isAuthenticated(token?: string) {
-  return (await getSession(token))?.sub !== undefined;
+export async function isAuthenticated() {
+  return (await getSession())?.sub !== undefined;
 }
 
-export async function isScribe(token?: string) {
-  return (await getSession(token))?.isScribe ?? false;
+export async function isScribe() {
+  return (await getSession())?.isScribe ?? false;
 }
 
-export async function isGameMaster(token?: string) {
-  return (await getSession(token))?.isGameMaster ?? false;
+export async function isGameMaster() {
+  return (await getSession())?.isGameMaster ?? false;
 }
 
-export async function isAdministrator(token?: string) {
-  return (await getSession(token))?.isAdmin ?? false;
+export async function isAdministrator() {
+  return (await getSession())?.isAdmin ?? false;
 }

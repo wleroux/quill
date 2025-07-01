@@ -66,11 +66,9 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
   const router = useRouter();
   const createCharacterMutation = useMutation({
     mutationFn: async (decisions: CharacterCreationDecision) => {
-      const response = await fetch("/api/character", {
+      const response = await fetch("/api/characters", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify(decisions)
       });
       if (response.ok) return response.json();

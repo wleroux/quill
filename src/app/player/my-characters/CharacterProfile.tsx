@@ -3,7 +3,6 @@ import {SkillID} from "@/model/source/model/Skill";
 import {ProficiencyIcon} from "@/app/player/my-characters/proficiency/ProficiencyIcon";
 import {SKILL_IDS, SKILLS} from "@/model/source/Skill";
 import {Character} from "@/model/character/Character";
-import {retireCharacterAction} from "@/actions/CharactersActions";
 import React, {useRef} from "react";
 import {REPOSITORY} from "@/model/source/index";
 import {ATTRIBUTE_IDS} from "@/model/source/model/Attribute";
@@ -33,7 +32,9 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
   const router = useRouter();
   const retireMutation = useMutation({
     mutationFn: async () => {
-      return retireCharacterAction(value.id);
+      return fetch(`/api/characters/${value.id}/retire`, {
+        method: "POST"
+      });
     },
     onSuccess: () => {
       router.refresh();

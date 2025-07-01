@@ -4,9 +4,8 @@ import React from "react";
 import {PageTitle} from "@/lib/components/PageTitle";
 import {Spacer} from "@/lib/components/Spacer";
 import {Button} from "@/lib/components/Button";
-import {CreateCharacterDialog} from "@/app/player/my-characters/CreateCharacterDialog";
-import {CharacterProfile} from "@/app/scribe/characters/CharacterProfile";
-
+import {CreateCharacterDialog} from "./CreateCharacterDialog";
+import {CharacterProfile} from "./CharacterProfile";
 
 export function MyCharacters({characters}: {characters: Character[]}) {
   const [createNewCharacterDialog, setCreateNewCharacterDialog] = React.useState<boolean>(false);

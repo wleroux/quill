@@ -1,8 +1,7 @@
 import {PropsWithChildren} from "react";
 import {isAuthenticated} from "@/lib/authentication/isAuthenticated";
-import { cookies } from "next/headers";
 
 export async function SignedIn({children}: PropsWithChildren<{}>) {
-  const authenticated = await isAuthenticated((await cookies()).get("token")?.value);
+  const authenticated = await isAuthenticated();
   return authenticated ? <>{children}</> : <></>;
 }
