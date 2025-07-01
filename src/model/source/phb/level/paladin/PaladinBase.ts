@@ -5,7 +5,7 @@ import {minStat} from "@/model/source/condition/attribute/minStat";
 import {all} from "@/model/source/condition/generic/AllCondition";
 import {SkillID} from "@/model/source/model/Skill";
 import {is} from "@/model/source/condition/generic/IsCondition";
-import {clericCantripSpell} from "@/model/source/phb/level/cleric/ClericCantripSpellCondition";
+import {clericCantripSpell} from "@/model/source/phb/level/cleric/clericCantripSpell";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 
 const paladinSkills = is<SkillID>("athletics", "insight", "intimidation", "medicine", "persuasion", "religion");

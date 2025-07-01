@@ -1,7 +1,7 @@
 import {Feat, FeatID} from "@/model/source/model/Feat";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {ToolID} from "@/model/source/model/Tool";
-import {clericCantripSpell} from "@/model/source/phb/level/cleric/ClericCantripSpellCondition";
+import {clericCantripSpell} from "@/model/source/phb/level/cleric/clericCantripSpell";
 import {druidCantripSpell} from "@/model/source/phb/level/druid/DruidCantripSpellCondition";
 import {wizardCantripSpell} from "@/model/source/phb/level/wizard/WizardCantripSpellCondition";
 import {toolType} from "@/model/source/condition/tool/ToolTypeCondition";
