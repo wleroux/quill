@@ -14,6 +14,8 @@ import {SkillOrToolField} from "@/model/source/choice/skill-or-tool/SkillOrToolF
 import {SpellReplacementFields} from "@/model/source/choice/spell-replacement/SpellReplacementField";
 import {ExpertiseField} from "@/model/source/choice/expertise/ExpertiseField";
 import {MetamagicField} from "@/model/source/choice/metamagic/MetamagicField";
+import {EldritchInvocationField} from "@/model/source/choice/eldritch-invocation/EldritchInvocationField";
+import {EldritchInvocationReplacementField} from "@/model/source/choice/eldritch-invocation-replacement/EldritchInvocationReplacementField";
 
 export function ChoiceField({character, choice, decision, onChange}: {character: Character, choice: Choice, decision: Decision | undefined, onChange: (value: Decision | undefined) => void}) {
   if (choice.data.enabled && !choice.data.enabled(undefined, character)) return <></>
@@ -25,7 +27,11 @@ export function ChoiceField({character, choice, decision, onChange}: {character:
   } else if (choice.type === "simple" && (decision === undefined || decision.type === "simple")) {
     return <SimpleField choice={choice} value={decision} onChange={onChange}/>
   } else if (choice.type === "expertise" && (decision === undefined || decision.type === "expertise")) {
-    return <ExpertiseField value={character} choice={choice} decision={decision} onChange={onChange} />
+    return <ExpertiseField value={character} choice={choice} decision={decision} onChange={onChange}/>
+  } else if (choice.type === "eldritch-invocation" && (decision === undefined || decision.type === "eldritch-invocation")) {
+    return <EldritchInvocationField character={character} choice={choice} value={decision} onChange={onChange} />
+  } else if (choice.type === "eldritch-invocation-replacement" && (decision === undefined || decision.type === "eldritch-invocation-replacement")) {
+    return <EldritchInvocationReplacementField value={character} choice={choice} decision={decision} onChange={fn => onChange(fn(decision))} />
   } else if (choice.type === "feat" && (decision === undefined || decision.type === "feat")) {
     return <FeatField character={character} choice={choice} value={decision} onChange={onChange} />
   } else if (choice.type === "metamagic" && (decision === undefined || decision.type === "metamagic")) {

@@ -1,6 +1,6 @@
 
 export function getGameScoreWeight(score: number): number {
-  return (score < 90)
-    ? 10 - (score / 10)
-    : 1 / ((score/10) - 9 + 1);
+  return (score < 10)
+    ? 10 - score
+    : 1 / (score - 9);
 }

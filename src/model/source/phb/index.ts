@@ -8,9 +8,11 @@ import LEVELS from "@/model/source/phb/level/index";
 import MANEUVERS from "./maneuver/index";
 import SPELLS from "./spell/index";
 import METAMAGICS from "./metamagic/index";
+import ELDRITCH_INVOCATIONS from "./eldritch-invocation";
 
 export default {
   BACKGROUNDS,
+  ELDRITCH_INVOCATIONS,
   FEATS,
   LEVELS,
   // MANEUVERS,

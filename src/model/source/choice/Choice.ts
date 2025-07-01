@@ -12,6 +12,8 @@ import {ExpertiseChoice} from "@/model/source/choice/expertise/ExpertiseChoice";
 import {BackgroundAttributeChoice} from "@/model/character/create/background/background-attribute/BackgroundAttributeChoice";
 import {SkillOrToolChoice} from "@/model/source/choice/skill-or-tool/SkillOrToolChoice";
 import {Condition} from "@/model/source/condition/Condition";
+import {EldritchInvocationChoice} from "@/model/source/choice/eldritch-invocation/EldritchInvocationChoice";
+import {EldritchInvocationReplacementChoice} from "@/model/source/choice/eldritch-invocation-replacement/EldritchInvocationReplacementChoice";
 
 export function selectedChoice(choiceID: string, optionID: string): Condition<any> {
   return (_: any, value: Character) => value.choices[choiceID] === optionID;
@@ -30,6 +32,8 @@ export function isMainClass() {
 export type Choice =
   | AttributeChoice
   | BackgroundAttributeChoice
+  | EldritchInvocationChoice
+  | EldritchInvocationReplacementChoice
   | ExpertiseChoice
   | FeatChoice
   | MetamagicChoice

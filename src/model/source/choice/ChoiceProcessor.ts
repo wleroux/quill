@@ -14,12 +14,16 @@ import {skillOrToolProcessor} from "@/model/source/choice/skill-or-tool/SkillOrT
 import {spellReplacementProcessor} from "@/model/source/choice/spell-replacement/SpellReplacementProcessor";
 import {Processor, ProcessorError} from "@/model/processor/Processor";
 import {ErrorResult} from "@/model/processor/Result";
+import {eldritchInvocationProcessor} from "@/model/source/choice/eldritch-invocation/eldritchInvocationProcessor";
+import {eldritchInvocationReplacementProcessor} from "@/model/source/choice/eldritch-invocation-replacement/eldritchInvocationReplacementProcessor";
 
 export const choiceProcessor: Processor<Choice, Decision | undefined> = (value, choice, decision) => {
   if (choice.type === "attribute" && (decision === undefined || decision.type === "attribute")) return attributeProcessor(value, choice, decision)
   else if (choice.type === "background-attribute" && (decision === undefined || decision.type === "background-attribute")) return backgroundAttributeProcessor(value, choice, decision);
   else if (choice.type === "expertise" && (decision === undefined || decision.type === "expertise")) return expertiseProcessor(value, choice, decision);
   else if (choice.type === "feat" && (decision === undefined || decision.type === "feat")) return featProcessor(value, choice, decision);
+  else if (choice.type === "eldritch-invocation" && (decision === undefined || decision.type === "eldritch-invocation")) return eldritchInvocationProcessor(value, choice, decision);
+  else if (choice.type === "eldritch-invocation-replacement" && (decision === undefined || decision.type === "eldritch-invocation-replacement")) return eldritchInvocationReplacementProcessor(value, choice, decision);
   else if (choice.type === "metamagic" && (decision === undefined || decision.type === "metamagic")) return metamagicProcessor(value, choice, decision);
   else if (choice.type === "metamagic-replacement" && (decision === undefined || decision.type === "metamagic-replacement")) return metamagicReplacementProcessor(value, choice, decision);
   else if (choice.type === "simple" && (decision === undefined || decision.type === "simple")) return simpleProcessor(value, choice, decision);

@@ -12,6 +12,7 @@ import {ItemID} from "@/model/source/model/Item";
 import {Decision} from "@/model/source/choice/Decision";
 import {SpecieID} from "@/model/source/model/Specie";
 import {BackgroundID} from "@/model/source/model/Background";
+import {EldritchInvocationID} from "@/model/source/model/EldritchInvocation";
 
 export type Character = {
   id: CharacterID;
@@ -28,6 +29,7 @@ export type Character = {
   skills: SkillID[];
   expertise: SkillID[];
   metamagics: {[sourceID: string]: MetamagicID};
+  eldritchInvocations?: {[sourceID: string]: { eldritchInvocationID: EldritchInvocationID; decisions: {[choiceID: ChoiceID]: Decision} }};
   spells: {[sourceID: string]: SpellID};
   tools: ToolID[];
   choices: {[choiceID: ChoiceID]: string};
@@ -47,6 +49,7 @@ export const INITIAL_CHARACTER = (id: CharacterID, ownerID: Snowflake): Characte
   expertise: [],
   feats: [],
   levels: [],
+  eldritchInvocations: {},
   metamagics: {},
   skills: [],
   spells: {},

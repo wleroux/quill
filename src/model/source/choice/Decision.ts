@@ -10,11 +10,15 @@ import {ExpertiseDecision} from "@/model/source/choice/expertise/ExpertiseDecisi
 import {SimpleDecision} from "@/model/source/choice/simple/SimpleDecision";
 import {BackgroundAttributeDecision} from "@/model/character/create/background/background-attribute/BackgroundAttributeDecision";
 import {SkillOrToolDecision} from "@/model/source/choice/skill-or-tool/SkillOrToolDecision";
+import {EldritchInvocationDecision} from "@/model/source/choice/eldritch-invocation/EldritchInvocationDecision";
+import {EldritchInvocationReplacementDecision} from "@/model/source/choice/eldritch-invocation-replacement/EldritchInvocationReplacementDecision";
 
 export type Decision =
   | AttributeDecision
   | BackgroundAttributeDecision
   | ExpertiseDecision
+  | EldritchInvocationDecision
+  | EldritchInvocationReplacementDecision
   | FeatDecision
   | ToolDecision
   | MetamagicDecision
