@@ -17,7 +17,7 @@ export function itemRarity(rarity: ItemRarity) {
 
 export const initiateMundaneItem = all(itemRarity("Mundane"), itemID => {
   const item = REPOSITORY.ITEMS[itemID];
-  return item.value ? item.value < 50_00 : false;
+  return item.value ? item.value <= 50_00 : false;
 });
 
 export const minorCommonItem = all(itemTier("Minor"), itemRarity("Common"));
