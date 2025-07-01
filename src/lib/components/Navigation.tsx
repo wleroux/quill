@@ -58,6 +58,9 @@ export async function Navigation() {
     // ]})
   }
   if (scribe) {
+    model.push({label: "Scribe", items: [
+      {label: "Characters", url: "/scribe/characters"}
+    ]})
   }
   if (admin) {
     model.push({label: "Admin", items: [
