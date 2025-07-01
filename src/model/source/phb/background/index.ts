@@ -213,7 +213,7 @@ const PHB_BACKGROUND_GUIDE: Background = {
     }},
     {type: "feat", data: {
       choiceID: "guide::feat",
-      condition: is("Magic Initiate")
+      condition: is("Magic Initiate (Druid)")
     }},
     {type: "skill", data: {
       choiceID: "guide::skill::skill-1",
@@ -315,7 +315,7 @@ const PHB_BACKGROUND_SAGE: Background = {
     }},
     {type: "feat", data: {
       choiceID: "sage::feat",
-      condition: is("Magic Initiate")
+      condition: is("Magic Initiate (Wizard)")
     }},
     {type: "skill", data: {
       choiceID: "sage::skill::skill-1",
