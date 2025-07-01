@@ -3,7 +3,7 @@ import {is} from "@/model/source/condition/generic/IsCondition";
 import {ToolID} from "@/model/source/model/Tool";
 import {clericCantripSpell} from "@/model/source/phb/level/cleric/clericCantripSpell";
 import {druidCantripSpell} from "@/model/source/phb/level/druid/druidCantripSpell";
-import {wizardCantripSpell} from "@/model/source/phb/level/wizard/WizardCantripSpellCondition";
+import {wizardCantripSpell} from "@/model/source/phb/level/wizard/wizardCantripSpell";
 import {toolType} from "@/model/source/condition/tool/ToolTypeCondition";
 
 const PHB_FEAT_ALERT: Feat = {
@@ -111,12 +111,12 @@ const PHB_FEAT_MAGIC_INITIATE_WIZARD: Feat = {
     {type: "spell", data: {
       choiceID: "magic initiate (wizard)::spell::cantrip-1",
       sourceID: "magic initiate (wizard)::spell::cantrip-1",
-      condition: wizardCantripSpell()
+      condition: wizardCantripSpell
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (wizard)::spell::cantrip-2",
       sourceID: "magic initiate (wizard)::spell::cantrip-2",
-      condition: wizardCantripSpell()
+      condition: wizardCantripSpell
     }}
   ]
 };
