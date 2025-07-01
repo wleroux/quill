@@ -5,7 +5,7 @@ import {StepperPanel, StepperPanelPassThroughOptions} from "primereact/stepperpa
 import React, {useRef, useState} from "react";
 import {twMerge} from "tailwind-merge";
 import {Button} from "@/lib/components/Button";
-import {SpecieField} from "@/model/character/create/specie/SpecieField";
+import {SpeciesField} from "@/model/character/create/species/SpeciesField";
 import {startingStatProcessor} from "@/model/character/create/starting-stat/StartingStatProcessor";
 import {CharacterCreationDecision} from "@/model/character/create/CharacterCreationDecision";
 import {NameField} from "@/model/character/name/NameField";
@@ -14,8 +14,8 @@ import {CharacterCreationChoice} from "@/model/character/create/CharacterCreatio
 import {INITIAL_CHARACTER} from "@/model/character/Character";
 import {StartingStatDecision} from "@/model/character/create/starting-stat/StartingStatDecision";
 import {StartingStatField} from "@/model/character/create/starting-stat/StartingStatField";
-import {SpecieDecision} from "@/model/character/create/specie/SpecieDecision";
-import {specieProcessor} from "@/model/character/create/specie/SpecieProcessor";
+import {SpeciesDecision} from "@/model/character/create/species/SpeciesDecision";
+import {specieProcessor} from "@/model/character/create/species/SpecieProcessor";
 import {BackgroundField} from "@/model/character/create/background/BackgroundField";
 import {BackgroundDecision} from "@/model/character/create/background/BackgroundDecision";
 import {backgroundProcessor} from "@/model/character/create/background/BackgroundProcessor";
@@ -68,7 +68,7 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
     type: "starting-stat",
     data: {str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10}
   });
-  const [specie, setSpecie] = useState<SpecieDecision | undefined>(undefined);
+  const [specie, setSpecie] = useState<SpeciesDecision | undefined>(undefined);
   const [background, setBackground] = useState<BackgroundDecision | undefined>(undefined);
   const [level1, setLevel1] = useState<LevelDecision | undefined>(undefined);
   const [level2, setLevel2] = useState<LevelDecision | undefined>(undefined);
@@ -116,7 +116,7 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
           <StartingStatField choice={CharacterCreationChoice.data.choices[1]} value={startingStat} onChange={setStartingStat} />
         </StepperPanel>
         <StepperPanel pt={stepperPanelPt} header="Specie">
-          <SpecieField value={character} choice={CharacterCreationChoice.data.choices[2]} decision={specie} onChange={setSpecie} />
+          <SpeciesField value={character} choice={CharacterCreationChoice.data.choices[2]} decision={specie} onChange={setSpecie} />
         </StepperPanel>
         <StepperPanel pt={stepperPanelPt} header="Background">
           <BackgroundField value={character} choice={CharacterCreationChoice.data.choices[3]} decision={background} onChange={setBackground} />

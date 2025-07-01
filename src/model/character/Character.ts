@@ -16,6 +16,7 @@ import {EldritchInvocationID} from "@/model/source/model/EldritchInvocation";
 
 export type Character = {
   id: CharacterID;
+  version: undefined,
   ownerID: Snowflake;
   revision: number,
   name: string;
@@ -37,6 +38,7 @@ export type Character = {
 
 export const INITIAL_CHARACTER = (id: CharacterID, ownerID: Snowflake): Character => ({
   id,
+  version: undefined,
   revision: 0,
   ownerID: ownerID,
   name: "Unknown",

@@ -1,5 +1,5 @@
 import {StartingStatChoice} from "@/model/character/create/starting-stat/StartingStatChoice";
-import {SpecieChoice} from "@/model/character/create/specie/SpecieChoice";
+import {SpeciesChoice} from "@/model/character/create/species/SpeciesChoice";
 import {BackgroundChoice} from "@/model/character/create/background/BackgroundChoice";
 import {minTextLength} from "@/model/source/condition/text/MinLengthCondition";
 import {NameChoice} from "@/model/character/name/NameChoice";
@@ -91,7 +91,7 @@ export const CharacterCreationChoice = {
       {type: "specie", data: {
         choiceID: "specie",
         condition: undefined
-      }} satisfies SpecieChoice,
+      }} satisfies SpeciesChoice,
       {type: "background", data: {
         choiceID: "background",
         condition: undefined

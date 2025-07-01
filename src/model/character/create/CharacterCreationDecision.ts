@@ -1,5 +1,5 @@
 import {BackgroundDecision} from "@/model/character/create/background/BackgroundDecision";
-import {SpecieDecision} from "@/model/character/create/specie/SpecieDecision";
+import {SpeciesDecision} from "@/model/character/create/species/SpeciesDecision";
 import {StartingStatDecision} from "@/model/character/create/starting-stat/StartingStatDecision";
 import {NameDecision} from "@/model/character/name/NameDecision";
 import {ChoiceID} from "@/model/source/choice/ChoiceID";
@@ -10,7 +10,7 @@ export type CharacterCreationDecision = {
   type: "character";
   data: {
     decisions: {
-      [choiceID: ChoiceID]: NameDecision | StartingStatDecision | BackgroundDecision | SpecieDecision | LevelDecision | undefined
+      [choiceID: ChoiceID]: NameDecision | StartingStatDecision | BackgroundDecision | SpeciesDecision | LevelDecision | undefined
     };
   }
 };

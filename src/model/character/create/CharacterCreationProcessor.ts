@@ -1,6 +1,6 @@
 import {Character} from "@/model/character/Character";
 import {CharacterCreationDecision} from "@/model/character/create/CharacterCreationDecision";
-import {specieProcessor} from "@/model/character/create/specie/SpecieProcessor";
+import {specieProcessor} from "@/model/character/create/species/SpecieProcessor";
 import {backgroundProcessor} from "@/model/character/create/background/BackgroundProcessor";
 import {nameProcessor} from "@/model/character/name/NameProcessor";
 import {CharacterCreationChoice} from "@/model/character/create/CharacterCreationChoice";

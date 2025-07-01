@@ -5,6 +5,11 @@ import {clericCantripSpell} from "@/model/source/phb/level/cleric/clericCantripS
 import {druidCantripSpell} from "@/model/source/phb/level/druid/druidCantripSpell";
 import {wizardCantripSpell} from "@/model/source/phb/level/wizard/wizardCantripSpell";
 import {toolType} from "@/model/source/condition/tool/ToolTypeCondition";
+import {maxSpellLevel} from "@/model/source/condition/spell/LeveledSpellCondition";
+import {clericSpell} from "@/model/source/phb/level/cleric/clericSpell";
+import {all} from "@/model/source/condition/generic/AllCondition";
+import {druidSpell} from "@/model/source/phb/level/druid/druidSpell";
+import {wizardSpell} from "@/model/source/phb/level/wizard/wizardSpell";
 
 const PHB_FEAT_ALERT: Feat = {
   label: "Alert",
@@ -67,6 +72,11 @@ const PHB_FEAT_MAGIC_INITIATE_CLERIC: Feat = {
       choiceID: "magic initiate (cleric)::spell::cantrip-2",
       sourceID: "magic initiate (cleric)::spell::cantrip-2",
       condition: clericCantripSpell
+    }},
+    {type: "spell", data: {
+      choiceID: "magic initiate (cleric)::spell-1",
+      sourceID: "magic initiate (cleric)::spell-1",
+      condition: all(clericSpell, maxSpellLevel(1))
     }}
   ]
 };
@@ -92,6 +102,11 @@ const PHB_FEAT_MAGIC_INITIATE_DRUID: Feat = {
       choiceID: "magic initiate (druid)::spell::cantrip-2",
       sourceID: "magic initiate (druid)::spell::cantrip-2",
       condition: druidCantripSpell
+    }},
+    {type: "spell", data: {
+      choiceID: "magic initiate (druid)::spell-1",
+      sourceID: "magic initiate (druid)::spell-1",
+      condition: all(druidSpell, maxSpellLevel(1))
     }}
   ]
 };
@@ -117,6 +132,11 @@ const PHB_FEAT_MAGIC_INITIATE_WIZARD: Feat = {
       choiceID: "magic initiate (wizard)::spell::cantrip-2",
       sourceID: "magic initiate (wizard)::spell::cantrip-2",
       condition: wizardCantripSpell
+    }},
+    {type: "spell", data: {
+      choiceID: "magic initiate (wizard)::spell-1",
+      sourceID: "magic initiate (wizard)::spell-1",
+      condition: all(wizardSpell, maxSpellLevel(1))
     }}
   ]
 };

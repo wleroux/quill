@@ -1,11 +1,11 @@
-import {SpecieDecision} from "@/model/character/create/specie/SpecieDecision";
+import {SpeciesDecision} from "@/model/character/create/species/SpeciesDecision";
 import {REPOSITORY} from "@/model/source/index";
 import {choiceProcessor} from "@/model/source/choice/ChoiceProcessor";
-import {SpecieChoice} from "@/model/character/create/specie/SpecieChoice";
+import {SpeciesChoice} from "@/model/character/create/species/SpeciesChoice";
 import {Processor, ProcessorError} from "@/model/processor/Processor";
 import {ErrorResult, ValidResult} from "@/model/processor/Result";
 
-export const specieProcessor: Processor<SpecieChoice, SpecieDecision | undefined> = (value, choice, decision) => {
+export const specieProcessor: Processor<SpeciesChoice, SpeciesDecision | undefined> = (value, choice, decision) => {
   if (decision === undefined)
     return ErrorResult.of([new ProcessorError("MISSING DECISION", [choice.data.choiceID], choice, decision)]);
 
