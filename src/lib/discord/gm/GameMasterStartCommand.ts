@@ -1,8 +1,8 @@
-import {StringCommandOption, SubcommandHandler} from "@/pages/api/discord/SubcommandHandler";
+import {StringCommandOption, SubcommandHandler} from "../SubcommandHandler";
 import {GAME_TIERS, isGameTier} from "@/model/game/GameTier";
 import {startGame} from "@/core/game/startGame";
-import {userErrorMessage} from "@/pages/api/discord/message/userErrorMessage";
-import {simpleEmbedMessage} from "@/pages/api/discord/message/simpleEmbedMessage";
+import {userErrorMessage} from "../message/userErrorMessage";
+import {simpleEmbedMessage} from "../message/simpleEmbedMessage";
 
 const NAME = new StringCommandOption("name", "The name of the game", {
   minLength: 3,

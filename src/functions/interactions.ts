@@ -1,11 +1,11 @@
 import {withMetadata} from "@/core/RequestContext";
-import {rootCommand} from "@/pages/api/discord/RootCommand";
 import {APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2} from "aws-lambda";
 import {verifyKey} from "discord-interactions";
 import {APIInteraction} from "discord-api-types/v10";
-import {interactionToString} from "./interactionToString";
 import {Resource} from "sst/resource";
 import {ulid} from "ulid";
+import {interactionToString} from "@/lib/discord/interactionToString";
+import {rootCommand} from "@/lib/discord/RootCommand";
 
 
 /**

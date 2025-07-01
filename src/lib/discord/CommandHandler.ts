@@ -8,7 +8,7 @@ import {
   ApplicationCommandType,
   RESTPostAPIApplicationCommandsJSONBody
 } from "discord-api-types/v10";
-import {SubcommandHandler} from "@/pages/api/discord/SubcommandHandler";
+import {SubcommandHandler} from "./SubcommandHandler";
 
 export class CommandHandler {
   private subcommands: SubcommandHandler[];

@@ -1,9 +1,9 @@
-import {CommandHandler} from "@/pages/api/discord/CommandHandler";
+import {CommandHandler} from "./CommandHandler";
 import {APIInteraction, APIInteractionResponse, ApplicationCommandType, InteractionResponseType, InteractionType} from "discord-api-types/v10";
 import {getMetadata} from "@/core/RequestContext";
-import {interactionToString} from "@/pages/api/discord/interactionToString";
+import {interactionToString} from "./interactionToString";
 import {internalServerErrorMessage} from "./message/internalServerErrorMessage";
-import {MessageComponentHandler} from "@/pages/api/discord/MessageComponentHandler";
+import {MessageComponentHandler} from "./MessageComponentHandler";
 
 export class InteractionHandler {
   private commandHandlers: CommandHandler[];

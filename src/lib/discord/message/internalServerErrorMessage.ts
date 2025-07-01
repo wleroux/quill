@@ -1,5 +1,5 @@
-import {DiscordColors} from "@/pages/api/discord/DiscordColors";
 import {APIInteractionResponse, InteractionResponseType, MessageFlags} from "discord-api-types/v10";
+import {DiscordColors} from "../DiscordColors";
 
 export function internalServerErrorMessage(requestID: string): APIInteractionResponse {
   return {

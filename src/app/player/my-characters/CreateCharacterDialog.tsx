@@ -25,10 +25,10 @@ import {nameProcessor} from "@/model/character/name/NameProcessor";
 import {LevelField} from "@/model/character/level/LevelField";
 import {LevelDecision} from "@/model/character/level/LevelDecision";
 import {levelProcessor} from "@/model/character/level/LevelProcessor";
-import {createCharacterAction} from "@/actions/CharactersActions";
 import {useRouter} from "next/navigation";
 import {FieldSet} from "@/lib/components/FieldSet";
 import {Modal} from "@/lib/components/Modal";
+import {useMutation} from "@tanstack/react-query";
 
 const stepperPt: StepperPassThroughOptions = {
   nav: {
@@ -63,6 +63,25 @@ function isValidCharacter(character: CharacterCreationDecision) {
 }
 
 export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onClose?: () => void}) {
+  const router = useRouter();
+  const createCharacterMutation = useMutation({
+    mutationFn: async (decisions: CharacterCreationDecision) => {
+      const response = await fetch("/api/character", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(decisions)
+      });
+      if (response.ok) return response.json();
+      else throw new Error(await response.text());
+    },
+    onSuccess: () => {
+      onClose?.();
+      router.refresh();
+    }
+  })
+
   const [name, setName] = useState<NameDecision | undefined>(undefined);
   const [startingStat, setStartingStat] = useState<StartingStatDecision>({
     type: "starting-stat",
@@ -76,7 +95,6 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
   const [activeStep, setActiveStep] = useState(0);
   const [currentLevel, setCurrentLevel] = useState<number>(0);
   const stepper = useRef<Stepper>(null);
-  const router = useRouter();
 
   let character = INITIAL_CHARACTER("", "");
   if (name && nameProcessor(character, CharacterCreationChoice.data.choices[0], name).valid) character = nameProcessor(character, CharacterCreationChoice.data.choices[0], name).orThrow();
@@ -148,11 +166,8 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
       }} />}
 
       {activeStep === 3 && currentLevel === 0 && <Button disabled={!levelProcessor(character, CharacterCreationChoice.data.choices[4], level1).valid} label="Level Up" onClick={() => setCurrentLevel(1)}/>}
-      {activeStep === 3 && currentLevel >= 1 && <Button disabled={!isValidCharacter(characterDecision)} label="Create Character" onClick={() => {
-        createCharacterAction(characterDecision).then(id => {
-          onClose?.();
-          router.refresh();
-        }).catch(error => console.error(error));
+      {activeStep === 3 && currentLevel >= 1 && <Button disabled={!isValidCharacter(characterDecision) || createCharacterMutation.isPending} label="Create Character" onClick={() => {
+        createCharacterMutation.mutate(characterDecision)
       }}/>}
     </div>}
   />;

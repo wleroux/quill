@@ -1,8 +1,8 @@
-import {StringCommandOption, SubcommandHandler} from "@/pages/api/discord/SubcommandHandler";
+import {StringCommandOption, SubcommandHandler} from "../SubcommandHandler";
 import {stopGame} from "@/core/game/stopGame";
 import {UserRepository} from "@/core/user/UserRepository";
-import {userErrorMessage} from "@/pages/api/discord/message/userErrorMessage";
-import {simpleEmbedMessage} from "@/pages/api/discord/message/simpleEmbedMessage";
+import {userErrorMessage} from "../message/userErrorMessage";
+import {simpleEmbedMessage} from "../message/simpleEmbedMessage";
 import {GameRepository} from "@/core/game/GameRepository";
 import {isGameStatus} from "@/model/game/GameStatus";
 

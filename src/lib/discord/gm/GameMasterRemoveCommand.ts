@@ -1,10 +1,10 @@
-import {StringCommandOption, SubcommandHandler} from "@/pages/api/discord/SubcommandHandler";
+import {StringCommandOption, SubcommandHandler} from "../SubcommandHandler";
 import {InteractionResponseType} from "discord-api-types/v10";
 import {removeCharacterFromGame} from "@/core/game/removeCharacterFromGame";
 import {UserRepository} from "@/core/user/UserRepository";
-import {userErrorMessage} from "@/pages/api/discord/message/userErrorMessage";
+import {userErrorMessage} from "../message/userErrorMessage";
 import {GameRepository} from "@/core/game/GameRepository";
-import {simpleEmbedMessage} from "@/pages/api/discord/message/simpleEmbedMessage";
+import {simpleEmbedMessage} from "../message/simpleEmbedMessage";
 import {CharacterRepository} from "@/core/character/CharacterRepository";
 
 const CHARACTER = new StringCommandOption(

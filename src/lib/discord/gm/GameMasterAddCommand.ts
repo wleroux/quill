@@ -1,9 +1,9 @@
-import {StringCommandOption, SubcommandHandler, UserCommandOption} from "@/pages/api/discord/SubcommandHandler";
+import {StringCommandOption, SubcommandHandler, UserCommandOption} from "../SubcommandHandler";
 import {InteractionResponseType, Snowflake} from "discord-api-types/v10";
 import {addCharactersToGame} from "@/core/game/AddCharactersToGame";
 import {UserRepository} from "@/core/user/UserRepository";
-import {userErrorMessage} from "@/pages/api/discord/message/userErrorMessage";
-import {simpleEmbedMessage} from "@/pages/api/discord/message/simpleEmbedMessage";
+import {userErrorMessage} from "../message/userErrorMessage";
+import {simpleEmbedMessage} from "../message/simpleEmbedMessage";
 import {CharacterRepository} from "@/core/character/CharacterRepository";
 import {GameRepository} from "@/core/game/GameRepository";
 

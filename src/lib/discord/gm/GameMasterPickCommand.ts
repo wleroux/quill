@@ -1,7 +1,7 @@
-import {NumberCommandOption, SubcommandHandler} from "@/pages/api/discord/SubcommandHandler";
+import {NumberCommandOption, SubcommandHandler} from "../SubcommandHandler";
 import {createPickList} from "@/core/game/previewPick";
-import {userErrorMessage} from "@/pages/api/discord/message/userErrorMessage";
-import {simpleEmbedMessage} from "@/pages/api/discord/message/simpleEmbedMessage";
+import {userErrorMessage} from "../message/userErrorMessage";
+import {simpleEmbedMessage} from "../message/simpleEmbedMessage";
 
 const MIN_PLAYERS = new NumberCommandOption("min-players", "Minimum number of players (default: 3)", {
   min: 3,

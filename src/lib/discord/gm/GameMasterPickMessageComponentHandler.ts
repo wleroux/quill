@@ -1,8 +1,8 @@
-import {MessageComponentHandler} from "@/pages/api/discord/MessageComponentHandler";
+import {MessageComponentHandler} from "../MessageComponentHandler";
 import {APIInteraction, APIInteractionResponse, APIMessageComponentInteractionData} from "discord-api-types/v10";
-import {userErrorMessage} from "@/pages/api/discord/message/userErrorMessage";
+import {userErrorMessage} from "../message/userErrorMessage";
 import {rollList} from "@/core/game/rollList";
-import {simpleEmbedMessage} from "@/pages/api/discord/message/simpleEmbedMessage";
+import {simpleEmbedMessage} from "../message/simpleEmbedMessage";
 
 export class GameMasterPickMessageComponentHandler implements MessageComponentHandler {
   canHandleMessageComponent(request: APIMessageComponentInteractionData): boolean {

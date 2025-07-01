@@ -161,7 +161,6 @@ export const CharacterRepository = {
     const finalValue = operations.reduce((initialValue, operation) => {
       return initialValue.flatMap(value => CharacterReducer(value, operation));
     }, ValidResult.of(initialValue));
-    console.log("Apply to Character", initialValue, finalValue);
     if (!finalValue.valid) return finalValue;
 
     updateCharacter(finalValue.value);

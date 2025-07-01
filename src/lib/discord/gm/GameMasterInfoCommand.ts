@@ -1,7 +1,7 @@
-import {SubcommandHandler} from "@/pages/api/discord/SubcommandHandler";
+import {SubcommandHandler} from "../SubcommandHandler";
 import {UserRepository} from "@/core/user/UserRepository";
-import {userErrorMessage} from "@/pages/api/discord/message/userErrorMessage";
-import {simpleEmbedMessage} from "@/pages/api/discord/message/simpleEmbedMessage";
+import {userErrorMessage} from "../message/userErrorMessage";
+import {simpleEmbedMessage} from "../message/simpleEmbedMessage";
 import {GameRepository} from "@/core/game/GameRepository";
 import {CharacterRepository} from "@/core/character/CharacterRepository";
 

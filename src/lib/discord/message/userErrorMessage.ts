@@ -1,5 +1,5 @@
 import {APIInteractionGuildMember, APIInteractionResponse, InteractionResponseType, MessageFlags, RouteBases} from "discord-api-types/v10";
-import {DiscordColors} from "@/pages/api/discord/DiscordColors";
+import {DiscordColors} from "../DiscordColors";
 import {Resource} from "sst/resource";
 
 function getAvatarURL(member: APIInteractionGuildMember): string {

@@ -42,7 +42,7 @@ export default $config({
     const vpc = new sst.aws.Vpc("QuillVPC");
     const cluster = new sst.aws.Cluster("QuillCluster", {vpc});
     if ($dev) new sst.aws.Function("QuillInteractions", {
-      handler: "src/pages/api/discord/lambda.handler",
+      handler: "src/functions/interactions.handler",
       url: true,
       link: [discordClientID, discordClientSecret, discordToken, discordGuildID, discordPublicKey, redirectUrl, table],
     });

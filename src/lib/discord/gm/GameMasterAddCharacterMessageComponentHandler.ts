@@ -1,12 +1,12 @@
-import {MessageComponentHandler} from "@/pages/api/discord/MessageComponentHandler";
+import {MessageComponentHandler} from "../MessageComponentHandler";
 import { APIMessageComponentInteractionData, APIInteraction, APIInteractionResponse } from "discord-api-types/v10";
-import {userErrorMessage} from "@/pages/api/discord/message/userErrorMessage";
+import {userErrorMessage} from "../message/userErrorMessage";
 import {botDiscordClient} from "@/lib/discord/BotDiscordClient";
 import {getList} from "@/core/game/pick/getList";
 import {addCharactersToGame} from "@/core/game/AddCharactersToGame";
 import {UserRepository} from "@/core/user/UserRepository";
 import {GameRepository} from "@/core/game/GameRepository";
-import {simpleEmbedMessage} from "@/pages/api/discord/message/simpleEmbedMessage";
+import {simpleEmbedMessage} from "../message/simpleEmbedMessage";
 import {CharacterRepository} from "@/core/character/CharacterRepository";
 
 export class GameMasterAddCharacterMessageComponentHandler implements MessageComponentHandler {

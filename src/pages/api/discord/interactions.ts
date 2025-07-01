@@ -5,10 +5,10 @@ import {NextApiRequest, NextApiResponse} from "next";
 import {Resource} from "sst/resource";
 import {IncomingHttpHeaders} from "node:http";
 import {buffer} from "node:stream/consumers";
-import {rootCommand} from "@/pages/api/discord/RootCommand";
 import {ulid} from "ulid";
 import {withMetadata} from "@/core/RequestContext";
-import {interactionToString} from "./interactionToString";
+import {interactionToString} from "@/lib/discord/interactionToString";
+import {rootCommand} from "@/lib/discord/RootCommand";
 
 export const config = {
   api: {
