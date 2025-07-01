@@ -9,6 +9,6 @@ export type MetamagicChoice = {
     choiceID: ChoiceID;
     sourceID: string;
     enabled?: Condition<any>;
-    condition: MetamagicCondition;
+    condition?: MetamagicCondition;
   }
 };

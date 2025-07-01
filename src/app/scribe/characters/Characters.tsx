@@ -10,7 +10,7 @@ export function ScribeCharacters({characters}: {characters: Character[]}) {
     <PageTitle>All Characters</PageTitle>
 
     {ACTIVE_CHARACTERS.length > 0 && <>
-      <PageTitle>Active Character</PageTitle>
+      <PageTitle>Active Characters</PageTitle>
       <div className="flex flex-row gap-4 justify-around justify-items-center flex-wrap">
         {ACTIVE_CHARACTERS.map(character => <CharacterProfile key={character.id} value={character} />)}
       </div>

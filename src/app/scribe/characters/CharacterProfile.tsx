@@ -13,6 +13,7 @@ import {useRouter} from "next/navigation";
 import {useMutation} from "@tanstack/react-query";
 import {twMerge} from "tailwind-merge";
 import {ConfirmPopup} from "primereact/confirmpopup";
+import {SPELL_LEVELS} from "@/model/source/model/Spell";
 
 function Stat({label, value}: {label: string, value: number}) {
   return <div className="flex flex-row gap-4 items-center">
@@ -95,17 +96,25 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
         </div>}
         {(Object.values(value.spells).length > 0 || Object.values(value.metamagics).length > 0) && <div className="flex-1">
           {Object.values(value.spells).length > 0 && <>
-            <strong>Prepared Spells</strong>
             <div className="flex flex-col">
-              {Object.values(value.spells).map(spellID => <div>
-                - {REPOSITORY.SPELLS[spellID].label}
-              </div>)}
+              {SPELL_LEVELS.map(spellLevel => {
+                const spells = Object.values(value.spells).filter(spellID => REPOSITORY.SPELLS[spellID].level === spellLevel);
+                if (spells.length === 0) return <React.Fragment key={spellLevel}></React.Fragment>
+                return <React.Fragment key={spellLevel}>
+                  <strong>{spellLevel !== "cantrip" ? `Level ${spellLevel} Spells` : "Cantrip Spells"}</strong>
+                  <div>
+                    {spells.sort().map(spellID => <div key={spellID}>
+                      - {REPOSITORY.SPELLS[spellID].label}
+                    </div>)}
+                  </div>
+                </React.Fragment>
+              })}
             </div>
           </>}
           {Object.values(value.metamagics).length > 0 && <>
             <strong>Metamagics</strong>
             <div className="flex flex-col">
-              {Object.values(value.metamagics).map(metamagicID => <div>
+              {Object.values(value.metamagics).sort().map(metamagicID => <div>
                 - {REPOSITORY.METAMAGICS[metamagicID].label}
               </div>)}
             </div>

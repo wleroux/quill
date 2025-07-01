@@ -14,7 +14,7 @@ export default {
   FEATS,
   LEVELS,
   // MANEUVERS,
-  // METAMAGICS,
+  METAMAGICS,
   ITEMS,
   SPECIES,
   SPELLS,

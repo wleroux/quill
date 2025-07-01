@@ -13,6 +13,7 @@ import {BackgroundAttributeField} from "@/model/character/create/background/back
 import {SkillOrToolField} from "@/model/source/choice/skill-or-tool/SkillOrToolField";
 import {SpellReplacementFields} from "@/model/source/choice/spell-replacement/SpellReplacementField";
 import {ExpertiseField} from "@/model/source/choice/expertise/ExpertiseField";
+import {MetamagicField} from "@/model/source/choice/metamagic/MetamagicField";
 
 export function ChoiceField({character, choice, decision, onChange}: {character: Character, choice: Choice, decision: Decision | undefined, onChange: (value: Decision | undefined) => void}) {
   if (choice.data.enabled && !choice.data.enabled(undefined, character)) return <></>
@@ -27,6 +28,8 @@ export function ChoiceField({character, choice, decision, onChange}: {character:
     return <ExpertiseField value={character} choice={choice} decision={decision} onChange={onChange} />
   } else if (choice.type === "feat" && (decision === undefined || decision.type === "feat")) {
     return <FeatField character={character} choice={choice} value={decision} onChange={onChange} />
+  } else if (choice.type === "metamagic" && (decision === undefined || decision.type === "metamagic")) {
+    return <MetamagicField value={character} choice={choice} decision={decision} onChange={onChange} />
   } else if (choice.type === "skill" && (decision === undefined || decision.type === "skill")) {
     return <SkillField character={character} choice={choice} value={decision} onChange={onChange}/>
   } else if (choice.type === "skill-or-tool" && (decision === undefined || decision?.type === "skill-or-tool")) {
