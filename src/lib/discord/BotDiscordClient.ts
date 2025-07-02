@@ -130,6 +130,22 @@ class BotDiscordClient {
     });
   }
 
+  getGuildMembers(guildID: Snowflake, options?: {
+    limit?: number;
+    after?: Snowflake
+  }): Promise<APIGuildMember[]> {
+    const params = new URLSearchParams();
+    if (options?.limit) params.set("limit", `${options?.limit}`);
+    if (options?.after) params.set("after", options?.after);
+    return this.api(`${Routes.guildMembers(guildID)}?${params.toString()}`, {
+      method: "GET",
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 60
+      }
+    });
+  }
+
   createGuildApplicationCommands(applicationID: Snowflake, guildID: Snowflake, commands: RESTPostAPIApplicationCommandsJSONBody[]): Promise<APIApplicationCommand> {
     return this.api(Routes.applicationGuildCommands(applicationID, guildID), {
       method: "PUT",
@@ -175,18 +191,6 @@ class BotDiscordClient {
 
   async getChannelMessage(channelID: Snowflake, messageID: Snowflake): Promise<APIMessage> {
     return this.api(Routes.channelMessage(channelID, messageID), {
-      method: "GET"
-    });
-  }
-
-  getGuildMembers(guildID: Snowflake, options?: {
-    limit?: number;
-    after?: Snowflake
-  }): Promise<APIGuildMember[]> {
-    const params = new URLSearchParams();
-    if (options?.limit) params.set("limit", `${options?.limit}`);
-    if (options?.after) params.set("after", options?.after);
-    return this.api(`${Routes.guildMembers(guildID)}?${params.toString()}`, {
       method: "GET"
     });
   }
