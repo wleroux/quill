@@ -1,5 +1,16 @@
-import {APIApplicationCommand, APIChannel, APIGuildMember, APIMessage, APIRole, RESTPatchAPIChannelJSONBody, RESTPostAPIApplicationCommandsJSONBody,
-  RESTPostAPIChannelMessageJSONBody, RouteBases, Routes, Snowflake} from "discord-api-types/v10";
+import {
+  APIApplicationCommand,
+  APIChannel,
+  APIGuildMember,
+  APIMessage,
+  APIRole,
+  RESTPatchAPIChannelJSONBody,
+  RESTPostAPIApplicationCommandsJSONBody,
+  RESTPostAPIChannelMessageJSONBody,
+  RouteBases,
+  Routes,
+  Snowflake
+} from "discord-api-types/v10";
 import {Resource} from "sst/resource";
 
 const DISCORD_ROUTE_BUCKET_MAP: {[route: string]: string} = {};
@@ -164,6 +175,18 @@ class BotDiscordClient {
 
   async getChannelMessage(channelID: Snowflake, messageID: Snowflake): Promise<APIMessage> {
     return this.api(Routes.channelMessage(channelID, messageID), {
+      method: "GET"
+    });
+  }
+
+  getGuildMembers(guildID: Snowflake, options?: {
+    limit?: number;
+    after?: Snowflake
+  }): Promise<APIGuildMember[]> {
+    const params = new URLSearchParams();
+    if (options?.limit) params.set("limit", `${options?.limit}`);
+    if (options?.after) params.set("after", options?.after);
+    return this.api(`${Routes.guildMembers(guildID)}?${params.toString()}`, {
       method: "GET"
     });
   }
