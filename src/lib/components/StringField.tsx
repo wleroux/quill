@@ -9,11 +9,11 @@ const inputTextPt: InputTextPassThroughOptions = {
   }
 };
 
-export function StringField({label, value, onChange}: {label: string, value: string, onChange: (value: string) => void}) {
+export function StringField({label, value, autoFocus, onChange}: {label: string, value: string, onChange: (value: string) => void, autoFocus?: boolean}) {
   const inputId = ulid();
   return <Field>
     <FieldLabel>{label}</FieldLabel>
-    <InputText pt={inputTextPt} id={inputId} value={value} onChange={value => onChange(value.target.value)} />
+    <InputText autoFocus={autoFocus} pt={inputTextPt} id={inputId} value={value} onChange={value => onChange(value.target.value)} />
   </Field>
 
 }

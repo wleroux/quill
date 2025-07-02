@@ -15,6 +15,8 @@ import {RetireDecision} from "@/model/character/retire/RetireDecision";
 import {CharacterCreationChoice} from "@/model/character/create/CharacterCreationChoice";
 import {characterCreationProcessor} from "@/model/character/create/CharacterCreationProcessor";
 import {Metadata} from "next";
+import {ProgressDecision} from "@/model/character/progress/ProgressDecision";
+import {getProgressChoice, progressProcessor} from "@/model/character/progress/progressProcessor";
 
 export type CreateCharacterOperation = {type: "create", data: {
   id: CharacterID;
@@ -22,8 +24,12 @@ export type CreateCharacterOperation = {type: "create", data: {
   decision: CharacterCreationDecision
 }};
 export type RetireCharacterOperation = {type: "retire", data: {}};
+export type TrainCharacterOperation = {type: "train", data: ProgressDecision[]};
 
-export type CharacterOperation = CreateCharacterOperation | RetireCharacterOperation;
+export type CharacterOperation =
+  | CreateCharacterOperation
+  | RetireCharacterOperation
+  | TrainCharacterOperation;
 
 
 export const CharacterReducer = (initialValue: Character | undefined, operation: CharacterOperation): Result<Character, string> => {
@@ -34,6 +40,12 @@ export const CharacterReducer = (initialValue: Character | undefined, operation:
     }
   } else {
     switch (operation.type) {
+      case "train": {
+        return operation.data.reduce(
+          (result, decision) => result.flatMap(value => progressProcessor(value, getProgressChoice(value, decision), decision)),
+          ValidResult.of(initialValue)
+        ).mapError(_ => "Could not train character");
+      }
       case "retire": return retireProcessor(initialValue, DefaultRetireChoice, RetireDecision).mapError(_ => "Could not retire character.");
     }
   }

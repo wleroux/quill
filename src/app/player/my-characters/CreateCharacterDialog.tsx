@@ -170,9 +170,6 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
         stepper.current?.nextCallback(ev);
       }} />}
 
-      {!result.valid && result.error.map((error, index) => <span key={index}>
-        {error.code} ({error.path.join(" / ")})
-      </span>)}
       {activeStep === 3 && currentLevel === 0 && <Button disabled={!levelProcessor(character, DefaultLevelChoice[0], level1).valid} label="Level Up" onClick={() => setCurrentLevel(1)}/>}
       {activeStep === 3 && currentLevel >= 1 && <Button disabled={!result.valid || createCharacterMutation.isPending} label="Create Character" onClick={() => {
         createCharacterMutation.mutate(characterDecision)

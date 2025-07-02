@@ -3,7 +3,7 @@ import {SkillID} from "@/model/source/model/Skill";
 import {ProficiencyIcon} from "@/app/player/my-characters/proficiency/ProficiencyIcon";
 import {SKILL_IDS, SKILLS} from "@/model/source/Skill";
 import {Character} from "@/model/character/Character";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import {REPOSITORY} from "@/model/source/index";
 import {ATTRIBUTE_IDS} from "@/model/source/model/Attribute";
 import {ProficientIcon} from "@/app/player/my-characters/proficiency/ProficientIcon";
@@ -13,6 +13,54 @@ import {useMutation} from "@tanstack/react-query";
 import {twMerge} from "tailwind-merge";
 import {ConfirmPopup} from "primereact/confirmpopup";
 import {SPELL_LEVELS} from "@/model/source/model/Spell";
+import {CharacterID} from "@/model/character/CharacterID";
+import {MENU_PASSTHROUGH} from "@/lib/components/Menu";
+import {RenameDialog} from "@/lib/character/train/RenameDialog";
+import {Menu} from "primereact/menu";
+
+function PlayerActionButton({value}: {value: Character}) {
+  const router = useRouter();
+  const retire = useMutation({
+    mutationFn: ({characterID}: {characterID: CharacterID}) => {
+      return fetch(`/api/characters/${characterID}/retire`, {
+        method: "POST"
+      });
+    },
+    onSuccess: () => {
+      router.refresh();
+    }
+  });
+  const menu = useRef<Menu>(null);
+
+  const [isConfirmRetireVisible, setIsConfirmRetireVisible] = useState(false);
+  const retireButtonRef = useRef(null);
+
+  const [isRenameOpen, setIsRenameOpen] = React.useState(false);
+
+  return <>
+    <Button ref={retireButtonRef} size="small" label="Actions" onClick={(ev) => {
+      menu.current?.toggle(ev);
+    }} />
+    <Menu pt={MENU_PASSTHROUGH} ref={menu} popup popupAlignment="right" model={[
+      {label: `Rename ${value.name}`, disabled: isRenameOpen, command() {
+          setIsRenameOpen(true);
+        }},
+      {label: `Retire ${value.name}`, disabled: retire.isPending || isConfirmRetireVisible, command() {
+        setIsConfirmRetireVisible(true);
+      }}
+    ]} />
+    <RenameDialog value={value} visible={isRenameOpen} onClose={() => setIsRenameOpen(false)} />
+
+    <ConfirmPopup pt={{
+      root: {className: "bg-red-800 border-red-400/50 text-red-50 dark:bg-red-950 border dark:border-red-400/50 p-4 mt-4 gap-4 flex flex-col"},
+      message: {className: "pl-4 text-red-100"},
+      icon: {className: "text-red-100"}
+    }} target={retireButtonRef.current ?? undefined} visible={isConfirmRetireVisible} onHide={() => setIsConfirmRetireVisible(false)}
+                  message={`Are you sure you want to retire ${value.name}? Once retired, they cannot be unretired.`} icon="pi pi-exclamation-triangle" accept={() => {
+      retire.mutate({characterID: value.id});
+    }} reject={() => setIsConfirmRetireVisible(false)}  />
+  </>
+}
 
 function Stat({label, value}: {label: string, value: number}) {
   return <div className="flex flex-row gap-4 items-center">
@@ -29,21 +77,6 @@ function Skill({id, proficient, expertise}: { id: SkillID, proficient: boolean, 
 }
 
 export function CharacterProfile({value, full}: { value: Character, full?: boolean }) {
-  const router = useRouter();
-  const retireMutation = useMutation({
-    mutationFn: async () => {
-      return fetch(`/api/characters/${value.id}/retire`, {
-        method: "POST"
-      });
-    },
-    onSuccess: () => {
-      router.refresh();
-    }
-  });
-
-  const [visible, setVisible] = React.useState(false);
-  const retireButtonRef = useRef(null);
-
   return <div className={twMerge(
     "relative w-full box-content rounded-md bg-[color:var(--background)] border border-[color:var(--foreground)]/20 flex flex-col gap-4"
   )}>
@@ -133,18 +166,7 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
       </div>
     </div>}
     {!value.retired && <div className="absolute right-4 top-4">
-      <ConfirmPopup pt={{
-        root: {className: "bg-red-800 border-red-400/50 text-red-50 dark:bg-red-950 border dark:border-red-400/50 p-4 mt-4 gap-4 flex flex-col"},
-        message: {className: "pl-4 text-red-100"},
-        icon: {className: "text-red-100"}
-      }} target={retireButtonRef.current ?? undefined} visible={visible} onHide={() => setVisible(false)}
-                    message={`Are you sure you want to retire ${value.name}? Once retired, they cannot be unretired.`} icon="pi pi-exclamation-triangle" accept={() => {
-        retireMutation.mutate();
-      }} reject={() => setVisible(false)}  />
-
-      <Button ref={retireButtonRef} icon="pi pi-trash" severity="danger" label="Retire" disabled={retireMutation.isPending} onClick={() => {
-        setVisible(true);
-      }} />
+      <PlayerActionButton value={value} />
     </div>}
   </div>
 }

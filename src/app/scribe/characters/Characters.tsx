@@ -1,6 +1,6 @@
 "use client";
 import {Character} from "@/model/character/Character";
-import React from "react";
+import React, { useRef } from "react";
 import {PageTitle} from "@/lib/components/PageTitle";
 import {validateCharacter} from "@/app/scribe/characters/validateCharacter";
 import {ClassID} from "@/model/source/model/Level";
@@ -9,6 +9,9 @@ import {Button} from "@/lib/components/Button";
 import {useMutation} from "@tanstack/react-query";
 import {CharacterID} from "@/model/character/CharacterID";
 import {useRouter} from "next/navigation";
+import { Menu } from "primereact/menu";
+import {MENU_PASSTHROUGH} from "@/lib/components/Menu";
+import {RenameDialog} from "@/lib/character/train/RenameDialog";
 
 function getLevelDisplay(classIDs: ClassID[]) {
   return classIDs.filter(classID => {
@@ -16,7 +19,7 @@ function getLevelDisplay(classIDs: ClassID[]) {
   }).join(" / ");
 }
 
-export function ScribeCharacters({characters, members}: {characters: Character[], members: {[userID: string]: string}}) {
+function ScribeActionButton({value}: {value: Character}) {
   const router = useRouter();
   const refresh = useMutation({
     mutationFn: ({characterID}: {characterID: CharacterID}) => {
@@ -28,6 +31,40 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
       router.refresh();
     }
   });
+  const retire = useMutation({
+    mutationFn: ({characterID}: {characterID: CharacterID}) => {
+      return fetch(`/api/characters/${characterID}/retire`, {
+        method: "POST"
+      });
+    },
+    onSuccess: () => {
+      router.refresh();
+    }
+  });
+  const menu = useRef<Menu>(null);
+
+  const [isRenameOpen, setIsRenameOpen] = React.useState(false);
+
+  return <>
+    <Button size="small" label="Actions" onClick={(ev) => {
+      menu.current?.toggle(ev);
+    }} />
+    <Menu pt={MENU_PASSTHROUGH} ref={menu} popup model={[
+      {label: `Rename ${value.name}`, disabled: isRenameOpen, command() {
+        setIsRenameOpen(true);
+      }},
+      {label: `Refresh ${value.name}`, disabled: refresh.isPending, command() {
+        refresh.mutate({characterID: value.id});
+      }},
+      {label: `Retire ${value.name}`, disabled: retire.isPending, command() {
+        retire.mutate({characterID: value.id});
+      }}
+    ]} />
+    <RenameDialog value={value} visible={isRenameOpen} onClose={() => setIsRenameOpen(false)} />
+  </>
+}
+
+export function ScribeCharacters({characters, members}: {characters: Character[], members: {[userID: string]: string}}) {
 
   const ACTIVE_CHARACTERS = characters.filter(character => !character.retired);
   const RETIRED_CHARACTERS = characters.filter(character => character.retired);
@@ -57,9 +94,7 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
           <td className="text-center">{getLevelDisplay(character.classIDs ?? [])}</td>
           <td className="text-center w-20 text-xs">{result.valid ? "" : result.error.map(error => `${error.code} (${error.path.join("/")})`).join("\n")}</td>
           <td className="text-center">
-            <Button disabled={refresh.isPending} label="Refresh" onClick={() => {
-              refresh.mutate({characterID: character.id});
-            }} />
+            <ScribeActionButton value={character} />
           </td>
         </tr>);
       })}
@@ -91,9 +126,7 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
             <td className="text-center">{getLevelDisplay(character.classIDs ?? [])}</td>
             <td className="text-center">{result.valid ? "" : result.error.map(error => `${error.code} ${error.path.join("/")}`).join(", ")}</td>
             <td className="text-center">
-              <Button disabled={refresh.isPending} label="Refresh" onClick={() => {
-                refresh.mutate({characterID: character.id});
-              }} />
+              <ScribeActionButton value={character} />
             </td>
           </tr>)
         })}
