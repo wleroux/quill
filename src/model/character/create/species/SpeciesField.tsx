@@ -16,17 +16,17 @@ export function SpeciesField({value, choice, decision, onChange}: {
     Object.keys(REPOSITORY.SPECIES)
       .filter(specieID => choice.data.condition === undefined || choice.data.condition(specieID, value));
 
-  const species = decision?.data.specieID ? REPOSITORY.SPECIES[decision.data.specieID] : undefined;
+  const species = decision?.data.speciesID ? REPOSITORY.SPECIES[decision.data.speciesID] : undefined;
   return <FieldSet inline>
-    <DropdownField label="Species" value={decision?.data.specieID} onChange={ev => {
-      const specieID = ev.target.value;
+    <DropdownField label="Species" value={decision?.data.speciesID} onChange={ev => {
+      const speciesID = ev.target.value;
       onChange(_ => ({
-        type: "specie",
-        data: {specieID, decisions: {}}
+        type: "species",
+        data: {speciesID, decisions: {}}
       }));
     }} options={VALID_SPECIES.map(specieID => ({value: specieID, label: REPOSITORY.SPECIES[specieID].label}))} />
     {species && decision && <ChoicesField
-      value={{...value, specie: decision.data}}
+      value={{...value, species: decision.data}}
       choices={species.choices}
       decisions={decision.data.decisions}
       onChange={fn => onChange(prev => {

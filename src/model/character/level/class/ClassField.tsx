@@ -19,14 +19,14 @@ export function ClassField({value, choice, decision, onChange}: {
     .filter(levelID => {
       const _class = REPOSITORY.CLASSES[levelID];
       if (_class.replace) {
-        if (!value.levels.some(level => level.classID === _class.replace))
+        if (!value.classIDs.some(classID => classID === _class.replace))
           return false;
-        if (value.levels.some(level => REPOSITORY.CLASSES[level.classID].replace === _class.replace))
+        if (value.classIDs.some(classID => REPOSITORY.CLASSES[classID].replace === _class.replace))
           return false;
       }
       return true;
     })
-    .filter(canMulticlass(value.levels, value)
+    .filter(canMulticlass(value.classIDs, value)
       ? (_) => true
       : (levelID) => (REPOSITORY.CLASSES[levelID].replace !== undefined)
     )
@@ -46,7 +46,7 @@ export function ClassField({value, choice, decision, onChange}: {
     }} />
 
     {_class && decision && decision && <ChoicesField
-      value={{...value, levels: [...value.levels, decision.data]}}
+      value={{...value, classIDs: [...value.classIDs, decision.data.classID]}}
       choices={_class.choices}
       decisions={decision.data.decisions}
       onChange={fn => onChange((prev?: ClassDecision): ClassDecision | undefined => {

@@ -9,6 +9,7 @@ export const nameProcessor: Processor<NameChoice, NameDecision | undefined> = (v
     return ErrorResult.of([new ProcessorError("UNMET CONDITION", [choice.data.choiceID], choice, decision)]);
   return ValidResult.of({
     ...value,
+    progress: [...value.progress, decision],
     name: decision!.data.name
   });
 }

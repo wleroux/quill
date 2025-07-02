@@ -10,10 +10,11 @@ import {PlayerID} from "@/model/player/PlayerID";
 import {getMetadata} from "@/core/RequestContext";
 import {ulid} from "ulid";
 import {retireProcessor} from "@/model/character/retire/RetireProcessor";
-import {RetireChoice} from "@/model/character/retire/RetireChoice";
+import {DefaultRetireChoice} from "@/model/character/retire/RetireChoice";
 import {RetireDecision} from "@/model/character/retire/RetireDecision";
 import {CharacterCreationChoice} from "@/model/character/create/CharacterCreationChoice";
 import {characterCreationProcessor} from "@/model/character/create/CharacterCreationProcessor";
+import {Metadata} from "next";
 
 export type CreateCharacterOperation = {type: "create", data: {
   id: CharacterID;
@@ -25,7 +26,7 @@ export type RetireCharacterOperation = {type: "retire", data: {}};
 export type CharacterOperation = CreateCharacterOperation | RetireCharacterOperation;
 
 
-const CharacterReducer = (initialValue: Character | undefined, operation: CharacterOperation): Result<Character, string> => {
+export const CharacterReducer = (initialValue: Character | undefined, operation: CharacterOperation): Result<Character, string> => {
   if (initialValue === undefined) {
     switch (operation.type) {
       case "create": return ValidResult.of(INITIAL_CHARACTER(operation.data.id, operation.data.ownerID))
@@ -33,7 +34,7 @@ const CharacterReducer = (initialValue: Character | undefined, operation: Charac
     }
   } else {
     switch (operation.type) {
-      case "retire": return retireProcessor(initialValue, RetireChoice, RetireDecision).mapError(_ => "Could not retire character.");
+      case "retire": return retireProcessor(initialValue, DefaultRetireChoice, RetireDecision).mapError(_ => "Could not retire character.");
     }
   }
   throw new Error(`Unexpected Operation: ${JSON.stringify(operation)}`);
@@ -51,6 +52,27 @@ function addAuditLog(id: CharacterID, revision: number, data: any) {
     },
     ConditionExpression: "attribute_not_exists(PK) and attribute_not_exists(SK)"
   }});
+}
+async function getCharacterAuditLogs(id: CharacterID) {
+  const Response = await dynamoDBClient.send(new QueryCommand({
+    TableName: Resource.QuillTable.name,
+    KeyConditionExpression: "PK = :PK AND begins_with(SK, :SK)",
+    ExpressionAttributeValues: {
+      ":PK": `CHARACTER#${id}`,
+      ":SK": "AUDIT#"
+    }
+  }));
+  const logs = [];
+  if (Response.Items) {
+    for (const Item of Response.Items) {
+      logs.push({
+        revision: Number.parseInt(Item.SK.substring("AUDIT#".length)),
+        metadata: Item.Metadata,
+        operations: Item.Data
+      });
+    }
+  }
+  return logs;
 }
 function updateCharacter(value: Character): Character {
   if (value.revision === 0) {
@@ -186,5 +208,25 @@ export const CharacterRepository = {
   },
   async getAllCharacters(): Promise<Character[]> {
     return characterLoader().getAllCharacters();
+  },
+  async getCharacterAuditLogs(characterID: CharacterID): Promise<{revision: number, metadata: Metadata, operations: CharacterOperation[]}[]> {
+    return getCharacterAuditLogs(characterID);
+  },
+  async refreshCharacter(value: Character) {
+    send({Put: {
+      TableName: Resource.QuillTable.name,
+      Item: {
+        "PK": "CHARACTER",
+        "SK": `CHARACTER#${value.id}`,
+        "GS1PK": `OWNER#${value.ownerID}`,
+        "GS1SK": `CHARACTER#${value.id}`,
+        Revision: value.revision,
+        Data: value
+      },
+      ConditionExpression: "Revision = :Revision",
+      ExpressionAttributeValues: {
+        ":Revision": value.revision
+      }
+    }});
   }
 } as const;

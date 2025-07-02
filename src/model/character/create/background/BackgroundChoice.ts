@@ -9,3 +9,10 @@ export type BackgroundChoice = {
     condition?: Condition<BackgroundID>;
   }
 };
+
+export const DefaultBackgroundChoice: BackgroundChoice = {
+  type: "background",
+  data: {
+    choiceID: "background"
+  }
+};

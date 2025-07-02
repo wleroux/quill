@@ -55,15 +55,15 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
       <div className={twMerge("w-full", !full && "opacity-50")}>
         <h2 className="font-bold text-xl">{value.name}</h2>
         <div>
-          <strong>Specie:</strong> {REPOSITORY.SPECIES[value.specie.specieID]?.label}
+          <strong>Specie:</strong> {REPOSITORY.SPECIES[value.species.speciesID]?.label}
         </div>
         <div>
           <strong>Background:</strong> {REPOSITORY.BACKGROUNDS[value.background.backgroundID]?.label}
         </div>
         <div>
-          <strong>Class:</strong> {value.levels
-          .filter(level => !value.levels.some(o => REPOSITORY.CLASSES[o.classID].replace === level.classID))
-          .map(level => REPOSITORY.CLASSES[level.classID].label).join(" / ")}
+          <strong>Class:</strong> {value.classIDs
+            .filter(classID => !value.classIDs.some(o => REPOSITORY.CLASSES[o].replace === classID))
+            .map(classID => REPOSITORY.CLASSES[classID].label).join(" / ")}
         </div>
       </div>
     </div>
@@ -72,7 +72,7 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
         {ATTRIBUTE_IDS.map(attributeID => <div key={attributeID} className="flex-1 flex flex-col">
           <Stat label={attributeID.toUpperCase()} value={value.stats[attributeID]}/>
           {SKILL_IDS.filter(skillID => SKILLS[skillID].attribute === attributeID).map(skillID => <div key={skillID}>
-            <Skill id={skillID} proficient={value.skills.includes(skillID)} expertise={value.expertise.includes(skillID)}/>
+            <Skill id={skillID} proficient={value.skills[skillID] === "proficient"} expertise={value.skills[skillID] === "expertise"}/>
           </div>)}
         </div>)}
         {value.tools.length > 0 && <div className="flex-1 gap-2">

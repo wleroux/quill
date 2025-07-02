@@ -1,6 +1,6 @@
 import {Character} from "@/model/character/Character";
 import {CharacterCreationDecision} from "@/model/character/create/CharacterCreationDecision";
-import {specieProcessor} from "@/model/character/create/species/SpecieProcessor";
+import {speciesProcessor} from "@/model/character/create/species/SpeciesProcessor";
 import {backgroundProcessor} from "@/model/character/create/background/BackgroundProcessor";
 import {nameProcessor} from "@/model/character/name/NameProcessor";
 import {CharacterCreationChoice} from "@/model/character/create/CharacterCreationChoice";
@@ -18,9 +18,9 @@ export const characterCreationProcessor: Processor<CharacterCreationChoice, Char
         nameProcessor(value, characterChoice, choiceDecision)
           .mapError(errors => errors.map(error => error.extend(choice.data.choiceID)))
       );
-    } else if (characterChoice.type === "specie" && (choiceDecision === undefined || choiceDecision.type === "specie")) {
+    } else if (characterChoice.type === "species" && (choiceDecision === undefined || choiceDecision.type === "species")) {
       result = result.flatMap(value =>
-        specieProcessor(value, characterChoice, choiceDecision)
+        speciesProcessor(value, characterChoice, choiceDecision)
           .mapError(errors => errors.map(error => error.extend(choice.data.choiceID)))
       );
     } else if (characterChoice.type === "background" && (choiceDecision === undefined || choiceDecision.type === "background")) {

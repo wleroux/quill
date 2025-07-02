@@ -8,11 +8,11 @@ import {ClassChoice} from "@/model/character/level/class/ClassChoice";
 import {ClassDecision} from "@/model/character/level/class/ClassDecision";
 import {Character} from "@/model/character/Character";
 
-export function canMulticlass(levels: Character["levels"], value: Character): boolean {
-  if (levels.length >= 2) return false;
-  for (let level of levels) {
+export function canMulticlass(classes: ClassID[], value: Character): boolean {
+  if (classes.length >= 2) return false;
+  for (let classID of classes) {
     // get root level
-    let _class = REPOSITORY.CLASSES[level.classID];
+    let _class = REPOSITORY.CLASSES[classID];
     while (_class.replace) {
       _class = REPOSITORY.CLASSES[_class.replace];
     }
@@ -23,24 +23,6 @@ export function canMulticlass(levels: Character["levels"], value: Character): bo
     }
   }
   return true;
-}
-
-export function addLevel(levels: ClassID[], levelID: ClassID): ClassID[] {
-  const level = REPOSITORY.CLASSES[levelID];
-  if (level === undefined) return levels;
-
-  if (level.replace) {
-    const levelIndex = levels.indexOf(level.replace);
-    if (levelIndex === -1) return levels;
-
-    return [
-      ...levels.slice(0, levelIndex),
-      levelID,
-      ...levels.slice(levelIndex + 1)
-    ];
-  } else {
-    return [...levels, levelID];
-  }
 }
 
 export const classProcessor: Processor<ClassChoice, ClassDecision | undefined> = (value, choice, decision) => {
@@ -56,9 +38,9 @@ export const classProcessor: Processor<ClassChoice, ClassDecision | undefined> =
   if (!neverTaken(decision.data.classID, value))
     return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
   if (_class.replace) {
-    if (!value.levels.some(level => level.classID === _class.replace))
+    if (!value.classIDs.some(classID => classID === _class.replace))
       return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
-    if (value.levels.some(level => REPOSITORY.CLASSES[level.classID].replace === _class.replace))
+    if (value.classIDs.some(classID => REPOSITORY.CLASSES[classID].replace === _class.replace))
       return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
   }
   if (_class.prerequisite && !_class.prerequisite(undefined, value))
@@ -67,13 +49,24 @@ export const classProcessor: Processor<ClassChoice, ClassDecision | undefined> =
     return ErrorResult.of([new ProcessorError("UNMET CONDITION", [choice.data.choiceID], choice, decision)]);
 
   // Validate Multi-classing
-  if (!canMulticlass(value.levels, value)) {
+  if (!canMulticlass(value.classIDs, value)) {
     if (REPOSITORY.CLASSES[decision.data.classID].replace === undefined)
       return ErrorResult.of([new ProcessorError("CANNOT MULTICLASS", [choice.data.choiceID], choice, decision)]);
   }
 
   // Validate Level Choices
-  value = {...value, levels: [...value.levels, decision.data]};
+  if (value.classIDs.includes(_class.replace)) {
+    value = {...value, classIDs: [
+      ...value.classIDs.slice(0, value.classIDs.indexOf(_class.replace)),
+      decision.data.classID,
+      ...value.classIDs.slice(value.classIDs.indexOf(_class.replace) + 1),
+    ]};
+  } else {
+    value = {...value, classIDs: [
+      ...value.classIDs,
+      decision.data.classID
+    ]};
+  }
   for (const levelChoice of _class.choices) {
     const choiceDecision = decision.data.decisions[levelChoice.data.choiceID];
     const result = choiceProcessor(value, levelChoice, choiceDecision).mapError(errors => errors.map(error => error.extend(choice.data.choiceID)));

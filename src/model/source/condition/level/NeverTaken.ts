@@ -2,19 +2,20 @@ import {ClassID} from "@/model/source/model/Level";
 import {Character} from "@/model/character/Character";
 import {REPOSITORY} from "@/model/source/index";
 
-function getAncestorLevels(levelID: ClassID): ClassID[] {
-  const ancestors = [];
-  let level = REPOSITORY.CLASSES[levelID];
-  while (level) {
-    ancestors.push(levelID);
+export function getAllClassIDs(value: Character): ClassID[] {
+  return value.classIDs.flatMap((classID) => {
+    const ancestors = [];
+    let level = REPOSITORY.CLASSES[classID];
+    while (level) {
+      ancestors.push(classID);
 
-    levelID = level.replace;
-    level = REPOSITORY.CLASSES[levelID];
-    if (ancestors.includes(levelID)) break;
-  }
-  return ancestors;
+      classID = level.replace;
+      level = REPOSITORY.CLASSES[classID];
+    }
+    return ancestors;
+  });
 }
 
 export function neverTaken(classID: ClassID, value: Character): boolean {
-  return !value.levels.some(level => level.classID === classID);
+  return !getAllClassIDs(value).includes(classID);
 }

@@ -7,7 +7,7 @@ import {SKILL_IDS, SKILLS} from "@/model/source/Skill";
 
 export function ExpertiseField({value, choice, decision, onChange}: {value: Character, choice: ExpertiseChoice, decision: ExpertiseDecision | undefined, onChange: (value: ExpertiseDecision | undefined) => void}) {
   const VALID_SKILLS = SKILL_IDS
-    .filter(skillID => value.skills.includes(skillID) && !value.expertise.includes(skillID))
+    .filter(skillID => value.skills[skillID] === "proficient")
     .filter(skillID => choice.data.condition === undefined || choice.data.condition(skillID, value));
   useEffect(() => {
     if (decision === undefined && VALID_SKILLS.length === 1) {

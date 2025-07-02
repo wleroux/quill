@@ -12,9 +12,9 @@ export const skillProcessor: Processor<SkillChoice, SkillDecision | undefined> =
     return ErrorResult.of([new ProcessorError("MISSING DECISION", [choice.data.choiceID], choice, decision)]);
 
   // VALIDATE SKILL
-  if (value.skills.includes(decision.data.skillID))
+  if (value.skills[decision.data.skillID] !== "untrained")
     return ErrorResult.of([new ProcessorError("ALREADY HAS SKILL", [choice.data.choiceID], choice, decision)]);
   if (choice.data.condition !== undefined && !choice.data.condition(decision.data.skillID, value))
     return ErrorResult.of([new ProcessorError("UNMET CONDITION", [choice.data.choiceID], choice, decision)]);
-  return ValidResult.of({...value, skills: [...value.skills, decision.data.skillID]});
+  return ValidResult.of({...value, skills: {...value.skills, [decision.data.skillID]: "proficient"}});
 };

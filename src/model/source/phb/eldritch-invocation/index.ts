@@ -3,8 +3,9 @@ import {Condition} from "@/model/source/condition/Condition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 import {all} from "@/model/source/condition/generic/AllCondition";
 import {SpellID} from "@/model/source/model/Spell";
+import {getAllClassIDs} from "@/model/source/condition/level/NeverTaken";
 
-const hasLevel = (classID: string): Condition<undefined> => (_, character) => character.levels.some(level => level.classID === classID);
+const hasLevel = (classID: string): Condition<undefined> => (_, character) => getAllClassIDs(character).includes(classID);
 const hasSpell = (spellID: SpellID): Condition<undefined> => (_, character) => Object.values(character.spells).includes(spellID);
 
 // TODO: Determine which spells apply to these

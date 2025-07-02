@@ -1,5 +1,13 @@
-export const RetireChoice = {
-  type: "retire"
-} as const;
+export const DefaultRetireChoice: RetireChoice = {
+  type: "retire",
+  data: {
+    choiceID: "retire"
+  }
+};
 
-export type RetireChoice = typeof RetireChoice;
+export type RetireChoice = {
+  type: "retire",
+  data: {
+    choiceID: string;
+  }
+};

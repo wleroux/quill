@@ -17,15 +17,15 @@ export function getPointCost(value: number) {
 }
 
 export const startingStatProcessor: Processor<StartingStatChoice, StartingStatDecision | undefined> = (value, choice, decision) => {
-  if (decision === undefined) {
+  if (decision === undefined)
     return ErrorResult.of([new ProcessorError("MISSING DECISION", [choice.data.choiceID], choice, decision)]);
-  }
   const cost = ATTRIBUTE_IDS.reduce((sum, attribute) => sum + getPointCost(decision.data[attribute]), 0);
   if (cost !== choice.data.points)
     return ErrorResult.of([new ProcessorError("POINT MISMATCH", [choice.data.choiceID], choice, decision)]);
 
   return ValidResult.of({
     ...value,
+    startingStat: decision.data,
     stats: decision.data
   });
 };

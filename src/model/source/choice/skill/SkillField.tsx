@@ -7,7 +7,7 @@ import {useEffect} from "react";
 
 export function SkillField({character, choice, value, onChange}: {character: Character, choice: SkillChoice, value: SkillDecision | undefined, onChange: (value: SkillDecision | undefined) => void}) {
   const VALID_SKILLS = SKILL_IDS
-    .filter(skillID => !character.skills.includes(skillID))
+    .filter(skillID => character.skills[skillID] === "untrained")
     .filter(skillID => choice.data.condition === undefined || choice.data.condition(skillID, character));
   useEffect(() => {
     if (value === undefined && VALID_SKILLS.length === 1) {

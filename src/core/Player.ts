@@ -2,6 +2,7 @@ import {Snowflake} from "discord-api-types/v10";
 import {botDiscordClient} from "@/lib/discord/BotDiscordClient";
 import {Resource} from "sst/resource";
 import {CharacterRepository} from "@/core/character/CharacterRepository";
+import {getCurrentLevel} from "@/model/character/level/LevelChoice";
 
 const MANAGED_ROLES = [
   "Player", "Initiate", "Adept", "Vanguard", "Exemplar", "Harbinger"
@@ -17,10 +18,11 @@ export async function refreshDiscordRoles(userID: Snowflake) {
   for (const character of characters) {
     if (character.retired) continue;
 
-    if (character.levels.length <= 4) roles.add("Initiate");
-    else if (character.levels.length <= 8) roles.add("Adept");
-    else if (character.levels.length <= 12) roles.add("Vanguard");
-    else if (character.levels.length <= 16) roles.add("Exemplar");
+    const level = getCurrentLevel(character);
+    if (level <= 4) roles.add("Initiate");
+    else if (level <= 8) roles.add("Adept");
+    else if (level <= 12) roles.add("Vanguard");
+    else if (level <= 16) roles.add("Exemplar");
     else roles.add("Harbinger");
   }
 

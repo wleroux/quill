@@ -12,14 +12,17 @@ export const levelProcessor: Processor<LevelChoice, LevelDecision | undefined> =
   }
 
   // Process Level Choices
-  return choice.data.choices.reduce((value, subchoice) => {
+  return choice.data.choices.reduce((result, subchoice) => {
     const subdecision = decision.data.decisions[subchoice.data.choiceID];
     if (subchoice.type === "class" && (subdecision === undefined || subdecision?.type === "class")) {
-      return value.flatMap((value) => classProcessor(value, subchoice, subdecision))
+      return result.flatMap((value) => classProcessor(value, subchoice, subdecision))
     } else if (subchoice.type === "item" && (subdecision === undefined || subdecision?.type === "item")) {
-      return value.flatMap((value) => itemProcessor(value, subchoice, subdecision))
+      return result.flatMap((value) => itemProcessor(value, subchoice, subdecision))
     } else {
       throw new Error(`Unknown Choice Type: ${JSON.stringify(choice)} and ${JSON.stringify(decision)}`)
     }
-  }, ValidResult.of(value));
+  }, ValidResult.of({
+    ...value,
+    progress: [...value.progress, decision]
+  }));
 }

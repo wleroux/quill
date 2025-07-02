@@ -9,7 +9,7 @@ import {SkillID} from "@/model/source/model/Skill";
 export function SkillOrToolField({character, choice, decision, onChange}: {character: Character, choice: SkillOrToolChoice, decision: SkillOrToolDecision | undefined, onChange: (value: SkillOrToolDecision | undefined) => void}) {
   const VALID_SKILLS =
     (Object.keys(SKILLS) as SkillID[])
-      .filter(skillID => !character.skills.includes(skillID))
+      .filter(skillID => character.skills[skillID] === "untrained")
       .filter(skillID => choice.data.condition === undefined || choice.data.condition(skillID, character))
   const VALID_TOOLS =
     Object.keys(REPOSITORY.TOOLS)

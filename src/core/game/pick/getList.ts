@@ -4,6 +4,7 @@ import {CharacterRepository} from "@/core/character/CharacterRepository";
 import {GAME_TIERS, GameTier, getTier} from "@/model/game/GameTier";
 import {APIMessage} from "discord-api-types/v10";
 import {Character} from "@/model/character/Character";
+import {getCurrentLevel} from "@/model/character/level/LevelChoice";
 
 export async function getList(message: APIMessage, minPlayers: number, maxPlayers: number): Promise<Result<GameList | undefined, string>> {
   const listMakerID = message.author.id;
@@ -19,7 +20,7 @@ export async function getList(message: APIMessage, minPlayers: number, maxPlayer
 
   const validGameTiers = GAME_TIERS.flatMap((tier): [GameTier, Character[]][] => {
     const tierPlayerCharacters = availableCharacters.map(playerCharacters => {
-      return playerCharacters.filter(character => getTier(character.levels.length) === tier);
+      return playerCharacters.filter(character => getTier(getCurrentLevel(character)) === tier);
     });
 
     if (!tierPlayerCharacters.every(playerCharacters => playerCharacters.length > 0)) return [];

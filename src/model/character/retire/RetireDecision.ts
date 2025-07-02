@@ -1,4 +1,9 @@
-export const RetireDecision = {
-  type: "retire"
+export type RetireDecision = {
+  type: "retire";
+  data: {}
 };
-export type RetireDecision = typeof RetireDecision;
+
+export const RetireDecision: RetireDecision = {
+  type: "retire",
+  data: {}
+};

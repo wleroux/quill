@@ -46,6 +46,7 @@ export function LevelField({value, choice, decision, onChange}: {
 
   let group: React.ReactNode[] = [];
   const jsx: React.ReactNode[] = [];
+  if (decision !== undefined) value = {...value, progress: [...value.progress, decision]}
   for (let index = 0; index < choice.data.choices.length; index ++) {
     const subchoice = choice.data.choices[index];
     if (subchoice.data.enabled !== undefined && !subchoice.data.enabled(undefined, value)) continue;

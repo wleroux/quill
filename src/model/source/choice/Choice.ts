@@ -20,12 +20,12 @@ export function selectedChoice(choiceID: string, optionID: string): Condition<an
 }
 export function noClasses() {
   return (_: any, context: Character): boolean => {
-    return context.levels.length === 0;
+    return context.classIDs.length === 0;
   }
 }
 export function isMainClass() {
   return (_: any, context: Character): boolean => {
-    return context.levels.length === 1;
+    return context.classIDs.length === 1;
   }
 }
 

@@ -7,3 +7,11 @@ export type StartingStatChoice = {
     points: number;
   }
 };
+
+export const DefaultStartingStatChoice: StartingStatChoice = {
+  type: "starting-stat",
+  data: {
+    choiceID: "starting-stat",
+    points: 27
+  }
+};
