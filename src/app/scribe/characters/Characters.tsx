@@ -88,7 +88,7 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
             <td className="text-center">{members[character.ownerID] ?? character.ownerID}</td>
             <td className="text-center">{character.species?.speciesID}</td>
             <td className="text-center">{character.background?.backgroundID}</td>
-            <td className="text-center">{getLevelDisplay(character.classIDs)}</td>
+            <td className="text-center">{getLevelDisplay(character.classIDs ?? [])}</td>
             <td className="text-center">{result.valid ? "" : result.error.map(error => `${error.code} ${error.path.join("/")}`).join(", ")}</td>
             <td className="text-center">
               <Button disabled={refresh.isPending} label="Refresh" onClick={() => {
