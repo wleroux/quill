@@ -21,7 +21,7 @@ export function SkillField({character, choice, value, onChange}: {character: Cha
     options={VALID_SKILLS
     .map((skillID) => ({
       value: skillID,
-      label: SKILLS[skillID].label ?? skillID
+      label: `${SKILLS[skillID].label} (${SKILLS[skillID].attribute.toUpperCase()})`
     }))}
     onChange={ev => onChange({type: "skill", data: {skillID: ev.target.value}})} />
 }
