@@ -24,9 +24,9 @@ export function SkillOrToolField({character, choice, decision, onChange}: {chara
       .map(skillOrToolID => {
         if (SKILL_IDS.includes(skillOrToolID as SkillID)) {
           const skill = SKILLS[skillOrToolID as SkillID];
-          return ({label: `${skill.label} (${skill.attribute.toUpperCase()})`});
+          return ({value: skillOrToolID, label: `${skill.label} (${skill.attribute.toUpperCase()})`});
         } else {
-          return ({label: REPOSITORY.TOOLS[skillOrToolID]?.label, value: skillOrToolID});
+          return ({value: skillOrToolID, label: REPOSITORY.TOOLS[skillOrToolID]?.label});
         }
       })
   } />
