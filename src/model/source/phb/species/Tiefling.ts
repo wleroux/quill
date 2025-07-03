@@ -32,14 +32,14 @@ export const PHB_SPECIES_TIEFLING: Species = {
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "abyssal"),
-      label: "Cantrip",
+      label: "Spell",
       sourceID: "tiefling::fiendish legacy::spell-1",
       choiceID: "tiefling::fiendish legacy::spell-1",
       condition: is<SpellID>("Ray of Sickness")
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "abyssal"),
-      label: "Cantrip",
+      label: "Spell",
       sourceID: "tiefling::fiendish legacy::spell-2",
       choiceID: "tiefling::fiendish legacy::spell-2",
       condition: is<SpellID>("Hold Person")
@@ -53,14 +53,14 @@ export const PHB_SPECIES_TIEFLING: Species = {
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "chthonic"),
-      label: "Cantrip",
+      label: "Spell",
       sourceID: "tiefling::fiendish legacy::spell-1",
       choiceID: "tiefling::fiendish legacy::spell-1",
       condition: is<SpellID>("False Life")
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "chthonic"),
-      label: "Cantrip",
+      label: "Spell",
       sourceID: "tiefling::fiendish legacy::spell-2",
       choiceID: "tiefling::fiendish legacy::spell-2",
       condition: is<SpellID>("Ray of Enfeeblement")
@@ -75,14 +75,14 @@ export const PHB_SPECIES_TIEFLING: Species = {
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "infernal"),
-      label: "Cantrip",
+      label: "Spell",
       sourceID: "tiefling::fiendish legacy::spell-1",
       choiceID: "tiefling::fiendish legacy::spell-1",
       condition: is<SpellID>("Hellish Rebuke")
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "infernal"),
-      label: "Cantrip",
+      label: "Spell",
       sourceID: "tiefling::fiendish legacy::spell-2",
       choiceID: "tiefling::fiendish legacy::spell-2",
       condition: is<SpellID>("Darkness")
