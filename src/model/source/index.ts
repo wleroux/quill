@@ -8,7 +8,7 @@ import {Item, ItemID} from "./model/Item";
 import {ClassID, Level} from "./model/Level";
 import {Maneuver, ManeuverID} from "./model/Maneuver";
 import {Metamagic, MetamagicID} from "./model/Metamagic";
-import {Specie, SpecieID} from "./model/Specie";
+import {Species, SpeciesID} from "./model/Species";
 import {Spell, SpellID} from "./model/Spell";
 import {EldritchInvocation, EldritchInvocationID} from "./model/EldritchInvocation";
 
@@ -24,7 +24,7 @@ export const REPOSITORY = {
   CLASSES: Object.assign({}, ...ALL_SOURCES.map(source => source.LEVELS).filter(Boolean)) satisfies {[levelID: ClassID]: Level},
   MANEUVERS: Object.assign({}, ...ALL_SOURCES.map(source => source.MANEUVERS).filter(Boolean)) satisfies {[maneuverID: ManeuverID]: Maneuver},
   METAMAGICS: Object.assign({}, ...ALL_SOURCES.map(source => source.METAMAGICS).filter(Boolean)) satisfies {[metamagicID: MetamagicID]: Metamagic},
-  SPECIES: Object.assign({}, ...ALL_SOURCES.map(source => source.SPECIES).filter(Boolean)) satisfies {[specieID: SpecieID]: Specie},
+  SPECIES: Object.assign({}, ...ALL_SOURCES.map(source => source.SPECIES).filter(Boolean)) satisfies {[specieID: SpeciesID]: Species},
   SPELLS: Object.assign({}, ...ALL_SOURCES.map(source => source.SPELLS).filter(Boolean)) satisfies {[spellID: SpellID]: Spell},
   TOOLS: Object.assign({}, ...ALL_SOURCES.map(source => source.TOOLS).filter(Boolean)) satisfies {[toolID: ToolID]: Tool},
 } as const;

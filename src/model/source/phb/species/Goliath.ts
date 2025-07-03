@@ -1,4 +1,4 @@
-import {Specie} from "@/model/source/model/Specie";
+import {Species} from "@/model/source/model/Species";
 
 export const GIANT_ANCESTRIES = [
   "cloud giant",
@@ -18,7 +18,7 @@ export const GIANT_ANCESTRY_LABELS: {[key in GiantAncestry]: string} = {
   "storm giant": "Storm Giant"
 } as const;
 
-export const PHB_SPECIE_GOLIATH: Specie = {
+export const PHB_SPECIES_GOLIATH: Species = {
   label: "Goliath",
   choices: [
     {type: "simple", data: {

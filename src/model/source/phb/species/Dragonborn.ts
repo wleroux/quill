@@ -1,4 +1,4 @@
-import {Specie} from "@/model/source/model/Specie";
+import {Species} from "@/model/source/model/Species";
 
 export const DRACONIC_ANCESTRIES = [
   "black",
@@ -26,7 +26,7 @@ export const DRACONIC_ANCESTRY_LABELS: {[key in DraconicAncestry]: string} = {
   "white": "White"
 } as const;
 
-export const PHB_SPECIE_DRAGONBORN: Specie = {
+export const PHB_SPECIES_DRAGONBORN: Species = {
   label: "Dragonborn",
   choices: [
     {type: "simple", data: {

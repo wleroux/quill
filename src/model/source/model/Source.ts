@@ -1,4 +1,4 @@
-import {Specie, SpecieID} from "./Specie";
+import {Species, SpeciesID} from "./Species";
 import {Background, BackgroundID} from "./Background";
 import {Spell, SpellID} from "./Spell";
 import {Feat, FeatID} from "./Feat";
@@ -17,7 +17,7 @@ export type Source = {
   LEVELS: {[levelID: ClassID]: Level};
   MANEUVERS?: {[maneuverID: ManeuverID]: Maneuver};
   METAMAGICS?: {[metamagicID: MetamagicID]: Metamagic};
-  SPECIES?: {[specieID: SpecieID]: Specie};
+  SPECIES?: {[specieID: SpeciesID]: Species};
   SPELLS?: {[spellID: SpellID]: Spell};
   TOOLS?: {[toolID: ToolID]: Tool};
 };

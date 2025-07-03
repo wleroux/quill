@@ -1,4 +1,4 @@
-import {Specie} from "@/model/source/model/Specie";
+import {Species} from "@/model/source/model/Species";
 import {SkillID} from "@/model/source/model/Skill";
 import {is} from "@/model/source/condition/generic/IsCondition";
 
@@ -14,7 +14,7 @@ export const ELVEN_LINEAGE_LABELS: {[key in ElvenLineage]: string} = {
   "wood elf": "Wood Elf"
 } as const;
 
-export const PHB_SPECIE_ELF: Specie = {
+export const PHB_SPECIES_ELF: Species = {
   label: "Elf",
   choices: [
     {type: "simple", data: {

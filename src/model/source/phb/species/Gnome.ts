@@ -1,4 +1,4 @@
-import {Specie} from "@/model/source/model/Specie";
+import {Species} from "@/model/source/model/Species";
 import {selectedChoice} from "@/model/source/choice/Choice";
 import {is} from "@/model/source/condition/generic/IsCondition";
 
@@ -12,7 +12,7 @@ export const GNOMISH_LINEAGE_LABELS: {[key in GnomishLineage]: string} = {
   "rock gnome": "Rock Gnome"
 };
 
-export const PHB_SPECIE_GNOME: Specie = {
+export const PHB_SPECIES_GNOME: Species = {
   label: "Gnome",
   choices: [
     {type: "simple", data: {

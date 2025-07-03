@@ -1,4 +1,4 @@
-import SPECIES from "./specie/index";
+import SPECIES from "@/model/source/phb/species/index";
 import TOOLS from "./tool/index";
 import {Source} from "@/model/source/model/Source";
 import FEATS from "./feat/index";

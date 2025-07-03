@@ -1,7 +1,7 @@
-import {Specie} from "@/model/source/model/Specie";
+import {Species} from "@/model/source/model/Species";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 
-export const PHB_SPECIE_HUMAN: Specie = {
+export const PHB_SPECIES_HUMAN: Species = {
   label: "Human",
   choices: [
     {type: "simple", data: {
