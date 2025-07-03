@@ -2,7 +2,7 @@ import {Character} from "@/model/character/Character";
 import {SkillOrToolChoice} from "@/model/source/choice/skill-or-tool/SkillOrToolChoice";
 import {SkillOrToolDecision} from "@/model/source/choice/skill-or-tool/SkillOrToolDecision";
 import {DropdownField} from "@/lib/components/DropdownField";
-import {SKILLS} from "@/model/source/Skill";
+import {SKILL_IDS, SKILLS} from "@/model/source/Skill";
 import {REPOSITORY} from "@/model/source/index";
 import {SkillID} from "@/model/source/model/Skill";
 
@@ -21,9 +21,13 @@ export function SkillOrToolField({character, choice, decision, onChange}: {chara
       ...VALID_SKILLS,
       ...VALID_TOOLS
     ]
-      .map(skillOrToolID => ({
-        label: REPOSITORY.TOOLS[skillOrToolID]?.label ?? SKILLS[skillOrToolID as SkillID]?.label,
-        value: skillOrToolID,
-      }))
+      .map(skillOrToolID => {
+        if (SKILL_IDS.includes(skillOrToolID as SkillID)) {
+          const skill = SKILLS[skillOrToolID as SkillID];
+          return ({label: `${skill.label} (${skill.attribute.toUpperCase()})`});
+        } else {
+          return ({label: REPOSITORY.TOOLS[skillOrToolID]?.label, value: skillOrToolID});
+        }
+      })
   } />
 }
