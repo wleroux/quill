@@ -17,6 +17,8 @@ import {CharacterID} from "@/model/character/CharacterID";
 import {MENU_PASSTHROUGH} from "@/lib/components/Menu";
 import {RenameDialog} from "@/lib/character/train/RenameDialog";
 import {Menu} from "primereact/menu";
+import {LevelDialog} from "@/lib/character/train/LevelDialog";
+import {getCurrentLevel} from "@/model/character/level/LevelChoice";
 
 function PlayerActionButton({value}: {value: Character}) {
   const router = useRouter();
@@ -36,20 +38,25 @@ function PlayerActionButton({value}: {value: Character}) {
   const retireButtonRef = useRef(null);
 
   const [isRenameOpen, setIsRenameOpen] = React.useState(false);
+  const [isLevelUpOpen, setIsLevelUpOpen] = React.useState(false);
 
   return <>
     <Button ref={retireButtonRef} size="small" label="Actions" onClick={(ev) => {
       menu.current?.toggle(ev);
     }} />
     <Menu pt={MENU_PASSTHROUGH} ref={menu} popup popupAlignment="right" model={[
-      {label: `Rename ${value.name}`, disabled: isRenameOpen, command() {
-          setIsRenameOpen(true);
-        }},
-      {label: `Retire ${value.name}`, disabled: retire.isPending || isConfirmRetireVisible, command() {
+      {label: `Level Up`, visible: getCurrentLevel(value) >= 3,  disabled: isLevelUpOpen, command() {
+        setIsLevelUpOpen(true);
+      }},
+      {label: `Rename`, disabled: isRenameOpen, command() {
+        setIsRenameOpen(true);
+      }},
+      {label: `Retire`, disabled: retire.isPending || isConfirmRetireVisible, command() {
         setIsConfirmRetireVisible(true);
       }}
     ]} />
     <RenameDialog value={value} visible={isRenameOpen} onClose={() => setIsRenameOpen(false)} />
+    <LevelDialog value={value} visible={isLevelUpOpen} onClose={() => setIsLevelUpOpen(false)} />
 
     <ConfirmPopup pt={{
       root: {className: "bg-red-800 border-red-400/50 text-red-50 dark:bg-red-950 border dark:border-red-400/50 p-4 mt-4 gap-4 flex flex-col"},

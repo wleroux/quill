@@ -33,10 +33,11 @@ export function LevelChoiceField({value, choice, decision, onChange}: {
   </Field>
 }
 
-export function LevelField({value, choice, decision, onChange}: {
+export function LevelField({value, choice, decision, inline, onChange}: {
   value: Character,
   choice: LevelChoice,
   decision?: LevelDecision,
+  inline?: boolean,
   onChange: (fn: (prev: LevelDecision | undefined) => LevelDecision | undefined) => void
 }) {
   const enabledChoices = choice.data.choices.filter(choice => choice.data.enabled === undefined || choice.data.enabled(undefined, value));
@@ -94,7 +95,7 @@ export function LevelField({value, choice, decision, onChange}: {
     }
   }
 
-  return <FieldSet>
+  return <FieldSet inline={inline}>
     {jsx}
   </FieldSet>
 }

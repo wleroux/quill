@@ -4,6 +4,7 @@ import {ItemChoice} from "@/model/character/level/item/ItemChoice";
 import {ClassChoice} from "./class/ClassChoice";
 import {initiateMundaneItem, majorCommonItem, minorCommonItem} from "@/model/source/condition/item/itemTypeCondition";
 import {Character} from "@/model/character/Character";
+import { alwaysFalse } from "@/model/source/condition/generic/FalseCondition";
 
 export function getCurrentLevel(value: Character) {
   return value.progress.filter(progress => progress.type === "level" &&
@@ -92,8 +93,49 @@ const LEVEL_2: LevelChoice = {
     ]
   }
 };
+const LEVEL_3: LevelChoice = {
+  type: "level",
+  data: {
+    choiceID: "level::3",
+    enabled: currentLevel(2),
+    choices: [
+      {type: "class", data: {
+        choiceID: "class::3",
+      }},
+      {type: "item", data: {
+        label: "Minor Common Item",
+        choiceID: "level::item::minor-common-3",
+        condition: minorCommonItem
+      }}
+    ]
+  }
+};
+const LEVEL_4: LevelChoice = {
+  type: "level",
+  data: {
+    choiceID: "level::4",
+    enabled: alwaysFalse(),
+    choices: [
+      {type: "class", data: {
+        choiceID: "class::4",
+      }},
+      {type: "item", data: {
+        label: "Minor Common Item",
+        choiceID: "level::item::minor-common-4",
+        condition: minorCommonItem
+      }},
+      {type: "item", data: {
+        label: "Major Common Item",
+        choiceID: "level::item::major-common-2",
+        condition: minorCommonItem
+      }}
+    ]
+  }
+};
 
 export const DefaultLevelChoice = [
   LEVEL_1,
-  LEVEL_2
+  LEVEL_2,
+  LEVEL_3,
+  LEVEL_4
 ] as LevelChoice[];
