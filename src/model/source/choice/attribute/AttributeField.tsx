@@ -16,7 +16,7 @@ export function AttributeField({character, choice, decision, onChange}: {
     .filter(attributeID => choice.data.condition == undefined || choice.data.condition(attributeID, character));
 
   return <DropdownField label="Attribute" value={decision?.data.attributeID} options={VALID_ATTRIBUTE_IDS.map(attributeID => ({
-      label: ATTRIBUTES[attributeID].label,
+      label: `${ATTRIBUTES[attributeID].label} (${character.stats[attributeID]} ⇒ ${character.stats[attributeID] + 1})`,
       value: attributeID
     }))} onChange={value => {
       onChange({
