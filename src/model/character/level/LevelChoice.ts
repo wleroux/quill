@@ -11,7 +11,7 @@ export function getCurrentLevel(value: Character) {
     Object.values(progress.data.decisions).some(data => data.type === "class")
   ).length;
 }
-function currentLevel(level: number): Condition<undefined> {
+export function currentLevel(level: number): Condition<any> {
   return (_, context: Character): boolean => getCurrentLevel(context) === level;
 }
 
