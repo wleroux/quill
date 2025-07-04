@@ -4,6 +4,7 @@ import {Resource} from "sst";
 
 type Session = {
   sub: Snowflake;
+  isMember: boolean;
   isScribe: boolean;
   isGameMaster: boolean;
   isAdmin: boolean;

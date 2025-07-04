@@ -5,7 +5,7 @@ import {SignedOut} from "@/lib/components/SignedOut";
 import {Menubar, MenubarPassThroughOptions} from "primereact/menubar";
 import Link from "next/link";
 import Image from "next/image";
-import {isAdministrator, isAuthenticated, isGameMaster, isScribe} from "@/lib/authentication/isAuthenticated";
+import {isAdministrator, isGameMaster, isMember, isScribe} from "@/lib/authentication/isAuthenticated";
 import {getUserID} from "@/lib/authentication/getUserID";
 import {MenuItem} from "primereact/menuitem";
 
@@ -44,7 +44,7 @@ const userManuPassthrough: MenubarPassThroughOptions = {
 };
 
 export async function Navigation() {
-  const [player, scribe, gameMaster, admin] = await Promise.all([isAuthenticated(), isScribe(), isGameMaster(), isAdministrator()]);
+  const [player, scribe, gameMaster, admin] = await Promise.all([isMember(), isScribe(), isGameMaster(), isAdministrator()]);
 
   const model: MenuItem[] = [];
   if (player) {

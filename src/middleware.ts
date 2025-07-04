@@ -34,8 +34,10 @@ export default async function authMiddleware(req: NextRequest) {
       const userinfo = await new UserDiscordClient(token.access_token).GetCurrentAuthorizationInformation();
       if (userinfo.user === undefined) return NextResponse.next();
 
-      const member = await botDiscordClient.getGuildMember(Resource.DiscordGuildID.value, userinfo.user!.id);
-      if (!member) return NextResponse.next();
+      const member = await (
+        botDiscordClient.getGuildMember(Resource.DiscordGuildID.value, userinfo.user!.id)
+          .catch(_ => undefined)
+      );
 
       const roles = await botDiscordClient.getGuildRoles(Resource.DiscordGuildID.value);
       const adminRole = roles.find(role => role.name === "bot overlord");
@@ -44,9 +46,10 @@ export default async function authMiddleware(req: NextRequest) {
 
       const authToken = await encrypt({
         sub: userinfo.user.id,
-        isGameMaster: member.roles.includes(gameMasterRole?.id ?? ""),
-        isScribe: member.roles.includes(scribeRole?.id ?? ""),
-        isAdmin: member.roles.includes(adminRole?.id ?? "")
+        isMember: member !== undefined,
+        isGameMaster: member ? member.roles.includes(gameMasterRole?.id ?? "") : false,
+        isScribe: member ? member.roles.includes(scribeRole?.id ?? "") : false,
+        isAdmin: member ? member.roles.includes(adminRole?.id ?? "") : false
       });
       const url = req.nextUrl.clone();
       url.pathname = "/";

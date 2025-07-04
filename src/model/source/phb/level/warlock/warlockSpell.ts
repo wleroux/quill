@@ -27,7 +27,7 @@ export const warlockSpell = is(
   "Illusory Script",
   "Protection from Evil and Good",
   "Speak with Animals",
-  "Tasha’s Hideous Laughter",
+  "Tasha's Hideous Laughter",
   "Unseen Servant",
   "Witch Bolt",
   // Level 2 Warlock Spells
@@ -69,7 +69,7 @@ export const warlockSpell = is(
   "Contact Other Plane",
   "Dream",
   "Hold Monster",
-  "Jallarzi’s Storm of Radiance",
+  "Jallarzi's Storm of Radiance",
   "Mislead",
   "Planar Binding",
   "Scrying",
@@ -81,7 +81,7 @@ export const warlockSpell = is(
   "Create Undead",
   "Eyebite",
   "Summon Fiend",
-  "Tasha’s Bubbling Cauldron",
+  "Tasha's Bubbling Cauldron",
   "True Seeing",
   // Level 7 Warlock Spells
   "Etherealness",

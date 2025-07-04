@@ -56,7 +56,7 @@ export const sorcererSpell = is<SpellID>(
   "Darkness",
   "Darkvision",
   "Detect Thoughts",
-  "Dragon’s Breath",
+  "Dragon's Breath",
   "Enhance Ability",
   "Enlarge/Reduce",
   "Flame Blade",
@@ -115,7 +115,7 @@ export const sorcererSpell = is<SpellID>(
   "Wall of Fire",
   // Level 5 Sorcerer Spells
   "Animate Objects",
-  "Bigby’s Hand",
+  "Bigby's Hand",
   "Cloudkill",
   "Cone of Cold",
   "Creation",
@@ -137,7 +137,7 @@ export const sorcererSpell = is<SpellID>(
   "Globe of Invulnerability",
   "Mass Suggestion",
   "Move Earth",
-  "Otiluke’s Freezing Sphere",
+  "Otiluke's Freezing Sphere",
   "Sunbeam",
   "True Seeing",
   // Level 7 Sorcerer Spells

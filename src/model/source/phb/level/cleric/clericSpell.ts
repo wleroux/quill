@@ -102,7 +102,7 @@ export const clericSpell = is<SpellID>(
   "Forbiddance",
   "Harm",
   "Heal",
-  "Heroes’ Feast",
+  "Heroes' Feast",
   "Planar Ally",
   "Sunbeam",
   "True Seeing",

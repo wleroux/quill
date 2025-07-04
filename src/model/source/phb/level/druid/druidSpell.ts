@@ -119,7 +119,7 @@ export const druidSpell = is(
   "Find the Path",
   "Flesh to Stone",
   "Heal",
-  "Heroes’ Feast",
+  "Heroes' Feast",
   "Move Earth",
   "Sunbeam",
   "Transport via Plants",

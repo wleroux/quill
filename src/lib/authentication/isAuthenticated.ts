@@ -16,3 +16,9 @@ export async function isGameMaster() {
 export async function isAdministrator() {
   return (await getSession())?.isAdmin ?? false;
 }
+
+export async function isMember(): Promise<boolean> {
+  return await isAuthenticated();
+  // TODO: Wait until new authentication is ready
+  // return (await getSession())?.isMember ?? false;
+}
