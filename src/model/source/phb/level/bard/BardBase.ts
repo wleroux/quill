@@ -8,6 +8,7 @@ import {toolType} from "@/model/source/condition/tool/ToolTypeCondition";
 import {minStat} from "@/model/source/condition/attribute/minStat";
 import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
 import {any} from "@/model/source/condition/generic/AnyCondition";
+import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 
 const PHB_BARD_1: Level = {
   label: "Bard 1",
@@ -97,7 +98,7 @@ const PHB_BARD_2: Level = {
       label: "Replace Prepared Spell",
       required: alwaysFalse(),
       choiceID: "bard::cantrip-replacement::2",
-      sourceID: bardPreparedSpellID(),
+      sourceID: bardPreparedSpellID,
       condition: bardLeveledSpell(1)
     }},
     {type: "spell", data: {
@@ -116,7 +117,58 @@ const PHB_BARD_2: Level = {
   ]
 } as const;
 
+export const BASE_BARD_3 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "bard::spell-replacement::3",
+      sourceID: bardPreparedCantripID(),
+      condition: bardCantripSpell()
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "bard::cantrip-replacement::3",
+      sourceID: bardPreparedSpellID,
+      condition: bardLeveledSpell(2)
+    }},
+    {type: "spell", data: {
+      choiceID: "bard::spell::spell-6",
+      sourceID: "bard::spell::spell-6",
+      condition: bardLeveledSpell(2),
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const BASE_BARD_4 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "bard::spell-replacement::4",
+      sourceID: bardPreparedCantripID(),
+      condition: bardCantripSpell()
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "bard::cantrip-replacement::4",
+      sourceID: bardPreparedSpellID,
+      condition: bardLeveledSpell(2)
+    }},
+    {type: "spell", data: {
+      choiceID: "bard::spell::spell-7",
+      sourceID: "bard::spell::spell-7",
+      condition: bardLeveledSpell(2),
+    }},
+    {type: "feat", data: {
+      choiceID: "bard::feat-1",
+      condition: featType("general", "origin")
+    }}
+  ]
+} as const satisfies Partial<Level>;
+
 export default {
-  "Bard 1": PHB_BARD_1,
-  "Bard 2": PHB_BARD_2
+  [PHB_BARD_1.label]: PHB_BARD_1,
+  [PHB_BARD_2.label]: PHB_BARD_2
 } as const satisfies {[levelID: ClassID]: Level};

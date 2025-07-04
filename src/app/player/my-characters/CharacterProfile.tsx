@@ -45,7 +45,7 @@ function PlayerActionButton({value}: {value: Character}) {
       menu.current?.toggle(ev);
     }} />
     <Menu pt={MENU_PASSTHROUGH} ref={menu} popup popupAlignment="right" model={[
-      {label: `Level Up`, visible: getCurrentLevel(value) < 3,  disabled: isLevelUpOpen, command() {
+      {label: `Level Up`, visible: getCurrentLevel(value) < 4,  disabled: isLevelUpOpen, command() {
         setIsLevelUpOpen(true);
       }},
       {label: `Rename`, disabled: isRenameOpen, command() {

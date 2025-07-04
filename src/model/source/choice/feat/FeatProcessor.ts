@@ -19,7 +19,7 @@ export const featProcessor: Processor<FeatChoice, FeatDecision | undefined> = (v
     const feat = REPOSITORY.FEATS[decision.data.featID];
     if (feat === undefined)
       return ErrorResult.of([new ProcessorError("INVALID FEAT", [choice.data.choiceID], choice, decision)]);
-    if (feat.prerequisite !== undefined && !feat.prerequisite.evaluate(value, value))
+    if (feat.prerequisite !== undefined && !feat.prerequisite(value, value))
       return ErrorResult.of([new ProcessorError("UNMET PREREQUISITE", [choice.data.choiceID], choice, decision)]);
     if (value.feats.some(feat => feat.featID === decision.data.featID) && !feat.repeatable)
       return ErrorResult.of([new ProcessorError("NON-REPEATABLE FEAT", [choice.data.choiceID], choice, decision)]);

@@ -38,7 +38,6 @@ export async function POST(
       const tier = getTier(level);
       const tierGames = games.filter(game => game.tier === tier && game.status === "SUCCESS").length;
       if (level <= 2) {
-        console.log(tierGames);
         if (tierGames < 0) return ErrorResult.of("Insufficient Games")
       } else {
         return ErrorResult.of("Cannot level up yet!")

@@ -1,8 +1,6 @@
 import {bardSpell} from "@/model/source/phb/level/bard/BardSpellCondition";
 import {SpellLevel} from "@/model/source/model/Spell";
 import {all} from "@/model/source/condition/generic/AllCondition";
-import {spellLevel} from "@/model/source/condition/spell/SpellLevelCondition";
+import {maxSpellLevel} from "@/model/source/condition/spell/LeveledSpellCondition";
 
-export function bardLeveledSpell(level: Exclude<SpellLevel, "cantrip">) {
-  return all(bardSpell(), spellLevel(level));
-}
+export const bardLeveledSpell = (level: Exclude<SpellLevel, "cantrip">) => all(bardSpell(), maxSpellLevel(level));

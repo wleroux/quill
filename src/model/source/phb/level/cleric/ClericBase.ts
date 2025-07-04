@@ -84,6 +84,30 @@ const PHB_CLERIC_2: Level = {
   ]
 } as const;
 
+export const PHB_CLERIC_3 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "cleric::cantrip-replacement::3",
+      sourceID: clericCantripSources,
+      condition: clericCantripSpell
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_CLERIC_4 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "cleric::cantrip-replacement::4",
+      sourceID: clericCantripSources,
+      condition: clericCantripSpell
+    }}
+  ]
+} as const satisfies Partial<Level>;
+
+
 export default {
   "Cleric 1": PHB_CLERIC_1,
   "Cleric 2": PHB_CLERIC_2

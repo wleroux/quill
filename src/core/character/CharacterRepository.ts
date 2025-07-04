@@ -44,7 +44,7 @@ export const CharacterReducer = (initialValue: Character | undefined, operation:
         return operation.data.reduce(
           (result, decision) => result.flatMap(value => progressProcessor(value, getProgressChoice(value, decision), decision)),
           ValidResult.of(initialValue)
-        ).mapError(_ => "Could not train character");
+        ).mapError(_ => _.code);
       }
       case "retire": return retireProcessor(initialValue, DefaultRetireChoice, RetireDecision).mapError(_ => "Could not retire character.");
     }

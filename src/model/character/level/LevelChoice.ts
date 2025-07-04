@@ -4,7 +4,7 @@ import {ItemChoice} from "@/model/character/level/item/ItemChoice";
 import {ClassChoice} from "./class/ClassChoice";
 import {initiateMundaneItem, majorCommonItem, minorCommonItem} from "@/model/source/condition/item/itemTypeCondition";
 import {Character} from "@/model/character/Character";
-import { alwaysFalse } from "@/model/source/condition/generic/FalseCondition";
+import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
 
 export function getCurrentLevel(value: Character) {
   return value.progress.filter(progress => progress.type === "level" &&
@@ -127,7 +127,7 @@ const LEVEL_4: LevelChoice = {
       {type: "item", data: {
         label: "Major Common Item",
         choiceID: "level::item::major-common-2",
-        condition: minorCommonItem
+        condition: majorCommonItem
       }}
     ]
   }

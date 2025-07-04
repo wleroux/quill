@@ -20,6 +20,9 @@ const dropdownPt: DropdownPassThroughOptions = {
   trigger: {
     className: "pointer-events-none pr-4"
   },
+  itemGroup: {
+    className: "bg-transparent px-4 py-1 rounded-md text-nowrap",
+  },
   item: (options) => ({
     className: twMerge(
       "bg-transparent px-4 py-1 hover:bg-black/20 rounded-md text-nowrap",

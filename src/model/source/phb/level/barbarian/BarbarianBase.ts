@@ -3,6 +3,7 @@ import {isMainClass, noClasses} from "@/model/source/choice/Choice";
 import {barbarianSkills} from "@/model/source/phb/level/barbarian/BarbarianSkillCondition";
 import {minStat} from "@/model/source/condition/attribute/minStat";
 import {any} from "@/model/source/condition/generic/AnyCondition";
+import { featType } from "@/model/source/condition/feat/FeatTypeCondition";
 
 const PHB_BARBARIAN_1: Level = {
   label: "Barbarian 1",
@@ -25,6 +26,24 @@ const PHB_BARBARIAN_2: Level = {
   replace: "Barbarian 1",
   choices: []
 };
+
+export const PHB_BARBARIAN_3 = {
+  choices: [
+    {type: "skill", data: {
+      label: "Primal Knowledge",
+      choiceID: "barbarian::skill-3",
+      condition: barbarianSkills()
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_BARBARIAN_4 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "barbarian::feat-1",
+      condition: featType("general", "origin")
+    }}
+  ]
+} as const satisfies Partial<Level>;
 
 export default {
   "Barbarian 1": PHB_BARBARIAN_1,
