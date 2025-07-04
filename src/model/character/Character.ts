@@ -15,6 +15,7 @@ import {BackgroundDecision} from "@/model/character/create/background/Background
 import {SpeciesDecision} from "@/model/character/create/species/SpeciesDecision";
 import {ClassID} from "@/model/source/model/Level";
 import {ProgressDecision} from "@/model/character/progress/ProgressDecision";
+import {ManeuverID} from "@/model/source/model/Maneuver";
 
 type Proficiency = "untrained" | "proficient" | "expertise";
 
@@ -34,12 +35,24 @@ export type Character = {
   // Results
   name: string;
   classIDs: ClassID[];
-  feats: {featID: FeatID, decisions: {[choiceID: ChoiceID]: Decision}}[];
+  feats: {[sourceID: string]: {
+    featID: FeatID,
+    decisions: {[choiceID: ChoiceID]: Decision}
+  }};
   stats: {[attributeID in AttributeID]: number};
-  items: {itemID: ItemID; decisions: {[choiceID: ChoiceID]: Decision}}[];
+  items: {
+    itemID: ItemID;
+    decisions: {[choiceID: ChoiceID]: Decision}
+  }[];
   skills: {[skillID in SkillID]: Proficiency};
+  maneuvers: {
+    [choiceID: ChoiceID]: ManeuverID;
+  };
   metamagics: {[sourceID: string]: MetamagicID};
-  eldritchInvocations?: {[sourceID: string]: { eldritchInvocationID: EldritchInvocationID; decisions: {[choiceID: ChoiceID]: Decision} }};
+  eldritchInvocations?: {[sourceID: string]: {
+    eldritchInvocationID: EldritchInvocationID;
+    decisions: {[choiceID: ChoiceID]: Decision}
+  }};
   spells: {[sourceID: string]: SpellID};
   tools: ToolID[];
   choices: {[choiceID: ChoiceID]: string};
@@ -64,8 +77,9 @@ export const INITIAL_CHARACTER = (id: CharacterID, ownerID: Snowflake): Characte
   classIDs: [],
   choices: {},
   items: [],
-  feats: [],
+  feats: {},
   eldritchInvocations: {},
+  maneuvers: {},
   metamagics: {},
   skills: {
     "acrobatics": "untrained",

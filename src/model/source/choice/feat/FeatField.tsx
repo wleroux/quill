@@ -8,24 +8,23 @@ import {useEffect} from "react";
 import {ChoicesField} from "@/model/source/choice/ChoicesField";
 
 export function FeatField({character, choice, value, onChange}: {character: Character, choice: FeatChoice, value: FeatDecision | undefined, onChange: (value: FeatDecision | undefined) => void}) {
-  const validFeats = Object.keys(REPOSITORY.FEATS)
-    .filter(featID => !character.feats.some(feat => feat.featID === featID) || REPOSITORY.FEATS[featID].repeatable)
+  const VALID_FEATS = Object.keys(REPOSITORY.FEATS)
+    .filter(featID => !Object.values(character.feats).some(feat => feat.featID === featID) || REPOSITORY.FEATS[featID].repeatable)
     .filter(featID => choice.data.condition === undefined || choice.data.condition(featID, character))
     .filter(featID => REPOSITORY.FEATS[featID].prerequisite?.(character, character) ?? true);
-
   useEffect(() => {
-    if (value === undefined && validFeats.length === 1) {
-      onChange({type: "feat", data: {featID: validFeats[0], decisions: {}}});
+    if (value === undefined && VALID_FEATS.length === 1) {
+      onChange({type: "feat", data: {featID: VALID_FEATS[0], decisions: {}}});
     }
   }, [value === undefined]);
 
   const feat = value?.data.featID ? REPOSITORY.FEATS[value.data.featID] : undefined;
   return <FieldSet inline>
     <DropdownField
-      disabled={validFeats.length === 0 || validFeats.length === 1 && validFeats[0] === value?.data.featID}
+      disabled={VALID_FEATS.length === 0 || VALID_FEATS.length === 1 && VALID_FEATS[0] === value?.data.featID}
       label={choice.data.label ?? "Feat"}
       value={value?.data.featID}
-      options={validFeats
+      options={VALID_FEATS
         .map(featID => ({value: featID, label: REPOSITORY.FEATS[featID].label}))
         .sort((a, b) => a.label.localeCompare(b.label))
       }

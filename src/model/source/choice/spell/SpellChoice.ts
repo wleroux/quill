@@ -8,7 +8,6 @@ export type SpellChoice = {
     label?: string;
     choiceID: ChoiceID;
     enabled?: Condition<any>;
-    sourceID: string;
     condition?: SpellCondition;
   }
 };

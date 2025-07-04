@@ -151,7 +151,7 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
         </StepperPanel>
       </Stepper>
     </div>}
-    footer={<div className="flex flex-row w-full gap-4">
+    footer={<div className="flex flex-row w-full gap-4 items-center">
       {activeStep !== 0 && currentLevel === 0 && <Button icon="pi pi-chevron-left" label="Prev" disabled={activeStep === 0} onClick={(ev) => {
         if (currentLevel === 0) setLevel1(undefined);
         stepper.current?.prevCallback(ev);
@@ -162,6 +162,9 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
       }} />}
       <Spacer />
 
+      {!result.valid &&
+        <span className="pi pi-info-circle text-red-400/20" title={result.error.map(error => error.path.slice(1).join("/")).join(", ")}></span>
+      }
       {activeStep !== 3 && <Button icon="pi pi-chevron-right" iconPos="right" label="Next" className={"flex-row-reverse"} disabled={
         (activeStep === 0 && !startingStatProcessor(character, DefaultStartingStatChoice, startingStat).valid) ||
         (activeStep === 1 && (species === undefined || !speciesProcessor(character, DefaultSpeciesChoice, species).valid)) ||

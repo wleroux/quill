@@ -5,8 +5,9 @@ import {minStat} from "@/model/source/condition/attribute/minStat";
 import {SkillID} from "@/model/source/model/Skill";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
+import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
 
-const fighterSkills = is<SkillID>("acrobatics","animal handling","athletics","history","insight","intimidation","persuasion","perception","survival");
+export const fighterSkills = is<SkillID>("acrobatics","animal handling","athletics","history","insight","intimidation","persuasion","perception","survival");
 
 const PHB_FIGHTER_1: Level = {
   label: "Fighter 1",
@@ -33,10 +34,46 @@ const PHB_FIGHTER_1: Level = {
 const PHB_FIGHTER_2: Level = {
   label: "Fighter 2",
   replace: "Fighter 1",
-  choices: []
+  choices: [
+    {type: "feat-replacement", data: {
+      label: "Replace Fighting Style",
+      choiceID: "fighter::fighting-style-replacement-2",
+      required: alwaysFalse(),
+      sourceID: is("fighter::fighting-style::feat-1"),
+      condition: featType("fighting style")
+    }}
+  ]
 } as const;
 
-export const FIGHTER_BASE_LEVELS = {
-  "Fighter 1": PHB_FIGHTER_1,
-  "Fighter 2": PHB_FIGHTER_2
+export const PHB_FIGHTER_3 = {
+  choices: [
+    {type: "feat-replacement", data: {
+      label: "Replace Fighting Style",
+      choiceID: "fighter::fighting-style-replacement-2",
+      required: alwaysFalse(),
+      sourceID: is("fighter::fighting-style::feat-1"),
+      condition: featType("fighting style")
+    }}
+  ]
+} as const satisfies Partial<Level>;
+
+export const PHB_FIGHTER_4 = {
+  choices: [
+    {type: "feat-replacement", data: {
+      label: "Replace Fighting Style",
+      choiceID: "fighter::fighting-style-replacement-2",
+      required: alwaysFalse(),
+      sourceID: is("fighter::fighting-style::feat-1"),
+      condition: featType("fighting style")
+    }},
+    {type: "feat", data: {
+      choiceID: "fighter::feat-1",
+      condition: featType("general", "origin")
+    }}
+  ]
+} as const satisfies Partial<Level>;
+
+export default {
+  [PHB_FIGHTER_1.label]: PHB_FIGHTER_1,
+  [PHB_FIGHTER_2.label]: PHB_FIGHTER_2
 } as const satisfies {[levelID: ClassID]: Level};

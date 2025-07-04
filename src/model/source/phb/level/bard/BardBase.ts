@@ -48,37 +48,31 @@ const PHB_BARD_1: Level = {
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "bard::spell::cantrip-1",
-      sourceID: "bard::spell::cantrip-1",
       condition: bardCantripSpell()
     }},
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "bard::spell::cantrip-2",
-      sourceID: "bard::spell::cantrip-2",
       condition: bardCantripSpell()
     }},
     {type: "spell", data: {
       label: "Level 1 Spell",
       choiceID: "bard::spell::spell-1",
-      sourceID: "bard::spell::spell-1",
       condition: bardLeveledSpell(1)
     }},
     {type: "spell", data: {
       label: "Level 1 Spell",
       choiceID: "bard::spell::spell-2",
-      sourceID: "bard::spell::spell-2",
       condition: bardLeveledSpell(1)
     }},
     {type: "spell", data: {
       label: "Level 1 Spell",
       choiceID: "bard::spell::spell-3",
-      sourceID: "bard::spell::spell-3",
       condition: bardLeveledSpell(1)
     }},
     {type: "spell", data: {
       label: "Level 1 Spell",
       choiceID: "bard::spell::spell-4",
-      sourceID: "bard::spell::spell-4",
       condition: bardLeveledSpell(1)
     }}
   ]
@@ -103,7 +97,6 @@ const PHB_BARD_2: Level = {
     }},
     {type: "spell", data: {
       choiceID: "bard::spell::spell-5",
-      sourceID: "bard::spell::spell-5",
       condition: bardLeveledSpell(1)
     }},
     {type: "expertise", data: {
@@ -135,7 +128,6 @@ export const BASE_BARD_3 = {
     }},
     {type: "spell", data: {
       choiceID: "bard::spell::spell-6",
-      sourceID: "bard::spell::spell-6",
       condition: bardLeveledSpell(2),
     }}
   ]
@@ -158,7 +150,6 @@ export const BASE_BARD_4 = {
     }},
     {type: "spell", data: {
       choiceID: "bard::spell::spell-7",
-      sourceID: "bard::spell::spell-7",
       condition: bardLeveledSpell(2),
     }},
     {type: "feat", data: {

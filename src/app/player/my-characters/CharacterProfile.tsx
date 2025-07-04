@@ -162,18 +162,28 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
           </>}
         </div>}
 
-        {value.feats.length > 0 && <div className="flex-1">
-          <strong>Feats</strong>
-          <div className="flex flex-col">
-            {value.feats.map((feat, index) => <div key={`${feat.featID}-${index}`}>
-              - {REPOSITORY.FEATS[feat.featID].label}
-            </div>)}
-          </div>
+        {(Object.values(value.feats).length > 0 || Object.values(value.maneuvers).length > 0) && <div className="flex-1">
+          {Object.values(value.feats).length > 0 && <>
+            <strong>Feats</strong>
+            <div className="flex flex-col">
+              {Object.keys(value.feats).map((choiceID) => <div key={choiceID}>
+                - {REPOSITORY.FEATS[value.feats[choiceID].featID].label}
+              </div>)}
+            </div>
+          </>}
+          {Object.values(value.maneuvers).length > 0 && <>
+            <strong>Feats</strong>
+            <div className="flex flex-col">
+              {Object.keys(value.maneuvers).map((choiceID) => <div key={choiceID}>
+                - {REPOSITORY.MANEUVERS[value.maneuvers[choiceID]].label}
+              </div>)}
+            </div>
+          </>}
+        </div>}
+        </div>
+          </div>}
+        {!value.retired && <div className="absolute right-4 top-4">
+          <PlayerActionButton value={value}/>
         </div>}
       </div>
-    </div>}
-    {!value.retired && <div className="absolute right-4 top-4">
-      <PlayerActionButton value={value} />
-    </div>}
-  </div>
-}
+      }

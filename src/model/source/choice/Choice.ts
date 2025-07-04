@@ -14,6 +14,8 @@ import {SkillOrToolChoice} from "@/model/source/choice/skill-or-tool/SkillOrTool
 import {Condition} from "@/model/source/condition/Condition";
 import {EldritchInvocationChoice} from "@/model/source/choice/eldritch-invocation/EldritchInvocationChoice";
 import {EldritchInvocationReplacementChoice} from "@/model/source/choice/eldritch-invocation-replacement/EldritchInvocationReplacementChoice";
+import {ManeuverChoice} from "@/model/source/choice/maneuver/ManeuverChoice";
+import {FeatReplacementChoice} from "@/model/source/choice/feat-replacement/FeatReplacementChoice";
 
 export function selectedChoice(choiceID: string, optionID: string): Condition<any> {
   return (_: any, value: Character) => value.choices[choiceID] === optionID;
@@ -36,6 +38,8 @@ export type Choice =
   | EldritchInvocationReplacementChoice
   | ExpertiseChoice
   | FeatChoice
+  | FeatReplacementChoice
+  | ManeuverChoice
   | MetamagicChoice
   | MetamagicReplacementChoice
   | SimpleChoice

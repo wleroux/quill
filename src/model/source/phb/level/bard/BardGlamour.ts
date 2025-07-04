@@ -9,12 +9,10 @@ const PHB_BARD_GLAMOUR_3: Level = {
     ...BASE_BARD_3.choices,
     {type: "spell", data: {
       choiceID: "bard (glamour)::spell-1",
-      sourceID: "bard (glamour)::spell-1",
       condition: is("Charm Person")
     }},
     {type: "spell", data: {
       choiceID: "bard (glamour)::spell-2",
-      sourceID: "bard (glamour)::spell-2",
       condition: is("Mirror Image")
     }}
   ]

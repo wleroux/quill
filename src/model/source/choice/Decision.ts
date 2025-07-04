@@ -12,6 +12,8 @@ import {BackgroundAttributeDecision} from "@/model/character/create/background/b
 import {SkillOrToolDecision} from "@/model/source/choice/skill-or-tool/SkillOrToolDecision";
 import {EldritchInvocationDecision} from "@/model/source/choice/eldritch-invocation/EldritchInvocationDecision";
 import {EldritchInvocationReplacementDecision} from "@/model/source/choice/eldritch-invocation-replacement/EldritchInvocationReplacementDecision";
+import {ManeuverDecision} from "@/model/source/choice/maneuver/ManeuverDecision";
+import {FeatReplacementDecision} from "@/model/source/choice/feat-replacement/FeatReplacementDecision";
 
 export type Decision =
   | AttributeDecision
@@ -20,12 +22,14 @@ export type Decision =
   | EldritchInvocationDecision
   | EldritchInvocationReplacementDecision
   | FeatDecision
-  | ToolDecision
+  | FeatReplacementDecision
+  | ManeuverDecision
   | MetamagicDecision
   | MetamagicReplacementDecision
   | SkillDecision
   | SkillOrToolDecision
   | SpellDecision
   | SpellReplacementDecision
+  | ToolDecision
   | SimpleDecision
   ;

@@ -27,7 +27,7 @@ export const spellProcessor: Processor<SpellChoice, SpellDecision | undefined> =
       ...value,
       spells: {
         ...value.spells,
-        [choice.data.sourceID]: decision.data.spellID
+        [choice.data.choiceID]: decision.data.spellID
       }
     });
   }

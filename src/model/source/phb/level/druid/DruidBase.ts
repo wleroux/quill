@@ -6,6 +6,7 @@ import {SkillID} from "@/model/source/model/Skill";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {druidCantripSpell} from "@/model/source/phb/level/druid/druidCantripSpell";
 import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
+import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 
 const druidCantripSourceIDs = is(
   "druid::cantrip-1",
@@ -59,7 +60,6 @@ const PHB_DRUID_1: Level = {
     }},
   ]
 } as const;
-
 const PHB_DRUID_2: Level = {
   label: "Druid 2",
   replace: "Druid 1",
@@ -73,8 +73,34 @@ const PHB_DRUID_2: Level = {
     }}
   ]
 } as const;
+export const PHB_DRUID_3 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      choiceID: "druid::cantrip-replacement::3",
+      condition: druidCantripSpell,
+      required: alwaysFalse(),
+      sourceID: druidCantripSourceIDs
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_DRUID_4 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      choiceID: "druid::cantrip-replacement::3",
+      condition: druidCantripSpell,
+      required: alwaysFalse(),
+      sourceID: druidCantripSourceIDs
+    }},
+    {type: "feat", data: {
+      choiceID: "druid::feat-1",
+      condition: featType("general", "origin")
+    }}
+  ]
+} as const satisfies Partial<Level>;
 
-export const DRUID_BASE_LEVELS = {
-  "Druid 1": PHB_DRUID_1,
-  "Druid 2": PHB_DRUID_2
+export default {
+  [PHB_DRUID_1.label]: PHB_DRUID_1,
+  [PHB_DRUID_2.label]: PHB_DRUID_2
 } as const satisfies {[levelID: ClassID]: Level};

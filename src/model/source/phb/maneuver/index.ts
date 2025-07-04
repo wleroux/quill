@@ -1,84 +1,64 @@
 import {Maneuver, ManeuverID} from "@/model/source/model/Maneuver";
 
 export default {
-  "ambush": {
-    label: "Ambush",
-    choices: []
+  "Ambush": {
+    label: "Ambush"
   },
-  "bait and switch": {
-    label: "Bait and Switch",
-    choices: []
+  "Bait and Switch": {
+    label: "Bait and Switch"
   },
-  "commander's strike": {
-    label: "Commander's Strike",
-    choices: []
+  "Commander's Strike": {
+    label: "Commander's Strike"
   },
-  "commanding presence": {
-    label: "Commanding Presence",
-    choices: []
+  "Commanding Presence": {
+    label: "Commanding Presence"
   },
-  "disarming attack": {
-    label: "Disarming Attack",
-    choices: []
+  "Disarming Attack": {
+    label: "Disarming Attack"
   },
-  "distracting strike": {
-    label: "Distracting Strike",
-    choices: []
+  "Distracting Strike": {
+    label: "Distracting Strike"
   },
-  "evasive footwork": {
-    label: "Evasive Footwork",
-    choices: []
+  "Evasive Footwork": {
+    label: "Evasive Footwork"
   },
-  "feinting attack": {
-    label: "Feinting Attack",
-    choices: []
+  "Feinting Attack": {
+    label: "Feinting Attack"
   },
-  "goading attack": {
-    label: "Goading Attack",
-    choices: []
+  "Goading Attack": {
+    label: "Goading Attack"
   },
-  "lunging attack": {
-    label: "Lunging Attack",
-    choices: []
+  "Lunging Attack": {
+    label: "Lunging Attack"
   },
-  "maneuvering attack": {
-    label: "Maneuvering Attack",
-    choices: []
+  "Maneuvering Attack": {
+    label: "Maneuvering Attack"
   },
-  "menacing attack": {
-    label: "Menacing Attack",
-    choices: []
+  "Menacing Attack": {
+    label: "Menacing Attack"
   },
-  "parry": {
-    label: "Parry",
-    choices: []
+  "Parry": {
+    label: "Parry"
   },
-  "precision attack": {
-    label: "Precision Attack",
-    choices: []
+  "Precision Attack": {
+    label: "Precision Attack"
   },
-  "pushing attack": {
-    label: "Pushing Attack",
-    choices: []
+  "Pushing Attack": {
+    label: "Pushing Attack"
   },
-  "rally": {
-    label: "Rally",
-    choices: []
+  "Rally": {
+    label: "Rally"
   },
-  "riposte": {
-    label: "Riposte",
-    choices: []
+  "Riposte": {
+    label: "Riposte"
   },
-  "sweeping attack": {
-    label: "Sweeping Attack",
-    choices: []
+  "Sweeping Attack": {
+    label: "Sweeping Attack"
   },
-  "tactical assessment": {
-    label: "Tactical Assessment",
-    choices: []
+  "Tactical Assessment": {
+    label: "Tactical Assessment"
   },
-  "trip attack": {
-    label: "Trip Attack",
-    choices: []
+  "Trip Attack": {
+    label: "Trip Attack"
   }
 } as const satisfies {[maneuverID in ManeuverID]: Maneuver};
