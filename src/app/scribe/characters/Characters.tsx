@@ -1,6 +1,6 @@
 "use client";
 import {Character} from "@/model/character/Character";
-import React, { useRef } from "react";
+import React, {useRef, useState} from "react";
 import {PageTitle} from "@/lib/components/PageTitle";
 import {validateCharacter} from "@/app/scribe/characters/validateCharacter";
 import {ClassID} from "@/model/source/model/Level";
@@ -12,6 +12,7 @@ import {useRouter} from "next/navigation";
 import { Menu } from "primereact/menu";
 import {MENU_PASSTHROUGH} from "@/lib/components/Menu";
 import {RenameDialog} from "@/lib/character/train/RenameDialog";
+import {CharacterProfile} from "@/app/player/my-characters/CharacterProfile";
 
 function getLevelDisplay(classIDs: ClassID[]) {
   return classIDs.filter(classID => {
@@ -66,10 +67,15 @@ function ScribeActionButton({value}: {value: Character}) {
 
 export function ScribeCharacters({characters, members}: {characters: Character[], members: {[userID: string]: string}}) {
 
+  const [character, setCharacter] = useState<Character | undefined>(undefined);
   const ACTIVE_CHARACTERS = characters.filter(character => !character.retired);
   const RETIRED_CHARACTERS = characters.filter(character => character.retired);
   return <>
     <PageTitle>All Characters</PageTitle>
+    {character && <>
+      <PageTitle>Selected Character</PageTitle>
+      <CharacterProfile value={character} full />
+    </>}
     <PageTitle>Active Characters</PageTitle>
     <table className="w-full bg-black/20 dark:bg-black/50 rounded-md overflow-hidden shadow-md">
       <thead className="bg-black/50">
@@ -87,7 +93,7 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
       {ACTIVE_CHARACTERS.map(character => {
         const result = validateCharacter(character);
         return (<tr key={character.id} className="even:bg-black/50 h-10">
-          <td className="text-center">{character.name}</td>
+          <td className="text-center" onClick={() => setCharacter(character)}>{character.name}</td>
           <td className="text-center">{members[character.ownerID] ?? character.ownerID}</td>
           <td className="text-center">{character.species?.speciesID}</td>
           <td className="text-center">{character.background?.backgroundID}</td>
@@ -119,7 +125,7 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
         {RETIRED_CHARACTERS.map(character => {
           const result = validateCharacter(character);
           return (<tr key={character.id} className="even:bg-black/50 h-10">
-            <td className="text-center">{character.name}</td>
+            <td className="text-center" onClick={() => setCharacter(character)}>{character.name}</td>
             <td className="text-center">{members[character.ownerID] ?? character.ownerID}</td>
             <td className="text-center">{character.species?.speciesID}</td>
             <td className="text-center">{character.background?.backgroundID}</td>

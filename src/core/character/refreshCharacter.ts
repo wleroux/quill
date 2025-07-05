@@ -4,9 +4,8 @@ import {CharacterReducer, CharacterRepository} from "@/core/character/CharacterR
 import {Character} from "@/model/character/Character";
 import {Result, ValidResult} from "@/model/processor/Result";
 import {tx} from "@/core/DynamoDBClient";
-import {ProcessorError} from "@/model/processor/Processor";
 
-export const refreshCharacter = tx(async function refreshCharacter(characterID: CharacterID, authorizingUserID: Snowflake): Promise<Result<Character, ProcessorError[]>> {
+export const refreshCharacter = tx(async function refreshCharacter(characterID: CharacterID, authorizingUserID: Snowflake): Promise<Result<Character, string>> {
   const audit = await CharacterRepository.getCharacterAuditLogs(characterID);
   let result = ValidResult.of(undefined as unknown as Character);
   for (const {operations} of audit) {

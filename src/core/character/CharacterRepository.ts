@@ -17,6 +17,7 @@ import {characterCreationProcessor} from "@/model/character/create/CharacterCrea
 import {Metadata} from "next";
 import {ProgressDecision} from "@/model/character/progress/ProgressDecision";
 import {getProgressChoice, progressProcessor} from "@/model/character/progress/progressProcessor";
+import {ProcessorError} from "@/model/processor/Processor";
 
 export type CreateCharacterOperation = {type: "create", data: {
   id: CharacterID;
@@ -32,7 +33,7 @@ export type CharacterOperation =
   | TrainCharacterOperation;
 
 
-export const CharacterReducer = (initialValue: Character | undefined, operation: CharacterOperation): Result<Character, string> => {
+export const CharacterReducer = (initialValue: Character | undefined, operation: CharacterOperation): Result<Character, ProcessorError[]> => {
   if (initialValue === undefined) {
     switch (operation.type) {
       case "create": return ValidResult.of(INITIAL_CHARACTER(operation.data.id, operation.data.ownerID))
@@ -44,9 +45,9 @@ export const CharacterReducer = (initialValue: Character | undefined, operation:
         return operation.data.reduce(
           (result, decision) => result.flatMap(value => progressProcessor(value, getProgressChoice(value, decision), decision)),
           ValidResult.of(initialValue)
-        ).mapError(_ => _.code);
+        );
       }
-      case "retire": return retireProcessor(initialValue, DefaultRetireChoice, RetireDecision).mapError(_ => "Could not retire character.");
+      case "retire": return retireProcessor(initialValue, DefaultRetireChoice, RetireDecision);
     }
   }
   throw new Error(`Unexpected Operation: ${JSON.stringify(operation)}`);

@@ -18,5 +18,5 @@ export async function POST(
     requestID: ulid()
   }, () => refreshCharacter(characterID, authorizingUserID));
   if (result.valid) return new Response();
-  else return new Response(`Cannot Update: ${result.error.map(error => `${error.code} (${error.path.join("/")})`).join(", ")}`, {status: 400});
+  else return new Response(`Cannot Update: ${result.error}`, {status: 400});
 }
