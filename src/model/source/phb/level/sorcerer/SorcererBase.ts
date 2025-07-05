@@ -67,37 +67,31 @@ const PHB_SORCERER_1: Level = {
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "sorcerer::cantrip-1",
-      sourceID: "sorcerer::cantrip-1",
       condition: sorcererCantripSpell
     }},
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "sorcerer::cantrip-2",
-      sourceID: "sorcerer::cantrip-2",
       condition: sorcererCantripSpell
     }},
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "sorcerer::cantrip-3",
-      sourceID: "sorcerer::cantrip-3",
       condition: sorcererCantripSpell
     }},
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "sorcerer::cantrip-4",
-      sourceID: "sorcerer::cantrip-4",
       condition: sorcererCantripSpell
     }},
     {type: "spell", data: {
       label: "Level 1 Spell",
       choiceID: "sorcerer::spell-1",
-      sourceID: "sorcerer::spell-1",
       condition: maxSorcererSpellLevel(1)
     }},
     {type: "spell", data: {
       label: "Level 1 Spell",
       choiceID: "sorcerer::spell-2",
-      sourceID: "sorcerer::spell-2",
       condition: maxSorcererSpellLevel(1)
     }}
   ]
@@ -122,12 +116,10 @@ const PHB_SORCERER_2: Level = {
     }},
     {type: "spell", data: {
       choiceID: "sorcerer::spell-3",
-      sourceID: "sorcerer::spell-3",
       condition: maxSorcererSpellLevel(1)
     }},
     {type: "spell", data: {
       choiceID: "sorcerer::spell-4",
-      sourceID: "sorcerer::spell-4",
       condition: maxSorcererSpellLevel(1)
     }},
     {type: "metamagic", data: {

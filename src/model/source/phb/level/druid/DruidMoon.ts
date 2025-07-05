@@ -9,17 +9,14 @@ const PHB_DRUID_MOON_3: Level = {
     ...PHB_DRUID_3.choices,
     {type: "spell", data: {
       choiceID: "druid (land)::spell-1",
-      sourceID: "druid (land)::spell-1",
       condition: is("Cure Wounds")
     }},
     {type: "spell", data: {
       choiceID: "druid (land)::spell-2",
-      sourceID: "druid (land)::spell-2",
       condition: is("Moonbeam")
     }},
     {type: "spell", data: {
       choiceID: "druid (land)::spell-3",
-      sourceID: "druid (land)::spell-3",
       condition: is("Starry Wisp")
     }}
   ]

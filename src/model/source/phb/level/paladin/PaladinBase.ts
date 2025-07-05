@@ -47,14 +47,12 @@ const PHB_PALADIN_2: Level = {
     }},
     {type: "spell", data: {
       label: "Cantrip",
-        sourceID: "paladin::blessed-warrior::cantrip-1",
       choiceID: "paladin::blessed-warrior::cantrip-1",
       enabled: selectedChoice("paladin::fighting-style::2", "blessed warrior"),
       condition: clericCantripSpell
     }},
     {type: "spell", data: {
       label: "Cantrip",
-      sourceID: "paladin::blessed-warrior::cantrip-2",
       choiceID: "paladin::blessed-warrior::cantrip-2",
       enabled: selectedChoice("paladin::fighting-style::2", "blessed warrior"),
       condition: clericCantripSpell

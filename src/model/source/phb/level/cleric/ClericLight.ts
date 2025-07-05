@@ -9,22 +9,18 @@ const PHB_CLERIC_LIGHT_3: Level = {
     ...PHB_CLERIC_3.choices,
     {type: "spell", data: {
       choiceID: "cleric (light)::spell-1",
-      sourceID: "cleric (light)::spell-1",
       condition: is("Burning Hands")
     }},
     {type: "spell", data: {
       choiceID: "cleric (light)::spell-2",
-      sourceID: "cleric (light)::spell-2",
       condition: is("Faerie Fire")
     }},
     {type: "spell", data: {
       choiceID: "cleric (light)::spell-3",
-      sourceID: "cleric (light)::spell-3",
       condition: is("Scorching Ray")
     }},
     {type: "spell", data: {
       choiceID: "cleric (light)::spell-4",
-      sourceID: "cleric (light)::spell-4",
       condition: is("See Invisibility")
     }}
   ]

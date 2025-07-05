@@ -54,25 +54,21 @@ const PHB_WARLOCK_1: Level = {
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "warlock::cantrip-1",
-      sourceID: "warlock::cantrip-1",
       condition: warlockCantripSpell
     }},
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "warlock::cantrip-2",
-      sourceID: "warlock::cantrip-2",
       condition: warlockCantripSpell
     }},
     {type: "spell", data: {
       label: "Spell",
       choiceID: "warlock::spell-1",
-      sourceID: "warlock::spell-1",
       condition: maxWarlockSpellLevel(1)
     }},
     {type: "spell", data: {
       label: "Spell",
       choiceID: "warlock::spell-2",
-      sourceID: "warlock::spell-2",
       condition: maxWarlockSpellLevel(1)
     }},
     {type: "eldritch-invocation", data: {
@@ -107,7 +103,6 @@ const PHB_WARLOCK_2: Level = {
     {type: "spell", data: {
       label: "Spell",
       choiceID: "warlock::spell-3",
-      sourceID: "warlock::spell-3",
       condition: maxWarlockSpellLevel(1)
     }},
     {type: "eldritch-invocation", data: {

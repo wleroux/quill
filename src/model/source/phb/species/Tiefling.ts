@@ -26,42 +26,36 @@ export const PHB_SPECIES_TIEFLING: Species = {
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "abyssal"),
       label: "Cantrip",
-      sourceID: "tiefling::fiendish legacy::cantrip-1",
       choiceID: "tiefling::fiendish legacy::cantrip-1",
       condition: is<SpellID>("Poison Spray")
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "abyssal"),
       label: "Spell",
-      sourceID: "tiefling::fiendish legacy::spell-1",
       choiceID: "tiefling::fiendish legacy::spell-1",
       condition: is<SpellID>("Ray of Sickness")
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "abyssal"),
       label: "Spell",
-      sourceID: "tiefling::fiendish legacy::spell-2",
       choiceID: "tiefling::fiendish legacy::spell-2",
       condition: is<SpellID>("Hold Person")
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "chthonic"),
       label: "Cantrip",
-      sourceID: "tiefling::fiendish legacy::cantrip-1",
       choiceID: "tiefling::fiendish legacy::cantrip-1",
       condition: is<SpellID>("Chill Touch")
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "chthonic"),
       label: "Spell",
-      sourceID: "tiefling::fiendish legacy::spell-1",
       choiceID: "tiefling::fiendish legacy::spell-1",
       condition: is<SpellID>("False Life")
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "chthonic"),
       label: "Spell",
-      sourceID: "tiefling::fiendish legacy::spell-2",
       choiceID: "tiefling::fiendish legacy::spell-2",
       condition: is<SpellID>("Ray of Enfeeblement")
     }},
@@ -69,27 +63,23 @@ export const PHB_SPECIES_TIEFLING: Species = {
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "infernal"),
       label: "Cantrip",
-      sourceID: "tiefling::fiendish legacy::cantrip-1",
       choiceID: "tiefling::fiendish legacy::cantrip-1",
       condition: is<SpellID>("Fire Bolt")
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "infernal"),
       label: "Spell",
-      sourceID: "tiefling::fiendish legacy::spell-1",
       choiceID: "tiefling::fiendish legacy::spell-1",
       condition: is<SpellID>("Hellish Rebuke")
     }},
     {type: "spell", data: {
       enabled: selectedChoice("fiendish legacy", "infernal"),
       label: "Spell",
-      sourceID: "tiefling::fiendish legacy::spell-2",
       choiceID: "tiefling::fiendish legacy::spell-2",
       condition: is<SpellID>("Darkness")
     }},
     {type: "spell", data: {
       label: "Otherworldly Presence",
-      sourceID: "tiefling::cantrip-1",
       choiceID: "tiefling::cantrip-1",
       condition: is<SpellID>("Thaumaturgy")
     }}

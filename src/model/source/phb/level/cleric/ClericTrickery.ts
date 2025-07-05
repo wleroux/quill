@@ -9,22 +9,18 @@ const PHB_CLERIC_TRICKERY_3: Level = {
     ...PHB_CLERIC_3.choices,
     {type: "spell", data: {
       choiceID: "cleric (trickery)::spell-1",
-      sourceID: "cleric (trickery)::spell-1",
       condition: is("Charm Person")
     }},
     {type: "spell", data: {
       choiceID: "cleric (trickery)::spell-2",
-      sourceID: "cleric (trickery)::spell-2",
       condition: is("Disguise Self")
     }},
     {type: "spell", data: {
       choiceID: "cleric (trickery)::spell-3",
-      sourceID: "cleric (trickery)::spell-3",
       condition: is("Invisibility")
     }},
     {type: "spell", data: {
       choiceID: "cleric (trickery)::spell-4",
-      sourceID: "cleric (trickery)::spell-4",
       condition: is("Pass without Trace")
     }}
   ]

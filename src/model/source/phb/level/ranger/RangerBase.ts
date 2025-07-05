@@ -57,14 +57,12 @@ const PHB_RANGER_2: Level = {
       label: "Cantrip",
       enabled: selectedChoice("ranger::fighting-style::2", "druidic warrior"),
       choiceID: "ranger::spell-druidic-warrior-1",
-      sourceID: "ranger::spell-druidic-warrior-1",
       condition: druidCantripSpell
     }},
     {type: "spell", data: {
       label: "Cantrip",
       enabled: selectedChoice("ranger::fighting-style::2", "druidic warrior"),
       choiceID: "ranger::spell-druidic-warrior-2",
-      sourceID: "ranger::spell-druidic-warrior-2",
       condition: druidCantripSpell
     }}
   ]

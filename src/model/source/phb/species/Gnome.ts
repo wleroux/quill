@@ -33,28 +33,24 @@ export const PHB_SPECIES_GNOME: Species = {
       label: "Cantrip",
       choiceID: "gnome::spell::cantrip-1",
       enabled: selectedChoice("gnomish lineage", "forest gnome"),
-      sourceID: "gnome::spell::cantrip-1",
       condition: is("Minor Illusion"),
     }},
     {type: "spell", data: {
       label: "Spell",
       choiceID: "gnome::spell::spell-1",
       enabled: selectedChoice("gnomish lineage", "forest gnome"),
-      sourceID: "gnome::spell::spell-1",
       condition: is("Speak with Animals")
     }},
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "gnome::spell::cantrip-1",
       enabled: selectedChoice("gnomish lineage", "rock gnome"),
-      sourceID: "gnome::spell::cantrip-1",
       condition: is("Mending"),
     }},
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "gnome::spell::cantrip-2",
       enabled: selectedChoice("gnomish lineage", "rock gnome"),
-      sourceID: "gnome::spell::cantrip-2",
       condition: is("Prestidigitation")
     }}
   ]

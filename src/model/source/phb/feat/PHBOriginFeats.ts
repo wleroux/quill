@@ -65,17 +65,14 @@ const PHB_FEAT_MAGIC_INITIATE_CLERIC: Feat = {
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (cleric)::spell::cantrip-1",
-      sourceID: "magic initiate (cleric)::spell::cantrip-1",
       condition: clericCantripSpell
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (cleric)::spell::cantrip-2",
-      sourceID: "magic initiate (cleric)::spell::cantrip-2",
       condition: clericCantripSpell
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (cleric)::spell-1",
-      sourceID: "magic initiate (cleric)::spell-1",
       condition: all(clericSpell, maxSpellLevel(1))
     }}
   ]
@@ -95,17 +92,14 @@ const PHB_FEAT_MAGIC_INITIATE_DRUID: Feat = {
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (druid)::spell::cantrip-1",
-      sourceID: "magic initiate (druid)::spell::cantrip-1",
       condition: druidCantripSpell
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (druid)::spell::cantrip-2",
-      sourceID: "magic initiate (druid)::spell::cantrip-2",
       condition: druidCantripSpell
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (druid)::spell-1",
-      sourceID: "magic initiate (druid)::spell-1",
       condition: all(druidSpell, maxSpellLevel(1))
     }}
   ]
@@ -125,17 +119,14 @@ const PHB_FEAT_MAGIC_INITIATE_WIZARD: Feat = {
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (wizard)::spell::cantrip-1",
-      sourceID: "magic initiate (wizard)::spell::cantrip-1",
       condition: wizardCantripSpell
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (wizard)::spell::cantrip-2",
-      sourceID: "magic initiate (wizard)::spell::cantrip-2",
       condition: wizardCantripSpell
     }},
     {type: "spell", data: {
       choiceID: "magic initiate (wizard)::spell-1",
-      sourceID: "magic initiate (wizard)::spell-1",
       condition: all(wizardSpell, maxSpellLevel(1))
     }}
   ]

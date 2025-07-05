@@ -9,27 +9,22 @@ const PHB_DRUID_SEA_3: Level = {
     ...PHB_DRUID_3.choices,
     {type: "spell", data: {
       choiceID: "druid (land)::spell-1",
-      sourceID: "druid (land)::spell-1",
       condition: is("Fog Cloud")
     }},
     {type: "spell", data: {
       choiceID: "druid (land)::spell-2",
-      sourceID: "druid (land)::spell-2",
       condition: is("Gust of Wind")
     }},
     {type: "spell", data: {
       choiceID: "druid (land)::spell-3",
-      sourceID: "druid (land)::spell-3",
       condition: is("Ray of Frost")
     }},
     {type: "spell", data: {
       choiceID: "druid (land)::spell-4",
-      sourceID: "druid (land)::spell-4",
       condition: is("Shatter")
     }},
     {type: "spell", data: {
       choiceID: "druid (land)::spell-5",
-      sourceID: "druid (land)::spell-5",
       condition: is("Thunderwave")
     }}
   ]

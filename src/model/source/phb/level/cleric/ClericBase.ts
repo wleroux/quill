@@ -38,19 +38,16 @@ const PHB_CLERIC_1: Level = {
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "cleric::cantrip-1",
-      sourceID: "cleric::cantrip-1",
       condition: clericCantripSpell
     }},
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "cleric::cantrip-2",
-      sourceID: "cleric::cantrip-2",
       condition: clericCantripSpell
     }},
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "cleric::cantrip-3",
-      sourceID: "cleric::cantrip-3",
       condition: clericCantripSpell
     }},
     {type: "simple", data: {
@@ -65,7 +62,6 @@ const PHB_CLERIC_1: Level = {
       enabled: selectedChoice("divine order", "thaumaturge"),
       label: "Cantrip",
       choiceID: "cleric::cantrip-thaumaturge",
-      sourceID: "cleric::cantrip-thaumaturge",
       condition: clericCantripSpell
     }}
   ]

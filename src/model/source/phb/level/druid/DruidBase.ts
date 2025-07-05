@@ -33,13 +33,11 @@ const PHB_DRUID_1: Level = {
     }},
     {type: "spell", data: {
       label: "Cantrip",
-      sourceID: "druid::cantrip-1",
       choiceID: "druid::spell::cantrip-1",
       condition: druidCantripSpell
     }},
     {type: "spell", data: {
       label: "Cantrip",
-      sourceID: "druid::cantrip-2",
       choiceID: "druid::spell::cantrip-2",
       condition: druidCantripSpell
     }},
@@ -54,7 +52,6 @@ const PHB_DRUID_1: Level = {
     {type: "spell", data: {
       enabled: selectedChoice("primal order", "magician"),
       label: "Cantrip",
-      sourceID: "druid::cantrip-magician",
       choiceID: "druid::spell::cantrip-magician",
       condition: druidCantripSpell
     }},

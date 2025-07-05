@@ -161,12 +161,10 @@ const PHB_FEAT_FEY_TOUCHED: Feat = {
     }},
     {type: "spell", data: {
       choiceID: "fey-touched::spell-1",
-      sourceID: "fey-touched::spell-1",
       condition: is<SpellID>("Misty Step")
     }},
     {type: "spell", data: {
       choiceID: "fey-touched::spell-2",
-      sourceID: "fey-touched::spell-2",
       condition: is<SpellID>(
         "Animal Friendship",
         "Bane",
@@ -423,37 +421,31 @@ const PHB_FEAT_RITUAL_CASTER: Feat = {
     {type: "spell", data: {
       label: "Ritual Spell",
       choiceID: "ritual caster::spell-1",
-      sourceID: "ritual caster::spell-1",
       condition: ritualSpell
     }},
     {type: "spell", data: {
       label: "Ritual Spell",
       choiceID: "ritual caster::spell-2",
-      sourceID: "ritual caster::spell-2",
       condition: ritualSpell
     }},
     {type: "spell", data: {
       label: "Ritual Spell",
       choiceID: "ritual caster::spell-3",
-      sourceID: "ritual caster::spell-3",
       condition: ritualSpell
     }},
     {type: "spell", data: { // TODO: Progressive Spell Selection
       label: "Ritual Spell",
       choiceID: "ritual caster::spell-4",
-      sourceID: "ritual caster::spell-4",
       condition: ritualSpell
     }},
     {type: "spell", data: {
       label: "Ritual Spell",
       choiceID: "ritual caster::spell-5",
-      sourceID: "ritual caster::spell-5",
       condition: ritualSpell
     }},
     {type: "spell", data: {
       label: "Ritual Spell",
       choiceID: "ritual caster::spell-6",
-      sourceID: "ritual caster::spell-6",
       condition: ritualSpell
     }}
   ]
@@ -574,7 +566,6 @@ const PHB_FEAT_TELEKINETIC: Feat = {
     {type: "spell", data: {
       label: "Cantrip",
       choiceID: "telekinetic::cantrip-1",
-      sourceID: "telekinetic::cantrip-1",
       condition: is("Mage Hand")
     }}
   ]
@@ -591,7 +582,6 @@ const PHB_FEAT_TELEPATHIC: Feat = {
     {type: "spell", data: {
       label: "Spell",
       choiceID: "telepathic::spell-1",
-      sourceID: "telepathic::spell-1",
       condition: is("Detect Thoughts")
     }}
   ]
