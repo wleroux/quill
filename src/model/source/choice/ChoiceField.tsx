@@ -55,6 +55,6 @@ export function ChoiceField({character, choice, decision, onChange}: {character:
   }
 
   return <Field>
-    <FieldLabel>Unknown Choice: {choice.type}</FieldLabel>
+    <FieldLabel>Unknown Choice: {choice.type} {JSON.stringify(decision)}</FieldLabel>
   </Field>
 }

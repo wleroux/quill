@@ -10,7 +10,7 @@ const PHB_MONK_ELEMENTS_3: Level = {
     ...PHB_MONK_3.choices,
     {type: "spell", data: {
       choiceID: "monk (elements)::spell-1",
-      condition: is<SpellID>("Elementalism ")
+      condition: is<SpellID>("Elementalism")
     }}
   ]
 } as const;

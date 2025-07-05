@@ -18,7 +18,7 @@ const PHB_MONK_MERCY_3: Level = {
       condition: is<SkillID>("medicine")
     }},
     {type: "tool", data: {
-      choiceID: "monk (mercy)::skill-1",
+      choiceID: "monk (mercy)::tool-1",
       condition: is<ToolID>("Herbalism Kit")
     }}
   ]
