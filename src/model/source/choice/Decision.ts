@@ -14,6 +14,7 @@ import {EldritchInvocationDecision} from "@/model/source/choice/eldritch-invocat
 import {EldritchInvocationReplacementDecision} from "@/model/source/choice/eldritch-invocation-replacement/EldritchInvocationReplacementDecision";
 import {ManeuverDecision} from "@/model/source/choice/maneuver/ManeuverDecision";
 import {FeatReplacementDecision} from "@/model/source/choice/feat-replacement/FeatReplacementDecision";
+import {ItemDecision} from "@/model/character/level/item/ItemDecision";
 
 export type Decision =
   | AttributeDecision
@@ -23,6 +24,7 @@ export type Decision =
   | EldritchInvocationReplacementDecision
   | FeatDecision
   | FeatReplacementDecision
+  | ItemDecision
   | ManeuverDecision
   | MetamagicDecision
   | MetamagicReplacementDecision

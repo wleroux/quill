@@ -68,7 +68,19 @@ const PHB_RANGER_2: Level = {
   ]
 } as const;
 
-export const RANGER_BASE_LEVELS = {
-  "Ranger 1": PHB_RANGER_1,
-  "Ranger 2": PHB_RANGER_2
+export const PHB_RANGER_3 = {
+  choices: []
+} as const satisfies Partial<Level>;
+export const PHB_RANGER_4 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "ranger::feat-1",
+      condition: featType("general", "origin"),
+    }}
+  ]
+} as const satisfies Partial<Level>;
+
+export default {
+  [PHB_RANGER_1.label]: PHB_RANGER_1,
+  [PHB_RANGER_2.label]: PHB_RANGER_2
 } as const satisfies {[levelID: ClassID]: Level};

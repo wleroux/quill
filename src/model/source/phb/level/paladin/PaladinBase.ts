@@ -56,11 +56,27 @@ const PHB_PALADIN_2: Level = {
       choiceID: "paladin::blessed-warrior::cantrip-2",
       enabled: selectedChoice("paladin::fighting-style::2", "blessed warrior"),
       condition: clericCantripSpell
+    }},
+    {type: "spell", data: {
+      label: "Spell",
+      choiceID: "paladin::divine-smite-1",
+      condition: is("Divine Smite")
     }}
   ]
 } as const;
+export const PHB_PALADIN_3 = {
+  choices: []
+} as const satisfies Partial<Level>;
+export const PHB_PALADIN_4 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "paladin::feat-1",
+      condition: featType("general", "origin")
+    }}
+  ]
+} as const satisfies Partial<Level>;
 
-export const PALADIN_BASE_LEVELS = {
-  "Paladin 1": PHB_PALADIN_1,
-  "Paladin 2": PHB_PALADIN_2
+export default {
+  [PHB_PALADIN_1.label]: PHB_PALADIN_1,
+  [PHB_PALADIN_2.label]: PHB_PALADIN_2
 } as const satisfies {[levelID: ClassID]: Level};
