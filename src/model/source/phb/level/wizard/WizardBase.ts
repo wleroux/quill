@@ -5,6 +5,7 @@ import {any} from "@/model/source/condition/generic/AnyCondition";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {SkillID} from "@/model/source/model/Skill";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
+import {AttributeID} from "@/model/source/model/Attribute";
 
 const wizardSkill = is<SkillID>("arcana","history","insight","investigation","medicine","religion");
 
@@ -12,6 +13,16 @@ const PHB_WIZARD_1: Level = {
   label: "Wizard 1",
   prerequisite: any(noClasses(), minStat("int", 13)),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "monk::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("int")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "monk::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("wis")
+    }},
     {type: "skill", data: {
       choiceID: "wizard::skill-1",
       enabled: isMainClass(),

@@ -69,8 +69,9 @@ function PlayerActionButton({value}: {value: Character}) {
   </>
 }
 
-function Stat({label, value}: {label: string, value: number}) {
-  return <div className="flex flex-row gap-4 items-center">
+function Stat({label, value, proficient}: {label: string, value: number, proficient: "untrained" | "proficient"}) {
+  return <div className="flex flex-row gap-2 items-center border-b border-b-2">
+    <ProficiencyIcon value={proficient} />
     <span className="font-bold">{label}</span>
     <span>{value}</span>
   </div>
@@ -110,7 +111,7 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
     {full && <div className="px-4 flex flex-col gap-4 pb-4">
       <div className="flex flex-row gap-4">
         {ATTRIBUTE_IDS.map(attributeID => <div key={attributeID} className="flex-1 flex flex-col">
-          <Stat label={attributeID.toUpperCase()} value={value.stats[attributeID]}/>
+          <Stat label={attributeID.toUpperCase()} value={value.stats[attributeID]} proficient={value.savingThrows[attributeID]}/>
           {SKILL_IDS.filter(skillID => SKILLS[skillID].attribute === attributeID).map(skillID => <div key={skillID}>
             <Skill id={skillID} proficient={value.skills[skillID] === "proficient"} expertise={value.skills[skillID] === "expertise"}/>
           </div>)}

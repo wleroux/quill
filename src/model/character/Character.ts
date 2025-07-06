@@ -44,6 +44,9 @@ export type Character = {
     itemID: ItemID;
     decisions: {[choiceID: ChoiceID]: Decision}
   }[];
+  savingThrows: {
+    [attributeID in AttributeID]: "untrained" | "proficient"
+  };
   skills: {[skillID in SkillID]: Proficiency};
   maneuvers: {
     [choiceID: ChoiceID]: ManeuverID;
@@ -81,6 +84,14 @@ export const INITIAL_CHARACTER = (id: CharacterID, ownerID: Snowflake): Characte
   eldritchInvocations: {},
   maneuvers: {},
   metamagics: {},
+  savingThrows: {
+    "str": "untrained",
+    "dex": "untrained",
+    "con": "untrained",
+    "int": "untrained",
+    "wis": "untrained",
+    "cha": "untrained",
+  },
   skills: {
     "acrobatics": "untrained",
     "animal handling": "untrained",

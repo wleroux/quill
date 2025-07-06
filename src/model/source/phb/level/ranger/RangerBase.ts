@@ -7,6 +7,7 @@ import {is} from "@/model/source/condition/generic/IsCondition";
 import {all} from "@/model/source/condition/generic/AllCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 import {druidCantripSpell} from "@/model/source/phb/level/druid/druidCantripSpell";
+import { AttributeID } from "@/model/source/model/Attribute";
 
 const rangerSkills = is<SkillID>("animal handling","athletics","insight","investigation","nature","perception","stealth","survival");
 
@@ -14,6 +15,16 @@ const PHB_RANGER_1: Level = {
   label: "Ranger 1",
   prerequisite: any(noClasses(), all(minStat("dex", 13), minStat("wis", 13))),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "ranger::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("str")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "ranger::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("dex")
+    }},
     {type: "skill", data: {
       choiceID: "ranger::skill::skill-1",
       condition: rangerSkills

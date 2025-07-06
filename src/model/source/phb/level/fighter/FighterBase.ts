@@ -6,6 +6,7 @@ import {SkillID} from "@/model/source/model/Skill";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
+import { AttributeID } from "@/model/source/model/Attribute";
 
 export const fighterSkills = is<SkillID>("acrobatics","animal handling","athletics","history","insight","intimidation","persuasion","perception","survival");
 
@@ -13,6 +14,16 @@ const PHB_FIGHTER_1: Level = {
   label: "Fighter 1",
   prerequisite: any(noClasses(), minStat("str", 13), minStat("dex", 13)),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "fighter::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("str")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "fighter::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("con")
+    }},
     {type: "skill", data: {
       choiceID: "fighter::skill::skill-1",
       enabled: isMainClass(),

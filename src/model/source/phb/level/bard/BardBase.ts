@@ -9,11 +9,23 @@ import {minStat} from "@/model/source/condition/attribute/minStat";
 import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
 import {any} from "@/model/source/condition/generic/AnyCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
+import {is} from "@/model/source/condition/generic/IsCondition";
+import { AttributeID } from "@/model/source/model/Attribute";
 
 const PHB_BARD_1: Level = {
   label: "Bard 1",
   prerequisite: any(noClasses(), minStat("cha", 13)),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "bard::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("dex")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "bard::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("cha")
+    }},
     {type: "skill", data: {
       choiceID: "bard::skill::skill-1",
       condition: bardSkill()

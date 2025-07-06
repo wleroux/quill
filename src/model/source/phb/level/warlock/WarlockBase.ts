@@ -11,6 +11,7 @@ import {maxSpellLevel} from "@/model/source/condition/spell/LeveledSpellConditio
 import {SpellLevel} from "@/model/source/model/Spell";
 import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
+import {AttributeID} from "@/model/source/model/Attribute";
 
 const warlockCantripSourceIDs = is<string>(
   "warlock::cantrip-1",
@@ -42,6 +43,16 @@ const PHB_WARLOCK_1: Level = {
   label: "Warlock 1",
   prerequisite: any(noClasses(), minStat("cha", 13)),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "warlock::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("wis")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "warlock::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("cha")
+    }},
     {type: "skill", data: {
       choiceID: "warlock::skill-1",
       enabled: isMainClass(),

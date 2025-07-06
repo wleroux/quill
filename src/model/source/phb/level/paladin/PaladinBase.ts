@@ -7,6 +7,7 @@ import {SkillID} from "@/model/source/model/Skill";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {clericCantripSpell} from "@/model/source/phb/level/cleric/clericCantripSpell";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
+import { AttributeID } from "@/model/source/model/Attribute";
 
 const paladinSkills = is<SkillID>("athletics", "insight", "intimidation", "medicine", "persuasion", "religion");
 
@@ -14,6 +15,16 @@ const PHB_PALADIN_1: Level = {
   label: "Paladin 1",
   prerequisite: any(noClasses(), all(minStat("str", 13), minStat("cha", 13))),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "paladin::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("wis")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "paladin::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("cha")
+    }},
     {type: "skill", data: {
       choiceID: "paladin::skill::skill-1",
       enabled: isMainClass(),

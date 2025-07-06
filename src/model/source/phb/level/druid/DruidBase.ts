@@ -7,6 +7,7 @@ import {is} from "@/model/source/condition/generic/IsCondition";
 import {druidCantripSpell} from "@/model/source/phb/level/druid/druidCantripSpell";
 import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
+import {AttributeID} from "@/model/source/model/Attribute";
 
 const druidCantripSourceIDs = is(
   "druid::cantrip-1",
@@ -21,6 +22,16 @@ const PHB_DRUID_1: Level = {
   label: "Druid 1",
   prerequisite: any(noClasses(), minStat("wis", 13)),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "druid::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("int")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "druid::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("wis")
+    }},
     {type: "skill", data: {
       choiceID: "druid::skill::skill-1",
       enabled: isMainClass(),

@@ -11,6 +11,7 @@ import {sorcererSpell} from "@/model/source/phb/level/sorcerer/sorcererSpell";
 import {SpellLevel} from "@/model/source/model/Spell";
 import {maxSpellLevel} from "@/model/source/condition/spell/LeveledSpellCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
+import { AttributeID } from "@/model/source/model/Attribute";
 
 const sorcererCantripSources = is<string>(
   "sorcerer::cantrip-1",
@@ -55,6 +56,16 @@ const PHB_SORCERER_1: Level = {
   label: "Sorcerer 1",
   prerequisite: any(noClasses(), minStat("cha", 13)),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "monk::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("con")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "monk::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("cha")
+    }},
     {type: "skill", data: {
       choiceID: "sorcerer::skill-1",
       enabled: isMainClass(),

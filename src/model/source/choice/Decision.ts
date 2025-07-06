@@ -15,6 +15,7 @@ import {EldritchInvocationReplacementDecision} from "@/model/source/choice/eldri
 import {ManeuverDecision} from "@/model/source/choice/maneuver/ManeuverDecision";
 import {FeatReplacementDecision} from "@/model/source/choice/feat-replacement/FeatReplacementDecision";
 import {ItemDecision} from "@/model/character/level/item/ItemDecision";
+import {SavingThrowDecision} from "@/model/source/choice/saving-throw/SavingThrowDecision";
 
 export type Decision =
   | AttributeDecision
@@ -28,6 +29,7 @@ export type Decision =
   | ManeuverDecision
   | MetamagicDecision
   | MetamagicReplacementDecision
+  | SavingThrowDecision
   | SkillDecision
   | SkillOrToolDecision
   | SpellDecision

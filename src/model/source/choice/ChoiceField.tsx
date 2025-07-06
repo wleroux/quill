@@ -20,6 +20,7 @@ import {ManeuverField} from "./maneuver/ManeuverField";
 import {FeatReplacementField} from "@/model/source/choice/feat-replacement/FeatReplacementField";
 import {ItemField} from "@/model/character/level/item/ItemField";
 import {MetamagicReplacementField} from "@/model/source/choice/metamagic-replacement/MetamagicReplacementField";
+import {SavingThrowField} from "@/model/source/choice/saving-throw/SavingThrowField";
 
 export function ChoiceField({character, choice, decision, onChange}: {character: Character, choice: Choice, decision: Decision | undefined, onChange: (value: Decision | undefined) => void}) {
   if (choice.data.enabled && !choice.data.enabled(undefined, character)) return <></>
@@ -48,6 +49,8 @@ export function ChoiceField({character, choice, decision, onChange}: {character:
     return <MetamagicField value={character} choice={choice} decision={decision} onChange={onChange} />
   } else if (choice.type === "metamagic-replacement" && (decision === undefined || decision.type === "metamagic-replacement")) {
     return <MetamagicReplacementField value={character} choice={choice} decision={decision} onChange={fn => onChange(fn(decision))} />
+  } else if (choice.type === "saving-throw" && (decision === undefined || decision.type === "saving-throw")) {
+    return <SavingThrowField value={character} choice={choice} decision={decision} onChange={fn => onChange(fn(decision))}/>
   } else if (choice.type === "skill" && (decision === undefined || decision.type === "skill")) {
     return <SkillField character={character} choice={choice} value={decision} onChange={onChange}/>
   } else if (choice.type === "skill-or-tool" && (decision === undefined || decision?.type === "skill-or-tool")) {

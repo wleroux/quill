@@ -17,6 +17,7 @@ import {EldritchInvocationReplacementChoice} from "@/model/source/choice/eldritc
 import {ManeuverChoice} from "@/model/source/choice/maneuver/ManeuverChoice";
 import {FeatReplacementChoice} from "@/model/source/choice/feat-replacement/FeatReplacementChoice";
 import {ItemChoice} from "@/model/character/level/item/ItemChoice";
+import {SavingThrowChoice} from "@/model/source/choice/saving-throw/SavingThrowChoice";
 
 export function selectedChoice(choiceID: string, optionID: string): Condition<any> {
   return (_: any, value: Character) => value.choices[choiceID] === optionID;
@@ -45,6 +46,7 @@ export type Choice =
   | MetamagicChoice
   | MetamagicReplacementChoice
   | SimpleChoice
+  | SavingThrowChoice
   | SkillChoice
   | SkillOrToolChoice
   | SpellChoice

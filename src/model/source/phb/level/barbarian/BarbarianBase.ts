@@ -4,11 +4,23 @@ import {barbarianSkills} from "@/model/source/phb/level/barbarian/BarbarianSkill
 import {minStat} from "@/model/source/condition/attribute/minStat";
 import {any} from "@/model/source/condition/generic/AnyCondition";
 import { featType } from "@/model/source/condition/feat/FeatTypeCondition";
+import { is } from "@/model/source/condition/generic/IsCondition";
+import { AttributeID } from "@/model/source/model/Attribute";
 
 const PHB_BARBARIAN_1: Level = {
   label: "Barbarian 1",
   prerequisite: any(noClasses(), minStat("str", 13)),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "barbarian::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("str")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "barbarian::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("con")
+    }},
     {type: "skill", data: {
       choiceID: "skill::barbarian::1",
       enabled: isMainClass(),

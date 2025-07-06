@@ -5,6 +5,7 @@ import {minStat} from "@/model/source/condition/attribute/minStat";
 import {SkillID} from "@/model/source/model/Skill";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
+import { AttributeID } from "@/model/source/model/Attribute";
 
 const rogueSkills = is<SkillID>("acrobatics","athletics","deception","insight","intimidation","investigation","perception","persuasion","sleight of hand","stealth");
 
@@ -12,6 +13,16 @@ const PHB_ROGUE_1: Level = {
   label: "Rogue 1",
   prerequisite: any(noClasses(), minStat("dex", 13)),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "rogue::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("dex")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "rogue::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("int")
+    }},
     {type: "skill", data: {
       choiceID: "rogue::skill::skill-1",
       condition: rogueSkills

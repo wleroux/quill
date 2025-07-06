@@ -7,6 +7,7 @@ import {SkillID} from "@/model/source/model/Skill";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {toolType} from "@/model/source/condition/tool/ToolTypeCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
+import {AttributeID} from "@/model/source/model/Attribute";
 
 const monkSkills = is<SkillID>("acrobatics", "athletics", "history", "insight", "religion", "stealth");
 
@@ -14,6 +15,16 @@ const PHB_MONK_1: Level = {
   label: "Monk 1",
   prerequisite: any(noClasses(), all(minStat("dex", 13), minStat("wis", 13))),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "monk::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("str")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "monk::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("dex")
+    }},
     {type: "skill", data: {
       choiceID: "monk::skill::skill-1",
       enabled: isMainClass(),

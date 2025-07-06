@@ -85,13 +85,13 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
       <tbody>
       {ACTIVE_CHARACTERS.map(character => {
         const result = validateCharacter(character);
-        return (<tr key={character.id} className={twMerge("even:bg-black/50 h-10", selectedCharacterID === character.id && "rounded-md outline -outline-offset-2 outline-2 outline-blue-500/50")}>
+        return (<tr key={character.id} className={twMerge("even:bg-black/50 h-12", selectedCharacterID === character.id && "rounded-md outline -outline-offset-2 outline-2 outline-blue-500/50")}>
           <td className="text-center w-[18%] cursor-pointer" onClick={() => setSelectedCharacterID(character.id)}>{character.name}</td>
           <td className="text-center w-[18%]">{members[character.ownerID] ?? character.ownerID}</td>
           <td className="text-center w-[18%]">{character.species?.speciesID}</td>
           <td className="text-center w-[18%]">{character.background?.backgroundID}</td>
           <td className="text-center w-[18%]">{getLevelDisplay(character.classIDs ?? [])}</td>
-          <td className="text-center flex flex-row items-center w-full justify-end px-1 gap-4 h-10">
+          <td className="text-center flex flex-row items-center w-full justify-end px-1 gap-4 h-12">
             {!result.valid && <span className="pi pi-exclamation-circle text-red-400" title={result.error.map(error => `${error.code} ${error.path.join("/")}`).join(", ")}/>}
             <ScribeActionButton value={character}/>
           </td>
@@ -116,13 +116,13 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
         <tbody>
         {RETIRED_CHARACTERS.map(character => {
           const result = validateCharacter(character);
-          return (<tr key={character.id} className={twMerge("even:bg-black/50 h-10", selectedCharacterID === character.id && "rounded-md outline -outline-offset-2 outline-2 outline-blue-500/50")}>
+          return (<tr key={character.id} className={twMerge("even:bg-black/50 h-12", selectedCharacterID === character.id && "rounded-md outline -outline-offset-2 outline-2 outline-blue-500/50")}>
             <td className="text-center w-[18%] cursor-pointer" onClick={() => setSelectedCharacterID(character.id)}>{character.name}</td>
             <td className="text-center w-[18%]">{members[character.ownerID] ?? character.ownerID}</td>
             <td className="text-center w-[18%]">{character.species?.speciesID}</td>
             <td className="text-center w-[18%]">{character.background?.backgroundID}</td>
             <td className="text-center w-[18%]">{getLevelDisplay(character.classIDs ?? [])}</td>
-            <td className="text-center flex flex-row items-center w-full justify-end px-1 gap-4 h-10">
+            <td className="text-center flex flex-row items-center w-full justify-end px-1 gap-4 h-12">
               {!result.valid && <span className="pi pi-exclamation-circle text-red-400" title={result.error.map(error => `${error.code} ${error.path.join("/")}`).join(", ")} />}
               <ScribeActionButton value={character}/>
             </td>

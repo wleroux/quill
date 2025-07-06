@@ -8,6 +8,7 @@ import {SkillID} from "@/model/source/model/Skill";
 import {all} from "@/model/source/condition/generic/AllCondition";
 import {cantripSpell} from "@/model/source/condition/spell/CantripSpellCondition";
 import {clericSpell} from "@/model/source/phb/level/cleric/clericSpell";
+import { AttributeID } from "@/model/source/model/Attribute";
 
 const clericCantripSources = is<string>(
   "cleric::cantrip-1",
@@ -25,6 +26,16 @@ const PHB_CLERIC_1: Level = {
   label: "Cleric 1",
   prerequisite: any(noClasses(), minStat("wis", 13)),
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: "cleric::saving-throw-1",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("wis")
+    }},
+    {type: "saving-throw", data: {
+      choiceID: "cleric::saving-throw-2",
+      enabled: isMainClass(),
+      condition: is<AttributeID>("cha")
+    }},
     {type: "skill", data: {
       choiceID: "cleric::skill-1",
       enabled: isMainClass(),

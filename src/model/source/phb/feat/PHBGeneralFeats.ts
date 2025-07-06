@@ -1,5 +1,5 @@
 import {Feat, FeatID} from "../../model/Feat";
-import {AttributeID} from "@/model/source/model/Attribute";
+import {ATTRIBUTE_IDS, AttributeID} from "@/model/source/model/Attribute";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {minStat} from "@/model/source/condition/attribute/minStat";
 import {any} from "@/model/source/condition/generic/AnyCondition";
@@ -386,16 +386,22 @@ const PHB_FEAT_POLEARM_MASTER: Feat = {
     }}
   ]
 };
-const PHB_FEAT_RESILIENT: Feat = {
-  label: "Resilient",
-  prerequisite: currentLevel(4),
+const PHB_FEAT_RESILIENT: Feat[] = ATTRIBUTE_IDS.map(attributeID => ({
+  label: `Resilient (${attributeID.toUpperCase()})`,
+  prerequisite: all(currentLevel(4), (_, value) => value.savingThrows[attributeID] === "untrained"),
   category: "general",
   choices: [
+    {type: "saving-throw", data: {
+      choiceID: `resilient (${attributeID})::saving-throw-1`,
+      condition: is<AttributeID>(attributeID)
+    }},
     {type: "attribute", data: {
-      choiceID: "resilient::attribute-1"
+      choiceID: `resilient (${attributeID})::attribute-1`,
+      condition: is<AttributeID>(attributeID)
     }}
   ]
-};
+}));
+
 const ritualSpell = is<SpellID>(
   "Alarm",
   "Comprehend Languages",
@@ -638,7 +644,7 @@ export default {
   "Piercer": PHB_FEAT_PIERCER,
   "Poisoner": PHB_FEAT_POISONER,
   "Polearm Master": PHB_FEAT_POLEARM_MASTER,
-  "Resilient": PHB_FEAT_RESILIENT,
+  ...Object.fromEntries(PHB_FEAT_RESILIENT.map(feat => [feat.label, feat])),
   "Ritual Caster": PHB_FEAT_RITUAL_CASTER,
   "Sentinel": PHB_FEAT_SENTINEL,
   "Shadow-Touched": PHB_FEAT_SHADOW_TOUCHED,
