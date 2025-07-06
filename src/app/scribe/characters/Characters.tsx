@@ -14,6 +14,7 @@ import {MENU_PASSTHROUGH} from "@/lib/components/Menu";
 import {RenameDialog} from "@/lib/character/train/RenameDialog";
 import {CharacterProfile} from "@/app/player/my-characters/CharacterProfile";
 import {RetrainDialog} from "@/app/player/my-characters/RetrainDialog";
+import {twMerge} from "tailwind-merge";
 
 function getLevelDisplay(classIDs: ClassID[]) {
   return classIDs.filter(classID => {
@@ -23,16 +24,6 @@ function getLevelDisplay(classIDs: ClassID[]) {
 
 function ScribeActionButton({value}: {value: Character}) {
   const router = useRouter();
-  const refresh = useMutation({
-    mutationFn: ({characterID}: {characterID: CharacterID}) => {
-      return fetch(`/api/characters/${characterID}/refresh`, {
-        method: "POST"
-      });
-    },
-    onSuccess: () => {
-      router.refresh();
-    }
-  });
   const retire = useMutation({
     mutationFn: ({characterID}: {characterID: CharacterID}) => {
       return fetch(`/api/characters/${characterID}/retire`, {
@@ -55,9 +46,6 @@ function ScribeActionButton({value}: {value: Character}) {
     <Menu pt={MENU_PASSTHROUGH} ref={menu} popup model={[
       {label: `Rename ${value.name}`, disabled: isRenameOpen, command() {
         setIsRenameOpen(true);
-      }},
-      {label: `Refresh ${value.name}`, disabled: refresh.isPending, command() {
-        refresh.mutate({characterID: value.id});
       }},
       {label: `Retrain ${value.name}`, disabled: retire.isPending, command() {
         setIsRetrainOpen(true);
@@ -91,22 +79,21 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
         <th>Specie</th>
         <th>Background</th>
         <th>Class</th>
-        <th>Valid</th>
         <th></th>
       </tr>
       </thead>
       <tbody>
       {ACTIVE_CHARACTERS.map(character => {
         const result = validateCharacter(character);
-        return (<tr key={character.id} className="even:bg-black/50 h-10">
-          <td className="text-center" onClick={() => setSelectedCharacterID(character.id)}>{character.name}</td>
-          <td className="text-center">{members[character.ownerID] ?? character.ownerID}</td>
-          <td className="text-center">{character.species?.speciesID}</td>
-          <td className="text-center">{character.background?.backgroundID}</td>
-          <td className="text-center">{getLevelDisplay(character.classIDs ?? [])}</td>
-          <td className="text-center w-20 text-xs">{result.valid ? "" : result.error.map(error => `${error.code} (${error.path.join("/")})`).join("\n")}</td>
-          <td className="text-center">
-            <ScribeActionButton value={character} />
+        return (<tr key={character.id} className={twMerge("even:bg-black/50 h-10", selectedCharacterID === character.id && "rounded-md outline -outline-offset-2 outline-2 outline-blue-500/50")}>
+          <td className="text-center w-[18%] cursor-pointer" onClick={() => setSelectedCharacterID(character.id)}>{character.name}</td>
+          <td className="text-center w-[18%]">{members[character.ownerID] ?? character.ownerID}</td>
+          <td className="text-center w-[18%]">{character.species?.speciesID}</td>
+          <td className="text-center w-[18%]">{character.background?.backgroundID}</td>
+          <td className="text-center w-[18%]">{getLevelDisplay(character.classIDs ?? [])}</td>
+          <td className="text-center flex flex-row items-center w-full justify-end px-1 gap-4 h-10">
+            {!result.valid && <span className="pi pi-exclamation-circle text-red-400" title={result.error.map(error => `${error.code} ${error.path.join("/")}`).join(", ")}/>}
+            <ScribeActionButton value={character}/>
           </td>
         </tr>);
       })}
@@ -123,22 +110,21 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
           <th>Specie</th>
           <th>Background</th>
           <th>Class</th>
-          <th>Valid</th>
           <th></th>
         </tr>
         </thead>
         <tbody>
         {RETIRED_CHARACTERS.map(character => {
           const result = validateCharacter(character);
-          return (<tr key={character.id} className="even:bg-black/50 h-10">
-            <td className="text-center" onClick={() => setSelectedCharacterID(character.id)}>{character.name}</td>
-            <td className="text-center">{members[character.ownerID] ?? character.ownerID}</td>
-            <td className="text-center">{character.species?.speciesID}</td>
-            <td className="text-center">{character.background?.backgroundID}</td>
-            <td className="text-center">{getLevelDisplay(character.classIDs ?? [])}</td>
-            <td className="text-center">{result.valid ? "" : result.error.map(error => `${error.code} ${error.path.join("/")}`).join(", ")}</td>
-            <td className="text-center">
-              <ScribeActionButton value={character} />
+          return (<tr key={character.id} className={twMerge("even:bg-black/50 h-10", selectedCharacterID === character.id && "rounded-md outline -outline-offset-2 outline-2 outline-blue-500/50")}>
+            <td className="text-center w-[18%] cursor-pointer" onClick={() => setSelectedCharacterID(character.id)}>{character.name}</td>
+            <td className="text-center w-[18%]">{members[character.ownerID] ?? character.ownerID}</td>
+            <td className="text-center w-[18%]">{character.species?.speciesID}</td>
+            <td className="text-center w-[18%]">{character.background?.backgroundID}</td>
+            <td className="text-center w-[18%]">{getLevelDisplay(character.classIDs ?? [])}</td>
+            <td className="text-center flex flex-row items-center w-full justify-end px-1 gap-4 h-10">
+              {!result.valid && <span className="pi pi-exclamation-circle text-red-400" title={result.error.map(error => `${error.code} ${error.path.join("/")}`).join(", ")} />}
+              <ScribeActionButton value={character}/>
             </td>
           </tr>)
         })}

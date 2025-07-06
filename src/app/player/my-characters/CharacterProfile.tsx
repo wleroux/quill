@@ -85,7 +85,7 @@ function Skill({id, proficient, expertise}: { id: SkillID, proficient: boolean, 
 
 export function CharacterProfile({value, full}: { value: Character, full?: boolean }) {
   return <div className={twMerge(
-    "relative w-full box-content rounded-md bg-[color:var(--background)] border border-[color:var(--foreground)]/20 flex flex-col gap-4"
+    "relative w-full box-content rounded-md bg-white dark:bg-black/40 border border-[color:var(--foreground)]/20 flex flex-col gap-4"
   )}>
     <div className={twMerge(
       "flex-1 flex flex-row p-4 rounded-t-md h-24 box-content gap-4",
