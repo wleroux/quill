@@ -136,7 +136,7 @@ export function CreateCharacterDialog({visible, onClose}: {visible: boolean, onC
       {/** @ts-ignore */}
       <Stepper ref={stepper} orientation="horizontal" pt={stepperPt} linear activeStep={activeStep} onChangeStep={ev => setActiveStep(ev.index)}>
         <StepperPanel pt={stepperPanelPt} header="Base Stats">
-          <StartingStatField choice={DefaultStartingStatChoice} value={startingStat} onChange={setStartingStat} />
+          <StartingStatField choice={DefaultStartingStatChoice} decision={startingStat} onChange={setStartingStat} />
         </StepperPanel>
         <StepperPanel pt={stepperPanelPt} header="Specie">
           <SpeciesField value={character} choice={DefaultSpeciesChoice} decision={species} onChange={setSpecies} />

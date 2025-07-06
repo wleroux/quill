@@ -18,6 +18,9 @@ import {Metadata} from "next";
 import {ProgressDecision} from "@/model/character/progress/ProgressDecision";
 import {getProgressChoice, progressProcessor} from "@/model/character/progress/progressProcessor";
 import {ProcessorError} from "@/model/processor/Processor";
+import {RetrainDecision} from "@/model/character/retrain/RetrainDecision";
+import {retrainProcessor} from "@/model/character/retrain/retrainProcessor";
+import {DefaultRetrainChoice} from "@/model/character/retrain/RetrainChoice";
 
 export type CreateCharacterOperation = {type: "create", data: {
   id: CharacterID;
@@ -26,11 +29,13 @@ export type CreateCharacterOperation = {type: "create", data: {
 }};
 export type RetireCharacterOperation = {type: "retire", data: {}};
 export type TrainCharacterOperation = {type: "train", data: ProgressDecision[]};
+export type RetrainCharacterOperation = {type: "retrain", data: RetrainDecision};
 
 export type CharacterOperation =
   | CreateCharacterOperation
   | RetireCharacterOperation
-  | TrainCharacterOperation;
+  | TrainCharacterOperation
+  | RetrainCharacterOperation;
 
 
 export const CharacterReducer = (initialValue: Character | undefined, operation: CharacterOperation): Result<Character, ProcessorError[]> => {
@@ -46,6 +51,15 @@ export const CharacterReducer = (initialValue: Character | undefined, operation:
           (result, decision) => result.flatMap(value => progressProcessor(value, getProgressChoice(value, decision), decision)),
           ValidResult.of(initialValue)
         );
+      }
+      case "retrain": {
+        const result = retrainProcessor(initialValue, DefaultRetrainChoice, operation.data);
+        if (result.valid) {
+          return ValidResult.of({
+            ...result.value,
+            revision: initialValue.revision
+          });
+        } else return result;
       }
       case "retire": return retireProcessor(initialValue, DefaultRetireChoice, RetireDecision);
     }
@@ -197,7 +211,6 @@ export const CharacterRepository = {
       return initialValue.flatMap(value => CharacterReducer(value, operation));
     }, ValidResult.of(initialValue));
     if (!finalValue.valid) return finalValue;
-
     updateCharacter(finalValue.value);
     addAuditLog(finalValue.value.id, finalValue.value.revision, operations);
 

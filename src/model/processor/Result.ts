@@ -11,6 +11,9 @@ export class ValidResult<Value> {
   mapError<E2>(_: (error: never) => E2): Result<Value, E2> {
     return this;
   }
+  orElse(value: Value): Value {
+    return this.value
+  }
   orThrow(): Value {
     return this.value;
   }
@@ -27,6 +30,9 @@ export class ErrorResult<Error> {
   }
   mapError<E2>(fn: (error: Error) => E2): Result<any, E2> {
     return ErrorResult.of(fn(this.error));
+  }
+  orElse<Value>(value: Value): Value {
+    return value;
   }
   orThrow(): never {
     // @ts-ignore

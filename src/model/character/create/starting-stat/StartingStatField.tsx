@@ -1,6 +1,6 @@
 import {ATTRIBUTE_IDS, AttributeID} from "@/model/source/model/Attribute";
 import {AbilityScoreField} from "@/lib/components/AbilityScoreField";
-import React, {useState} from "react";
+import React from "react";
 import {StartingStatChoice} from "@/model/character/create/starting-stat/StartingStatChoice";
 import {StartingStatDecision} from "@/model/character/create/starting-stat/StartingStatDecision";
 import {twMerge} from "tailwind-merge";
@@ -25,27 +25,27 @@ function getHighestBaseScore(choice: StartingStatChoice, value: StartingStatDeci
   return 15;
 }
 
-export function StartingStatField({choice, value, onChange}: {
+export function StartingStatField({choice, decision, onChange}: {
   choice: StartingStatChoice,
-  value: StartingStatDecision,
+  decision: StartingStatDecision,
   onChange: (value: StartingStatDecision) => void
 }) {
-  const points = ATTRIBUTE_IDS.map(attr => getPointCost(value.data[attr])).reduce((sum, a) => sum + a, 0);
+  const points = ATTRIBUTE_IDS.map(attr => getPointCost(decision.data[attr])).reduce((sum, a) => sum + a, 0);
 
   return <>
     <div className="flex flex-row gap-4 justify-around pb-2">
       {ATTRIBUTE_IDS.map(attributeID => <div key={attributeID} className="flex flex-col items-center gap-2">
-          <label htmlFor={attributeID} className="text-lg font-[family-name:var(--font-audiowide)]">{attributeID.toUpperCase()} {getStatMod(value.data[attributeID])}</label>
-          <AbilityScoreField inputId={attributeID} value={value.data[attributeID]} onValueChange={ev => {
+          <label htmlFor={attributeID} className="text-lg font-[family-name:var(--font-audiowide)]">{attributeID.toUpperCase()} {getStatMod(decision.data[attributeID])}</label>
+          <AbilityScoreField inputId={attributeID} value={decision.data[attributeID]} onValueChange={ev => {
             const field = Math.min(Math.max(8, ev.target.value ?? 8), 15);
             onChange({
               type: "starting-stat",
               data: {
-                ...value.data,
+                ...decision.data,
                 [attributeID]: field
               }
             })
-          }} maxFractionDigits={0} min={8} max={getHighestBaseScore(choice, value, attributeID)} showButtons/>
+          }} maxFractionDigits={0} min={8} max={getHighestBaseScore(choice, decision, attributeID)} showButtons/>
         </div>
       )}
     </div>

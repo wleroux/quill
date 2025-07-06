@@ -25,7 +25,7 @@ export function validateCharacter(initialValue: Character): Result<Character, Pr
       data: initialValue.background
     }));
     for (const progress of initialValue.progress) {
-      result.flatMap(value => progressProcessor(value, getProgressChoice(value, progress), progress));
+      result = result.flatMap(value => progressProcessor(value, getProgressChoice(value, progress), progress));
     }
     return result;
   } catch (e) {
