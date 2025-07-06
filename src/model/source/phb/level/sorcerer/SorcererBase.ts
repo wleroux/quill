@@ -124,12 +124,10 @@ const PHB_SORCERER_2: Level = {
       condition: maxSorcererSpellLevel(1)
     }},
     {type: "metamagic", data: {
-      choiceID: "sorcerer::metamagic-1",
-      sourceID: "sorcerer::metamagic-1"
+      choiceID: "sorcerer::metamagic-1"
     }},
     {type: "metamagic", data: {
-      choiceID: "sorcerer::metamagic-2",
-      sourceID: "sorcerer::metamagic-2"
+      choiceID: "sorcerer::metamagic-2"
     }}
   ]
 } as const;
@@ -148,6 +146,12 @@ export const PHB_SORCERER_3 = {
       choiceID: "sorcerer::spell-replacement::3",
       sourceID: sorcererPreparedSpellSources,
       condition: maxSorcererSpellLevel(2)
+    }},
+    {type: "metamagic-replacement", data: {
+      label: "Replace Metamagic",
+      required: alwaysFalse(),
+      sourceID: is("sorcerer::metamagic-1", "sorcerer::metamagic-2"),
+      choiceID: "sorcerer::metamagic-replacement-1",
     }},
     {type: "spell", data: {
       choiceID: "sorcerer::spell-5",

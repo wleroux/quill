@@ -8,7 +8,8 @@ export type MetamagicReplacementChoice = {
     label?: string;
     choiceID: ChoiceID;
     enabled?: Condition<any>;
+    required?: Condition<any>;
     sourceID: Condition<ChoiceID>;
-    condition: MetamagicCondition;
+    condition?: MetamagicCondition;
   }
 };

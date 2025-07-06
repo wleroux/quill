@@ -17,6 +17,6 @@ export const metamagicProcessor: Processor<MetamagicChoice, MetamagicDecision | 
     if (choice.data.condition && !choice.data.condition(decision.data.metamagicID, value))
       return ErrorResult.of([new ProcessorError("UNMET CONDITION", [choice.data.choiceID], choice, decision)]);
 
-    return ValidResult.of({...value, metamagics: {...value.metamagics, [choice.data.sourceID]: decision.data.metamagicID}});
+    return ValidResult.of({...value, metamagics: {...value.metamagics, [choice.data.choiceID]: decision.data.metamagicID}});
   }
 };

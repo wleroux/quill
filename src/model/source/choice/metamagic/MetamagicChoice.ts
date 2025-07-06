@@ -7,7 +7,6 @@ export type MetamagicChoice = {
   data: {
     label?: string;
     choiceID: ChoiceID;
-    sourceID: string;
     enabled?: Condition<any>;
     condition?: MetamagicCondition;
   }

@@ -98,11 +98,9 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
   const backgroundResult =
     speciesResult
       .flatMap(value => speciesProcessor(value, DefaultSpeciesChoice, decision.data.species));
-  const progressResult =
-    speciesResult
-      .flatMap(value => backgroundProcessor(value, DefaultBackgroundChoice, decision.data.background));
   const currentLevelResult =
     speciesResult
+      .flatMap(value => backgroundProcessor(value, DefaultBackgroundChoice, decision.data.background))
       .flatMap(value => {
         const level = step.type === "level" ? step.level : 0;
         let result = ValidResult.of(value);
@@ -117,7 +115,7 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
     if (!startingStatResult.valid) return 0;
     if (!speciesResult.valid) return 1;
     if (!backgroundResult.valid) return 2;
-    if (!progressResult.valid) return 3;
+    if (!currentLevelResult.valid) return 3;
     return 3;
   };
 
@@ -218,7 +216,7 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
       <Spacer />
 
       {!result.valid &&
-        <span className="pi pi-info-circle text-red-400/20" title={result.error.map(error => error.path.slice(1).join("/")).join(", ")}></span>
+        <span className="pi pi-info-circle text-red-400/20" title={result.error.map(error => `${error.code} ${error.path.slice(1).join("/")}`).join(", ")}></span>
       }
       <Button disabled={!result.valid || retrainMutation.isPending} label="Retrain" onClick={() => {
         retrainMutation.mutate({characterID: value.id, decision})
