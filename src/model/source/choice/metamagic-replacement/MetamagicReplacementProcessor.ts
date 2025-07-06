@@ -9,6 +9,8 @@ export const metamagicReplacementProcessor: Processor<MetamagicReplacementChoice
   if (choice.data.enabled && !choice.data.enabled(undefined, value)) return ValidResult.of(value);
   if (decision === undefined) {
     // VALIDATE REQUIRED
+    if (choice.data.required && !choice.data.required(undefined, value))
+      return ValidResult.of(value);
     return ErrorResult.of([new ProcessorError("REQUIRED", [choice.data.choiceID], choice, decision)]);
   } else {
     // VALIDATE SOURCE
