@@ -10,6 +10,7 @@ import {warlockSpell} from "@/model/source/phb/level/warlock/warlockSpell";
 import {maxSpellLevel} from "@/model/source/condition/spell/LeveledSpellCondition";
 import {SpellLevel} from "@/model/source/model/Spell";
 import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
+import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 
 const warlockCantripSourceIDs = is<string>(
   "warlock::cantrip-1",
@@ -115,8 +116,71 @@ const PHB_WARLOCK_2: Level = {
     }}
   ]
 } as const;
+export const PHB_WARLOCK_3 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      sourceID: warlockCantripSourceIDs,
+      required: alwaysFalse(),
+      choiceID: "warlock::cantrip-replacement::cantrip-3",
+      condition: warlockCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Spell Replacement",
+      sourceID: warlockSpellSourceIDs,
+      required: alwaysFalse(),
+      choiceID: "warlock::spell-replacement::spell-3",
+      condition: maxWarlockSpellLevel(2)
+    }},
+    {type: "eldritch-invocation-replacement", data: {
+      label: "Eldritch Invocation Replacement",
+      choiceID: "warlock::eldritch-invocation-replacement::3",
+      required: alwaysFalse()
+    }},
+    {type: "spell", data: {
+      choiceID: "warlock::cantrip-3",
+      condition: maxWarlockSpellLevel(2)
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_WARLOCK_4 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      sourceID: warlockCantripSourceIDs,
+      required: alwaysFalse(),
+      choiceID: "warlock::cantrip-replacement::cantrip-4",
+      condition: warlockCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Spell Replacement",
+      sourceID: warlockSpellSourceIDs,
+      required: alwaysFalse(),
+      choiceID: "warlock::spell-replacement::spell-4",
+      condition: maxWarlockSpellLevel(2)
+    }},
+    {type: "eldritch-invocation-replacement", data: {
+      label: "Eldritch Invocation Replacement",
+      choiceID: "warlock::eldritch-invocation-replacement::4",
+      required: alwaysFalse()
+    }},
+    {type: "feat", data: {
+      choiceID: "warlock::feat-1",
+      condition: featType("general", "origin"),
+    }},
+    {type: "spell", data: {
+      label: "Cantrip",
+      choiceID: "warlock::cantrip-3",
+      condition: warlockCantripSpell
+    }},
+    {type: "spell", data: {
+      choiceID: "warlock::cantrip-3",
+      condition: maxWarlockSpellLevel(2)
+    }}
+  ]
+} as const satisfies Partial<Level>;
 
 export default {
-  "Warlock 1": PHB_WARLOCK_1,
-  "Warlock 2": PHB_WARLOCK_2
+  [PHB_WARLOCK_1.label]: PHB_WARLOCK_1,
+  [PHB_WARLOCK_2.label]: PHB_WARLOCK_2
 } as const satisfies {[levelID: ClassID]: Level};

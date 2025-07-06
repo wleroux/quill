@@ -10,6 +10,7 @@ import {cantripSpell} from "@/model/source/condition/spell/CantripSpellCondition
 import {sorcererSpell} from "@/model/source/phb/level/sorcerer/sorcererSpell";
 import {SpellLevel} from "@/model/source/model/Spell";
 import {maxSpellLevel} from "@/model/source/condition/spell/LeveledSpellCondition";
+import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 
 const sorcererCantripSources = is<string>(
   "sorcerer::cantrip-1",
@@ -132,8 +133,64 @@ const PHB_SORCERER_2: Level = {
     }}
   ]
 } as const;
+export const PHB_SORCERER_3 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::cantrip-replacement::3",
+      sourceID: sorcererCantripSources,
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::spell-replacement::3",
+      sourceID: sorcererPreparedSpellSources,
+      condition: maxSorcererSpellLevel(2)
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-5",
+      condition: maxSorcererSpellLevel(2)
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-6",
+      condition: maxSorcererSpellLevel(2)
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_SORCERER_4 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::cantrip-replacement::4",
+      sourceID: sorcererCantripSources,
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::spell-replacement::4",
+      sourceID: sorcererPreparedSpellSources,
+      condition: maxSorcererSpellLevel(2)
+    }},
+    {type: "feat", data: {
+      choiceID: "sorcerer::feat-1",
+      condition: featType("general", "origin")
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::cantrip-5",
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-7",
+      condition: maxSorcererSpellLevel(2)
+    }}
+  ]
+} as const satisfies Partial<Level>;
 
 export default {
-  "Sorcerer 1": PHB_SORCERER_1,
-  "Sorcerer 2": PHB_SORCERER_2
+  [PHB_SORCERER_1.label]: PHB_SORCERER_1,
+  [PHB_SORCERER_2.label]: PHB_SORCERER_2
 } as const satisfies {[levelID: ClassID]: Level};

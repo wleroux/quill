@@ -4,6 +4,7 @@ import {minStat} from "@/model/source/condition/attribute/minStat";
 import {any} from "@/model/source/condition/generic/AnyCondition";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {SkillID} from "@/model/source/model/Skill";
+import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 
 const wizardSkill = is<SkillID>("arcana","history","insight","investigation","medicine","religion");
 
@@ -34,8 +35,19 @@ const PHB_WIZARD_2: Level = {
     }}
   ]
 } as const;
+export const PHB_WIZARD_3 = {
+  choices: []
+} as const satisfies Partial<Level>;
+export const PHB_WIZARD_4 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "wizard::feat-1",
+      condition: featType("general", "origin")
+    }}
+  ]
+} as const satisfies Partial<Level>;
 
 export default {
-  "Wizard 1": PHB_WIZARD_1,
-  "Wizard 2": PHB_WIZARD_2
+  [PHB_WIZARD_1.label]: PHB_WIZARD_1,
+  [PHB_WIZARD_2.label]: PHB_WIZARD_2
 } as const satisfies {[levelID: ClassID]: Level};
