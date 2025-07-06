@@ -6,7 +6,6 @@ import {validateCharacter} from "@/app/scribe/characters/validateCharacter";
 import {ClassID} from "@/model/source/model/Level";
 import {REPOSITORY} from "@/model/source/index";
 import {Button} from "@/lib/components/Button";
-import {useMutation} from "@tanstack/react-query";
 import {CharacterID} from "@/model/character/CharacterID";
 import {useRouter} from "next/navigation";
 import {Menu} from "primereact/menu";
@@ -15,6 +14,8 @@ import {RenameDialog} from "@/lib/character/train/RenameDialog";
 import {CharacterProfile} from "@/app/player/my-characters/CharacterProfile";
 import {RetrainDialog} from "@/app/player/my-characters/RetrainDialog";
 import {twMerge} from "tailwind-merge";
+import {useRetireMutation} from "@/lib/character/retire/useRetireMutation";
+import {useUnretireMutation} from "@/lib/character/unretire/useUnretireMutation";
 
 function getLevelDisplay(classIDs: ClassID[]) {
   return classIDs.filter(classID => {
@@ -24,16 +25,13 @@ function getLevelDisplay(classIDs: ClassID[]) {
 
 function ScribeActionButton({value}: {value: Character}) {
   const router = useRouter();
-  const retire = useMutation({
-    mutationFn: ({characterID}: {characterID: CharacterID}) => {
-      return fetch(`/api/characters/${characterID}/retire`, {
-        method: "POST"
-      });
-    },
-    onSuccess: () => {
-      router.refresh();
-    }
+  const retire = useRetireMutation({
+    onSuccess() {router.refresh()}
   });
+  const unretire = useUnretireMutation({
+    onSuccess() {router.refresh();}
+  });
+
   const menu = useRef<Menu>(null);
 
   const [isRenameOpen, setIsRenameOpen] = React.useState(false);
@@ -50,9 +48,13 @@ function ScribeActionButton({value}: {value: Character}) {
       {label: `Retrain ${value.name}`, disabled: retire.isPending, command() {
         setIsRetrainOpen(true);
       }},
-      {label: `Retire ${value.name}`, disabled: retire.isPending, command() {
-        retire.mutate({characterID: value.id});
-      }}
+      !value.retired
+        ? {label: `Retire ${value.name}`, disabled: retire.isPending, command() {
+            retire.mutate({characterID: value.id});
+          }}
+        : {label: `Unretire ${value.name}`, disabled: unretire.isPending, command() {
+            unretire.mutate({characterID: value.id});
+          }}
     ]} />
     <RetrainDialog value={value} visible={isRetrainOpen} onClose={() => setIsRetrainOpen(false)} />
     <RenameDialog value={value} visible={isRenameOpen} onClose={() => setIsRenameOpen(false)} />
