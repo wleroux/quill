@@ -10,7 +10,7 @@ const PHB_PALADIN_DEVOTION_3: Level = {
     ...PHB_PALADIN_3.choices,
     {type: "spell", data: {
       choiceID: "paladin (devotion)::spell-1",
-      condition: is<SpellID>("Protection from Evil And Good")
+      condition: is<SpellID>("Protection from Evil and Good")
     }},
     {type: "spell", data: {
       choiceID: "paladin (devotion)::spell-2",
