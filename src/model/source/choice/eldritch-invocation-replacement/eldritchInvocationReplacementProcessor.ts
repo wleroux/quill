@@ -11,6 +11,8 @@ export const eldritchInvocationReplacementProcessor: Processor<EldritchInvocatio
   if (choice.data.enabled && !choice.data.enabled(undefined, value)) return ValidResult.of(value);
 
   if (decision === undefined) {
+    if (choice.data.required && !choice.data.required(undefined, value))
+      return ValidResult.of(value);
     return ErrorResult.of([new ProcessorError("REQUIRED DECISION", [choice.data.choiceID], choice, decision)]);
   } else {
     // VALIDATE SOURCE

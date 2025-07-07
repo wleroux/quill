@@ -156,7 +156,7 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
           {Object.values(value.metamagics).length > 0 && <>
             <strong>Metamagics</strong>
             <div className="flex flex-col">
-              {Object.values(value.metamagics).sort().map(metamagicID => <div>
+              {Object.values(value.metamagics).sort().map(metamagicID => <div key={metamagicID}>
                 - {REPOSITORY.METAMAGICS[metamagicID].label}
               </div>)}
             </div>
