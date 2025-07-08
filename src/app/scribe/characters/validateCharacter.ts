@@ -27,6 +27,7 @@ export function validateCharacter(initialValue: Character): Result<Character, Pr
     for (const progress of initialValue.progress) {
       result = result.flatMap(value => progressProcessor(value, getProgressChoice(value, progress), progress));
     }
+
     return result;
   } catch (e) {
     // If an exception, just error out completely!

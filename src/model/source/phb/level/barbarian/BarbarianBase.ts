@@ -71,6 +71,6 @@ export const PHB_BARBARIAN_4 = {
 } as const satisfies Partial<Level>;
 
 export default {
-  "Barbarian 1": PHB_BARBARIAN_1,
-  "Barbarian 2": PHB_BARBARIAN_2,
+  [PHB_BARBARIAN_1.label]: PHB_BARBARIAN_1,
+  [PHB_BARBARIAN_2.label]: PHB_BARBARIAN_2,
 } as const satisfies {[levelID: ClassID]: Level};

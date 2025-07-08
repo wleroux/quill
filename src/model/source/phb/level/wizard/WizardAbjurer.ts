@@ -6,6 +6,9 @@ const PHB_WIZARD_ABJURER_3: Level = {
   label: "Wizard (Abjurer) 3",
   choices: [
     ...PHB_WIZARD_3.choices
+  ],
+  longRest: [
+    ...PHB_WIZARD_3.longRest
   ]
 } as const;
 const PHB_WIZARD_ABJURER_4: Level = {
@@ -13,6 +16,9 @@ const PHB_WIZARD_ABJURER_4: Level = {
   label: "Wizard (Abjurer) 4",
   choices: [
     ...PHB_WIZARD_4.choices
+  ],
+  longRest: [
+    ...PHB_WIZARD_4.longRest
   ]
 } as const;
 

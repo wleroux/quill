@@ -25,6 +25,7 @@ export function getLongRestChoice(value: Character): LongRestChoice {
     data: {
       choiceID: "long-rest",
       choices: getAllClassIDs(value)
+        .reverse()
         .flatMap((classID) => REPOSITORY.CLASSES[classID].longRest ?? [])
     }
   };
@@ -48,12 +49,13 @@ export const longRestProcessor: Processor<LongRestChoice, LongRestDecision | und
         .reduce((result, progress) => result.flatMap(v => retireProcessor(v, DefaultRetireChoice, progress)), result);
 
     // Process Long Rest
-    return choice.data.choices.reduce((result, subchoice) => {
+    result = choice.data.choices.reduce((result, subchoice) => {
       const subdecision = decision.data.decisions[subchoice.data.choiceID];
       return result.flatMap(value => choiceProcessor(value, subchoice, subdecision));
     }, result.flatMap(value => ValidResult.of({
       ...value,
       longRest: decision.data.decisions
     } satisfies Character)));
+    return result;
   }
 };
