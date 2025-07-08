@@ -23,6 +23,9 @@ const PHB_CLERIC_LIGHT_3: Level = {
       choiceID: "cleric (light)::spell-4",
       condition: is("See Invisibility")
     }}
+  ],
+  longRest: [
+    ...PHB_CLERIC_3.longRest
   ]
 } as const;
 const PHB_CLERIC_LIGHT_4: Level = {
@@ -30,6 +33,9 @@ const PHB_CLERIC_LIGHT_4: Level = {
   replace: "Cleric (Light) 3",
   choices: [
     ...PHB_CLERIC_4.choices
+  ],
+  longRest: [
+    ...PHB_CLERIC_4.longRest
   ]
 } as const;
 

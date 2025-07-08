@@ -23,6 +23,9 @@ const PHB_CLERIC_TRICKERY_3: Level = {
       choiceID: "cleric (trickery)::spell-4",
       condition: is("Pass without Trace")
     }}
+  ],
+  longRest: [
+    ...PHB_CLERIC_3.longRest
   ]
 } as const;
 const PHB_CLERIC_TRICKERY_4: Level = {
@@ -30,6 +33,9 @@ const PHB_CLERIC_TRICKERY_4: Level = {
   replace: "Cleric (Trickery) 3",
   choices: [
     ...PHB_CLERIC_4.choices
+  ],
+  longRest: [
+    ...PHB_CLERIC_4.longRest
   ]
 } as const;
 

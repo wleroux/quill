@@ -9,6 +9,11 @@ import {all} from "@/model/source/condition/generic/AllCondition";
 import {cantripSpell} from "@/model/source/condition/spell/CantripSpellCondition";
 import {clericSpell} from "@/model/source/phb/level/cleric/clericSpell";
 import { AttributeID } from "@/model/source/model/Attribute";
+import {SpellID, SpellLevel} from "@/model/source/model/Spell";
+import {wizardSpell} from "@/model/source/phb/level/wizard/wizardSpell";
+import {maxSpellLevel} from "@/model/source/condition/spell/LeveledSpellCondition";
+import {Condition} from "@/model/source/condition/Condition";
+import {getLevelsIn} from "@/model/source/condition/level/NeverTaken";
 
 const clericCantripSources = is<string>(
   "cleric::cantrip-1",
@@ -21,6 +26,22 @@ const clericCantripSources = is<string>(
 
 const clericSkill = is<SkillID>("history","insight","medicine","persuasion","religion");
 const clericCantripSpell = all(cantripSpell, clericSpell)
+const maxClericLeveledSpells = (level: Exclude<SpellLevel, "cantrip">) => all(
+  wizardSpell,
+  maxSpellLevel(level)
+);
+function getClericMaxSpellLevel(level: number): Exclude<SpellLevel, "cantrip"> {
+  if (level < 3) return 1;
+  if (level < 5) return 2;
+  if (level < 7) return 3;
+  if (level < 9) return 4;
+  if (level < 11) return 5;
+  if (level < 13) return 6;
+  if (level < 15) return 7;
+  if (level < 17) return 8;
+  return 9;
+}
+const maxClericSpellLongRest: Condition<SpellID> = (_, value) => maxClericLeveledSpells(getClericMaxSpellLevel(getLevelsIn(value, "Cleric 1")))(_, value)
 
 const PHB_CLERIC_1: Level = {
   label: "Cleric 1",
@@ -75,6 +96,24 @@ const PHB_CLERIC_1: Level = {
       choiceID: "cleric::cantrip-thaumaturge",
       condition: clericCantripSpell
     }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "cleric::spell-1",
+      condition: maxClericSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "cleric::spell-2",
+      condition: maxClericSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "cleric::spell-3",
+      condition: maxClericSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "cleric::spell-4",
+      condition: maxClericSpellLongRest
+    }}
   ]
 } as const;
 const PHB_CLERIC_2: Level = {
@@ -88,6 +127,12 @@ const PHB_CLERIC_2: Level = {
       sourceID: clericCantripSources,
       condition: clericCantripSpell
     }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "cleric::spell-5",
+      condition: maxClericSpellLongRest
+    }}
   ]
 } as const;
 
@@ -100,6 +145,12 @@ export const PHB_CLERIC_3 = {
       sourceID: clericCantripSources,
       condition: clericCantripSpell
     }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "cleric::spell-6",
+      condition: maxClericSpellLongRest
+    }}
   ]
 } as const satisfies Partial<Level>;
 export const PHB_CLERIC_4 = {
@@ -110,6 +161,12 @@ export const PHB_CLERIC_4 = {
       choiceID: "cleric::cantrip-replacement::4",
       sourceID: clericCantripSources,
       condition: clericCantripSpell
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "cleric::spell-7",
+      condition: maxClericSpellLongRest
     }}
   ]
 } as const satisfies Partial<Level>;

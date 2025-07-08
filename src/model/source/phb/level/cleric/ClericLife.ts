@@ -23,6 +23,9 @@ const PHB_CLERIC_LIFE_3: Level = {
       choiceID: "cleric (life)::spell-4",
       condition: is("Lesser Restoration")
     }}
+  ],
+  longRest: [
+    ...PHB_CLERIC_3.longRest
   ]
 } as const;
 const PHB_CLERIC_LIFE_4: Level = {
@@ -30,6 +33,9 @@ const PHB_CLERIC_LIFE_4: Level = {
   replace: "Cleric (Life) 3",
   choices: [
     ...PHB_CLERIC_4.choices
+  ],
+  longRest: [
+    ...PHB_CLERIC_4.longRest
   ]
 } as const;
 
