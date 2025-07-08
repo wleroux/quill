@@ -37,7 +37,6 @@ export async function rollList(gameMasterID: PlayerID, channelID: Snowflake, min
 
   await botDiscordClient.createMessage(channelID, {
     components: [
-      {type: ComponentType.TextDisplay, content: `||${pickedList.characters.map(characterSnapshot => characterSnapshot.ownerID).map(owner => `<@${owner}>`).join(" ")}||`},
       {type: ComponentType.Container, components: iterationComponents},
       {
         type: ComponentType.Container,
@@ -56,14 +55,18 @@ export async function rollList(gameMasterID: PlayerID, channelID: Snowflake, min
             custom_id: `add-characters-to-game:${gameMasterID}:${channelID}:${pickedList.messageID}`
           }]
         }]
-    }],
+      }
+    ],
+    allowed_mentions: {
+      users: pickedList.characters.map(character => character.ownerID)
+    },
     flags: MessageFlags.IsComponentsV2
   });
 
   const match = channel.name!.match(/(?:[alse]+)-(.*)/);
   if (match) {
-    await botDiscordClient.createMessage(channel.id, {
-      content: `$rename p-${match[1]}`
+    await botDiscordClient.modifyChannel(channel.id, {
+      name: `$rename p-${match[1]}`
     });
   }
   return ValidResult.of(pickedList);

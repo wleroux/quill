@@ -84,6 +84,9 @@ export async function createPickList(channelID: Snowflake, gameMasterID: Snowfla
         ]
       }
     ],
+    allowed_mentions: {
+      users: []
+    },
     flags: MessageFlags.IsComponentsV2
   });
 
