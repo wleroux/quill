@@ -5,6 +5,9 @@ import {userErrorMessage} from "../message/userErrorMessage";
 import {simpleEmbedMessage} from "../message/simpleEmbedMessage";
 import {GameRepository} from "@/core/game/GameRepository";
 import {isGameStatus} from "@/model/game/GameStatus";
+import {botDiscordClient} from "@/lib/discord/BotDiscordClient";
+import {ComponentType, MessageFlags } from "discord-api-types/v10";
+import {CharacterRepository} from "@/core/character/CharacterRepository";
 
 const REASON = new StringCommandOption(
   "reason",
@@ -35,6 +38,23 @@ export const gameMasterStopCommand = new SubcommandHandler(
 
     const result = await stopGame(activeGameID, reason);
     if (!result.valid) return userErrorMessage("Cannot Stop Game", "There is no active game currently.", context.member!);
+
+    // Post Message
+    botDiscordClient.createMessage(context.channel_id!, {
+      components: [{
+        type: ComponentType.Container,
+        components: [{
+          type: ComponentType.TextDisplay,
+          content: `# ${game.name}\n` +
+            `**DM:** <@${game.gameMasterID}>\n` +
+            `**Status:** ${reason}\n` +
+            `**Characters:**\n` +
+            (await Promise.all(result.value.characterIDs.map(CharacterRepository.getCharacterByID)))
+              .map(character => `- <@${character.ownerID}>'s ${character.name}`).join("\n")
+        }]
+      }],
+      flags: MessageFlags.IsComponentsV2
+    });
 
     return simpleEmbedMessage(
       "# Stop Game\n" +
