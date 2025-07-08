@@ -6,6 +6,7 @@ import {any} from "@/model/source/condition/generic/AnyCondition";
 import { featType } from "@/model/source/condition/feat/FeatTypeCondition";
 import { is } from "@/model/source/condition/generic/IsCondition";
 import { AttributeID } from "@/model/source/model/Attribute";
+import {MELEE_SIMPLE_WEAPON_TYPES, MELEE_WEAPON_TYPES, WEAPON_TYPES} from "@/model/source/phb/weapon-mastery/weapons";
 
 const PHB_BARBARIAN_1: Level = {
   label: "Barbarian 1",
@@ -30,6 +31,18 @@ const PHB_BARBARIAN_1: Level = {
       choiceID: "skill::barbarian::2",
       enabled: isMainClass(),
       condition: barbarianSkills()
+    }}
+  ],
+  longRest: [
+    {type: "simple", data: {
+      choiceID: "barbarian::weapon-mastery-1",
+      label: "Weapon Mastery",
+      options: MELEE_WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
+    }},
+    {type: "simple", data: {
+      choiceID: "barbarian::weapon-mastery-2",
+      label: "Weapon Mastery",
+      options: MELEE_WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
     }}
   ]
 };

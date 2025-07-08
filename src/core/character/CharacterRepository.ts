@@ -21,6 +21,8 @@ import {ProcessorError} from "@/model/processor/Processor";
 import {RetrainDecision} from "@/model/character/retrain/RetrainDecision";
 import {retrainProcessor} from "@/model/character/retrain/retrainProcessor";
 import {DefaultRetrainChoice} from "@/model/character/retrain/RetrainChoice";
+import {LongRestDecision} from "@/model/character/long-rest/LongRestDecision";
+import {getLongRestChoice, longRestProcessor} from "@/model/character/long-rest/longRestProcessor";
 
 export type CreateCharacterOperation = {type: "create", data: {
   id: CharacterID;
@@ -30,12 +32,14 @@ export type CreateCharacterOperation = {type: "create", data: {
 export type RetireCharacterOperation = {type: "retire", data: {}};
 export type TrainCharacterOperation = {type: "train", data: ProgressDecision[]};
 export type RetrainCharacterOperation = {type: "retrain", data: RetrainDecision};
+export type LongRestCharacterOperation = {type: "long-rest", data: LongRestDecision["data"]["decisions"]};
 
 export type CharacterOperation =
   | CreateCharacterOperation
   | RetireCharacterOperation
   | TrainCharacterOperation
-  | RetrainCharacterOperation;
+  | RetrainCharacterOperation
+  | LongRestCharacterOperation;
 
 
 export const CharacterReducer = (initialValue: Character | undefined, operation: CharacterOperation): Result<Character, ProcessorError[]> => {
@@ -62,6 +66,15 @@ export const CharacterReducer = (initialValue: Character | undefined, operation:
         } else return result;
       }
       case "retire": return retireProcessor(initialValue, DefaultRetireChoice, RetireDecision);
+      case "long-rest": {
+        const result = longRestProcessor(initialValue, getLongRestChoice(initialValue), {type: "long-rest", data: {decisions: operation.data}});
+        if (result.valid) {
+          return ValidResult.of({
+            ...result.value,
+            revision: initialValue.revision
+          });
+        } else return result;
+      }
     }
   }
   throw new Error(`Unexpected Operation: ${JSON.stringify(operation)}`);

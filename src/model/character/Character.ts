@@ -16,6 +16,7 @@ import {SpeciesDecision} from "@/model/character/create/species/SpeciesDecision"
 import {ClassID} from "@/model/source/model/Level";
 import {ProgressDecision} from "@/model/character/progress/ProgressDecision";
 import {ManeuverID} from "@/model/source/model/Maneuver";
+import {LongRestDecision} from "@/model/character/long-rest/LongRestDecision";
 
 type Proficiency = "untrained" | "proficient" | "expertise";
 
@@ -31,6 +32,7 @@ export type Character = {
   species: SpeciesDecision["data"];
   background: BackgroundDecision["data"];
   progress: ProgressDecision[];
+  longRest?: LongRestDecision["data"]["decisions"];
 
   // Results
   name: string;
