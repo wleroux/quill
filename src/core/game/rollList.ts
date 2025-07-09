@@ -69,7 +69,7 @@ export async function rollList(gameMasterID: PlayerID, channelID: Snowflake, min
   const match = channel.name!.match(/(?:[alse]+)-(.*)/);
   if (match) {
     await botDiscordClient.modifyChannel(channel.id, {
-      name: `$rename p-${match[1]}`
+      name: `p-${match[1]}`
     });
   }
   return ValidResult.of(pickedList);
