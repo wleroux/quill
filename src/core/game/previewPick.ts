@@ -52,7 +52,7 @@ export async function createPickList(channelID: Snowflake, gameMasterID: Snowfla
   ));
 
   // POST LIST PICK PREVIEW
-  await botDiscordClient.createMessage(channelID, {
+  botDiscordClient.createMessage(channelID, {
     components: [
       {
         type: ComponentType.Container,
