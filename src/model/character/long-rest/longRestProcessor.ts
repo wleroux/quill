@@ -49,9 +49,11 @@ export const longRestProcessor: Processor<LongRestChoice, LongRestDecision | und
         .reduce((result, progress) => result.flatMap(v => retireProcessor(v, DefaultRetireChoice, progress)), result);
 
     // Process Long Rest
-    result = choice.data.choices.reduce((result, subchoice) => {
+    result = choice.data.choices.reduce((initial, subchoice) => {
       const subdecision = decision.data.decisions[subchoice.data.choiceID];
-      return result.flatMap(value => choiceProcessor(value, subchoice, subdecision));
+      const final = initial.flatMap(value => choiceProcessor(value, subchoice, subdecision));
+      // Do not process invalid choice but don't stop character from processing either
+      return final.valid ? final : initial;
     }, result.flatMap(value => ValidResult.of({
       ...value,
       longRest: decision.data.decisions

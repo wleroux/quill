@@ -15,9 +15,10 @@ import {levelProcessor} from "../level/LevelProcessor";
 import {DefaultLevelChoice} from "@/model/character/level/LevelChoice";
 import {retireProcessor} from "@/model/character/retire/RetireProcessor";
 import {DefaultRetireChoice} from "@/model/character/retire/RetireChoice";
+import {getLongRestChoice, longRestProcessor} from "@/model/character/long-rest/longRestProcessor";
 
-export const retrainProcessor: Processor<RetrainChoice, RetrainDecision> = (value, choice, decision) => {
-  let result = ValidResult.of(INITIAL_CHARACTER(value.id, value.ownerID));
+export const retrainProcessor: Processor<RetrainChoice, RetrainDecision> = (initialValue, choice, decision) => {
+  let result = ValidResult.of(INITIAL_CHARACTER(initialValue.id, initialValue.ownerID));
   result = result.flatMap(value => nameProcessor(value, DefaultNameChoice, decision.data.name));
   result = result.flatMap(value => startingStatProcessor(value, DefaultStartingStatChoice, decision.data.startingStat));
   result = result.flatMap(value => speciesProcessor(value, DefaultSpeciesChoice, decision.data.species));
@@ -31,5 +32,10 @@ export const retrainProcessor: Processor<RetrainChoice, RetrainDecision> = (valu
       return retireProcessor(value, DefaultRetireChoice, decision.data.retire);
     return ValidResult.of(value);
   });
+  result = result.flatMap(value => longRestProcessor(
+    value,
+    getLongRestChoice(value),
+    initialValue.longRest ? {type: "long-rest", data: {decisions: initialValue.longRest}} : undefined
+  ));
   return result;
 }
