@@ -1,4 +1,4 @@
-import {APIComponentInContainer, ButtonStyle, ComponentType, MessageFlags, Snowflake} from "discord-api-types/v10";
+import {APIComponentInContainer, APIMessageTopLevelComponent, ButtonStyle, ComponentType, MessageFlags, Snowflake} from "discord-api-types/v10";
 import {botDiscordClient} from "@/lib/discord/BotDiscordClient";
 import {PlayerID} from "@/model/player/PlayerID";
 import {GameList} from "@/core/game/pick/GameList";
@@ -37,7 +37,10 @@ export async function rollList(gameMasterID: PlayerID, channelID: Snowflake, min
 
   await botDiscordClient.createMessage(channelID, {
     components: [
-      {type: ComponentType.Container, components: iterationComponents},
+      ...(iterationComponents.length > 0
+        ? [{type: ComponentType.Container, components: iterationComponents}]
+        : []
+      ) satisfies APIMessageTopLevelComponent[],
       {
         type: ComponentType.Container,
         components: [{
