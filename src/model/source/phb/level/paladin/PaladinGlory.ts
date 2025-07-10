@@ -16,6 +16,9 @@ const PHB_PALADIN_GLORY_3: Level = {
       choiceID: "paladin (glory)::spell-2",
       condition: is<SpellID>("Heroism")
     }},
+  ],
+  longRest: [
+    ...PHB_PALADIN_3.longRest
   ]
 } as const;
 const PHB_PALADIN_GLORY_4: Level = {
@@ -23,6 +26,9 @@ const PHB_PALADIN_GLORY_4: Level = {
   label: "Paladin (Glory) 4",
   choices: [
     ...PHB_PALADIN_4.choices
+  ],
+  longRest: [
+    ...PHB_PALADIN_4.longRest
   ]
 } as const;
 

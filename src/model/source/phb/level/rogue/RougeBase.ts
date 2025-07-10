@@ -6,6 +6,7 @@ import {SkillID} from "@/model/source/model/Skill";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 import { AttributeID } from "@/model/source/model/Attribute";
+import {WEAPON_TYPES} from "@/model/source/phb/weapon-mastery/weapons";
 
 const rogueSkills = is<SkillID>("acrobatics","athletics","deception","insight","intimidation","investigation","perception","persuasion","sleight of hand","stealth");
 
@@ -48,16 +49,30 @@ const PHB_ROGUE_1: Level = {
     {type: "expertise", data: {
       choiceID: "rogue::expertise::expertise-2"
     }},
+  ],
+  longRest: [
+    {type: "simple", data: {
+      choiceID: "rogue::weapon-mastery-1",
+      label: "Weapon Mastery",
+      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
+    }},
+    {type: "simple", data: {
+      choiceID: "rogue::weapon-mastery-2",
+      label: "Weapon Mastery",
+      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
+    }}
   ]
 } as const;
 
 const PHB_ROGUE_2: Level = {
   label: "Rogue 2",
   replace: "Rogue 1",
-  choices: []
+  choices: [],
+  longRest: []
 } as const;
 export const PHB_ROGUE_3 = {
-  choices: []
+  choices: [],
+  longRest: []
 } as const satisfies Partial<Level>;
 export const PHB_ROGUE_4 = {
   choices: [
@@ -65,7 +80,8 @@ export const PHB_ROGUE_4 = {
       choiceID: "rogue::feat-1",
       condition: featType("general", "origin")
     }}
-  ]
+  ],
+  longRest: []
 } as const satisfies Partial<Level>;
 
 export default {

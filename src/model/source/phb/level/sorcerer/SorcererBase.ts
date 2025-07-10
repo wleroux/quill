@@ -106,7 +106,8 @@ const PHB_SORCERER_1: Level = {
       choiceID: "sorcerer::spell-2",
       condition: maxSorcererSpellLevel(1)
     }}
-  ]
+  ],
+  longRest: []
 } as const;
 const PHB_SORCERER_2: Level = {
   label: "Sorcerer 2",
@@ -140,7 +141,8 @@ const PHB_SORCERER_2: Level = {
     {type: "metamagic", data: {
       choiceID: "sorcerer::metamagic-2"
     }}
-  ]
+  ],
+  longRest: []
 } as const;
 export const PHB_SORCERER_3 = {
   choices: [
@@ -172,7 +174,8 @@ export const PHB_SORCERER_3 = {
       choiceID: "sorcerer::spell-6",
       condition: maxSorcererSpellLevel(2)
     }}
-  ]
+  ],
+  longRest: []
 } as const satisfies Partial<Level>;
 export const PHB_SORCERER_4 = {
   choices: [
@@ -202,7 +205,8 @@ export const PHB_SORCERER_4 = {
       choiceID: "sorcerer::spell-7",
       condition: maxSorcererSpellLevel(2)
     }}
-  ]
+  ],
+  longRest: []
 } as const satisfies Partial<Level>;
 
 export default {

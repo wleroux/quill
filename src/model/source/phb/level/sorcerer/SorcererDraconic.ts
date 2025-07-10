@@ -24,6 +24,9 @@ const PHB_SORCERER_DRACONIC_3: Level = {
       choiceID: "sorcerer (draconic)::spell-4",
       condition: is<SpellID>("Dragon's Breath")
     }}
+  ],
+  longRest: [
+    ...PHB_SORCERER_3.longRest
   ]
 } as const;
 const PHB_SORCERER_DRACONIC_4: Level = {
@@ -31,6 +34,9 @@ const PHB_SORCERER_DRACONIC_4: Level = {
   label: "Sorcerer (Draconic) 4",
   choices: [
     ...PHB_SORCERER_4.choices
+  ],
+  longRest: [
+    ...PHB_SORCERER_4.longRest
   ]
 } as const;
 

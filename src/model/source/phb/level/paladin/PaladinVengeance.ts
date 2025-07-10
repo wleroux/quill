@@ -16,6 +16,9 @@ const PHB_PALADIN_ANCIENTS_3: Level = {
       choiceID: "paladin (vengeance)::spell-2",
       condition: is<SpellID>("Hunter's Mark")
     }},
+  ],
+  longRest: [
+    ...PHB_PALADIN_3.longRest
   ]
 } as const;
 const PHB_PALADIN_ANCIENTS_4: Level = {
@@ -23,6 +26,9 @@ const PHB_PALADIN_ANCIENTS_4: Level = {
   label: "Paladin (Vengeance) 4",
   choices: [
     ...PHB_PALADIN_4.choices
+  ],
+  longRest: [
+    ...PHB_PALADIN_4.longRest
   ]
 } as const;
 

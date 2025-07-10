@@ -19,6 +19,9 @@ const PHB_DRUID_MOON_3: Level = {
       choiceID: "druid (land)::spell-3",
       condition: is("Starry Wisp")
     }}
+  ],
+  longRest: [
+    ...PHB_DRUID_3.longRest
   ]
 } as const;
 const PHB_DRUID_MOON_4: Level = {
@@ -26,6 +29,9 @@ const PHB_DRUID_MOON_4: Level = {
   label: "Druid (Moon) 4",
   choices: [
     ...PHB_DRUID_4.choices
+  ],
+  longRest: [
+    ...PHB_DRUID_4.longRest
   ]
 } as const;
 

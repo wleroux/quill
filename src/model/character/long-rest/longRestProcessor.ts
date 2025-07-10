@@ -26,7 +26,7 @@ export function getLongRestChoice(value: Character): LongRestChoice {
       choiceID: "long-rest",
       choices: getAllClassIDs(value)
         .reverse()
-        .flatMap((classID) => REPOSITORY.CLASSES[classID].longRest ?? [])
+        .flatMap((classID) => REPOSITORY.CLASSES[classID].longRest)
     }
   };
 }

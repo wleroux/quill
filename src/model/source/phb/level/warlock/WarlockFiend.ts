@@ -24,6 +24,9 @@ const PHB_WARLOCK_FIEND_3: Level = {
       choiceID: "warlock (fiend)::spell-4",
       condition: is<SpellID>("Suggestion")
     }}
+  ],
+  longRest: [
+    ...PHB_WARLOCK_3.longRest
   ]
 } as const;
 const PHB_WARLOCK_FIEND_4: Level = {
@@ -31,6 +34,9 @@ const PHB_WARLOCK_FIEND_4: Level = {
   label: "Warlock (Fiend) 4",
   choices: [
     ...PHB_WARLOCK_4.choices
+  ],
+  longRest: [
+    ...PHB_WARLOCK_4.longRest
   ]
 } as const;
 

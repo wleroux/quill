@@ -24,6 +24,9 @@ const PHB_WARLOCK_GREAT_OLD_ONE_3: Level = {
       choiceID: "warlock (great old one)::spell-4",
       condition: is<SpellID>("Tasha's Hideous Laughter")
     }}
+  ],
+  longRest: [
+    ...PHB_WARLOCK_3.longRest
   ]
 } as const;
 const PHB_WARLOCK_GREAT_OLD_ONE_4: Level = {
@@ -31,6 +34,9 @@ const PHB_WARLOCK_GREAT_OLD_ONE_4: Level = {
   label: "Warlock (Great Old One) 4",
   choices: [
     ...PHB_WARLOCK_4.choices
+  ],
+  longRest: [
+    ...PHB_WARLOCK_4.longRest
   ]
 } as const;
 

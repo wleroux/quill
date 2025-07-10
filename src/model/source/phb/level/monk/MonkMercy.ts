@@ -21,6 +21,9 @@ const PHB_MONK_MERCY_3: Level = {
       choiceID: "monk (mercy)::tool-1",
       condition: is<ToolID>("Herbalism Kit")
     }}
+  ],
+  longRest: [
+    ...PHB_MONK_3.longRest
   ]
 } as const;
 
@@ -29,6 +32,9 @@ const PHB_MONK_MERCY_4: Level = {
   label: "Monk (Mercy) 4",
   choices: [
     ...PHB_MONK_4.choices
+  ],
+  longRest: [
+    ...PHB_MONK_4.longRest
   ]
 } as const;
 

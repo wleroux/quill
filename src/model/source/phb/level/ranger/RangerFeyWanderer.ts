@@ -17,6 +17,9 @@ const PHB_RANGER_FEY_WANDERER_3: Level = {
       choiceID: "ranger (fey wanderer)::skill-1",
       condition: is<SkillID>("deception", "performance", "persuasion")
     }}
+  ],
+  longRest: [
+    ...PHB_RANGER_3.longRest
   ]
 } as const;
 
@@ -25,6 +28,9 @@ const PHB_RANGER_FEY_WANDERER_4: Level = {
   label: "Ranger (Fey Wanderer) 4",
   choices: [
     ...PHB_RANGER_4.choices
+  ],
+  longRest: [
+    ...PHB_RANGER_4.longRest
   ]
 } as const;
 

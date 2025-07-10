@@ -6,6 +6,9 @@ const PHB_BARBARIAN_WORLD_TREE_3: Level = {
   label: "Barbarian (World Tree) 3",
   choices: [
     ...PHB_BARBARIAN_3.choices
+  ],
+  longRest: [
+    ...PHB_BARBARIAN_3.longRest
   ]
 };
 const PHB_BARBARIAN_WORLD_TREE_4: Level = {
@@ -13,6 +16,9 @@ const PHB_BARBARIAN_WORLD_TREE_4: Level = {
   label: "Barbarian (World Tree) 4",
   choices: [
     ...PHB_BARBARIAN_4.choices
+  ],
+  longRest: [
+    ...PHB_BARBARIAN_4.longRest
   ]
 };
 

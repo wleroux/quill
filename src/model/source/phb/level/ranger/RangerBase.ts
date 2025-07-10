@@ -7,9 +7,27 @@ import {is} from "@/model/source/condition/generic/IsCondition";
 import {all} from "@/model/source/condition/generic/AllCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 import {druidCantripSpell} from "@/model/source/phb/level/druid/druidCantripSpell";
-import { AttributeID } from "@/model/source/model/Attribute";
+import {AttributeID} from "@/model/source/model/Attribute";
+import {SpellID, SpellLevel} from "@/model/source/model/Spell";
+import {maxSpellLevel} from "@/model/source/condition/spell/LeveledSpellCondition";
+import {Condition} from "@/model/source/condition/Condition";
+import {getLevelsIn} from "@/model/source/condition/level/NeverTaken";
+import {rangerSpells} from "@/model/source/phb/level/ranger/rangerSpells";
+import { WEAPON_TYPES } from "../../weapon-mastery/weapons";
 
 const rangerSkills = is<SkillID>("animal handling","athletics","insight","investigation","nature","perception","stealth","survival");
+const maxRangerLeveledSpells = (level: Exclude<SpellLevel, "cantrip">) => all(
+  rangerSpells,
+  maxSpellLevel(level)
+);
+function getRangerMaxSpellLevel(level: number): Exclude<SpellLevel, "cantrip"> {
+  if (level < 5) return 1;
+  if (level < 9) return 2;
+  if (level < 13) return 3;
+  if (level < 17) return 4;
+  return 5;
+}
+const maxRangerSpellLongRest: Condition<SpellID> = (_, value) => maxRangerLeveledSpells(getRangerMaxSpellLevel(getLevelsIn(value, "Paladin 1")))(_, value)
 
 const PHB_RANGER_1: Level = {
   label: "Ranger 1",
@@ -39,6 +57,26 @@ const PHB_RANGER_1: Level = {
       enabled: isMainClass(),
       condition: rangerSkills
     }},
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-1",
+      condition: maxRangerSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "ranger::spell-2",
+      condition: maxRangerSpellLongRest
+    }},
+    {type: "simple", data: {
+      choiceID: "ranger::weapon-mastery-1",
+      label: "Weapon Mastery",
+      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
+    }},
+    {type: "simple", data: {
+      choiceID: "ranger::weapon-mastery-2",
+      label: "Weapon Mastery",
+      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
+    }}
   ]
 } as const;
 
@@ -76,11 +114,23 @@ const PHB_RANGER_2: Level = {
       choiceID: "ranger::spell-druidic-warrior-2",
       condition: druidCantripSpell
     }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-3",
+      condition: maxRangerSpellLongRest
+    }},
   ]
 } as const;
 
 export const PHB_RANGER_3 = {
-  choices: []
+  choices: [],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-4",
+      condition: maxRangerSpellLongRest
+    }}
+  ]
 } as const satisfies Partial<Level>;
 export const PHB_RANGER_4 = {
   choices: [
@@ -88,6 +138,12 @@ export const PHB_RANGER_4 = {
       choiceID: "ranger::feat-1",
       condition: featType("general", "origin"),
     }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-5",
+      condition: maxRangerSpellLongRest
+    }},
   ]
 } as const satisfies Partial<Level>;
 

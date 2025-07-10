@@ -17,6 +17,9 @@ const PHB_BARBARIAN_WILD_HEART_3: Level = {
       choiceID: "barbarian (wild heart)::spell-1",
       condition: is("Speak with Animals"),
     }}
+  ],
+  longRest: [
+    ...PHB_BARBARIAN_3.longRest
   ]
 };
 const PHB_BARBARIAN_WILD_HEART_4: Level = {
@@ -24,6 +27,9 @@ const PHB_BARBARIAN_WILD_HEART_4: Level = {
   label: "Barbarian (Wild Heart) 4",
   choices: [
     ...PHB_BARBARIAN_4.choices
+  ],
+  longRest: [
+    ...PHB_BARBARIAN_4.longRest
   ]
 };
 

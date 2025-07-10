@@ -6,6 +6,9 @@ const PHB_MONK_OPEN_HAND_3: Level = {
   label: "Monk (Open Hand) 3",
   choices: [
     ...PHB_MONK_3.choices
+  ],
+  longRest: [
+    ...PHB_MONK_3.longRest
   ]
 } as const;
 
@@ -14,6 +17,9 @@ const PHB_MONK_OPEN_HAND_4: Level = {
   label: "Monk (Open Hand) 4",
   choices: [
     ...PHB_MONK_4.choices
+  ],
+  longRest: [
+    ...PHB_MONK_4.longRest
   ]
 } as const;
 

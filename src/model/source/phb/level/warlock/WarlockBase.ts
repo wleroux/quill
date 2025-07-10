@@ -87,7 +87,8 @@ const PHB_WARLOCK_1: Level = {
       choiceID: "warlock::eldritch-invocation::1",
       sourceID: "warlock::eldritch-invocation-1"
     }}
-  ]
+  ],
+  longRest: []
 } as const;
 const PHB_WARLOCK_2: Level = {
   label: "Warlock 2",
@@ -125,7 +126,8 @@ const PHB_WARLOCK_2: Level = {
       choiceID: "warlock::eldritch-invocation::3",
       sourceID: "warlock::eldritch-invocation-3"
     }}
-  ]
+  ],
+  longRest: []
 } as const;
 export const PHB_WARLOCK_3 = {
   choices: [
@@ -152,7 +154,8 @@ export const PHB_WARLOCK_3 = {
       choiceID: "warlock::cantrip-3",
       condition: maxWarlockSpellLevel(2)
     }}
-  ]
+  ],
+  longRest: []
 } as const satisfies Partial<Level>;
 export const PHB_WARLOCK_4 = {
   choices: [
@@ -188,7 +191,8 @@ export const PHB_WARLOCK_4 = {
       choiceID: "warlock::cantrip-3",
       condition: maxWarlockSpellLevel(2)
     }}
-  ]
+  ],
+  longRest: []
 } as const satisfies Partial<Level>;
 
 export default {

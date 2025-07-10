@@ -87,6 +87,8 @@ const PHB_BARD_1: Level = {
       choiceID: "bard::spell::spell-4",
       condition: bardLeveledSpell(1)
     }}
+  ],
+  longRest: [
   ]
 } as const;
 const PHB_BARD_2: Level = {
@@ -119,6 +121,8 @@ const PHB_BARD_2: Level = {
       choiceID: "bard::expertise::expertise-2",
       condition: bardSkill()
     }}
+  ],
+  longRest: [
   ]
 } as const;
 
@@ -142,6 +146,8 @@ export const BASE_BARD_3 = {
       choiceID: "bard::spell::spell-6",
       condition: bardLeveledSpell(2),
     }}
+  ],
+  longRest: [
   ]
 } as const satisfies Partial<Level>;
 export const BASE_BARD_4 = {
@@ -168,6 +174,8 @@ export const BASE_BARD_4 = {
       choiceID: "bard::feat-1",
       condition: featType("general", "origin")
     }}
+  ],
+  longRest: [
   ]
 } as const satisfies Partial<Level>;
 

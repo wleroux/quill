@@ -6,7 +6,8 @@ import {SkillID} from "@/model/source/model/Skill";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
-import { AttributeID } from "@/model/source/model/Attribute";
+import {AttributeID} from "@/model/source/model/Attribute";
+import {WEAPON_TYPES} from "../../weapon-mastery/weapons";
 
 export const fighterSkills = is<SkillID>("acrobatics","animal handling","athletics","history","insight","intimidation","persuasion","perception","survival");
 
@@ -39,6 +40,23 @@ const PHB_FIGHTER_1: Level = {
       choiceID: "fighter::fighting-style::feat-1",
       condition: featType("fighting style")
     }}
+  ],
+  longRest: [
+    {type: "simple", data: {
+      choiceID: "fighter::weapon-mastery-1",
+      label: "Weapon Mastery",
+      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
+    }},
+    {type: "simple", data: {
+      choiceID: "fighter::weapon-mastery-2",
+      label: "Weapon Mastery",
+      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
+    }},
+    {type: "simple", data: {
+      choiceID: "fighter::weapon-mastery-2",
+      label: "Weapon Mastery",
+      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
+    }}
   ]
 } as const;
 
@@ -53,6 +71,8 @@ const PHB_FIGHTER_2: Level = {
       sourceID: is("fighter::fighting-style::feat-1"),
       condition: featType("fighting style")
     }}
+  ],
+  longRest: [
   ]
 } as const;
 
@@ -65,6 +85,8 @@ export const PHB_FIGHTER_3 = {
       sourceID: is("fighter::fighting-style::feat-1"),
       condition: featType("fighting style")
     }}
+  ],
+  longRest: [
   ]
 } as const satisfies Partial<Level>;
 
@@ -80,6 +102,13 @@ export const PHB_FIGHTER_4 = {
     {type: "feat", data: {
       choiceID: "fighter::feat-1",
       condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
+    {type: "simple", data: {
+      choiceID: "fighter::weapon-mastery-4",
+      label: "Weapon Mastery",
+      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
     }}
   ]
 } as const satisfies Partial<Level>;

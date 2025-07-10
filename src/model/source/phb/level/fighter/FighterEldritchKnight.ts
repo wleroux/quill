@@ -29,6 +29,9 @@ const PHB_FIGHTER_ELDRITCH_KNIGHT_3: Level = {
       choiceID: "fighter (eldritch knight)::spell-3",
       condition: maxWizardLeveledSpell(1)
     }}
+  ],
+  longRest: [
+    ...PHB_FIGHTER_3.longRest
   ]
 } as const;
 
@@ -37,6 +40,9 @@ const PHB_FIGHTER_ELDRITCH_KNIGHT_4: Level = {
   label: "Fighter (Eldritch Knight) 4",
   choices: [
     ...PHB_FIGHTER_4.choices
+  ],
+  longRest: [
+    ...PHB_FIGHTER_4.longRest
   ]
 } as const;
 

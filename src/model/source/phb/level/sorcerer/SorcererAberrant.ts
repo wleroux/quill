@@ -28,6 +28,9 @@ const PHB_SORCERER_ABERRANT_3: Level = {
       choiceID: "sorcerer (aberrant)::spell-5",
       condition: is<SpellID>("Mind Sliver")
     }}
+  ],
+  longRest: [
+    ...PHB_SORCERER_3.longRest
   ]
 } as const;
 const PHB_SORCERER_ABERRANT_4: Level = {
@@ -35,6 +38,9 @@ const PHB_SORCERER_ABERRANT_4: Level = {
   label: "Sorcerer (Aberrant) 4",
   choices: [
     ...PHB_SORCERER_4.choices
+  ],
+  longRest: [
+    ...PHB_SORCERER_4.longRest
   ]
 } as const;
 

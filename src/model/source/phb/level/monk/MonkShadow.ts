@@ -12,6 +12,9 @@ const PHB_MONK_SHADOW_3: Level = {
       choiceID: "monk (shadow)::spell-1",
       condition: is<SpellID>("Darkness")
     }}
+  ],
+  longRest: [
+    ...PHB_MONK_3.longRest
   ]
 } as const;
 
@@ -20,6 +23,9 @@ const PHB_MONK_SHADOW_4: Level = {
   label: "Monk (Shadow) 4",
   choices: [
     ...PHB_MONK_4.choices
+  ],
+  longRest: [
+    ...PHB_MONK_4.longRest
   ]
 } as const;
 

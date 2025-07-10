@@ -28,6 +28,9 @@ const PHB_WARLOCK_ARCHFEY_3: Level = {
       choiceID: "warlock (archfey)::spell-5",
       condition: is<SpellID>("Sleep")
     }},
+  ],
+  longRest: [
+    ...PHB_WARLOCK_3.longRest
   ]
 } as const;
 const PHB_WARLOCK_ARCHFEY_4: Level = {
@@ -35,6 +38,9 @@ const PHB_WARLOCK_ARCHFEY_4: Level = {
   label: "Warlock (Archfey) 4",
   choices: [
     ...PHB_WARLOCK_4.choices
+  ],
+  longRest: [
+    ...PHB_WARLOCK_4.longRest
   ]
 } as const;
 

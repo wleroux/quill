@@ -40,15 +40,21 @@ const PHB_MONK_1: Level = {
       enabled: isMainClass(),
       condition: any(toolType("artisan tool"), toolType("musical instrument"))
     }}
+  ],
+  longRest: [
   ]
 } as const;
 const PHB_MONK_2: Level = {
   label: "Monk 2",
   replace: "Monk 1",
-  choices: []
+  choices: [],
+  longRest: [
+  ]
 } as const;
 export const PHB_MONK_3 = {
   choices: [
+  ],
+  longRest: [
   ]
 } as const satisfies Partial<Level>;
 export const PHB_MONK_4 = {
@@ -57,6 +63,8 @@ export const PHB_MONK_4 = {
       choiceID: "monk::feat-1",
       condition: featType("general", "origin")
     }}
+  ],
+  longRest: [
   ]
 } as const satisfies Partial<Level>;
 

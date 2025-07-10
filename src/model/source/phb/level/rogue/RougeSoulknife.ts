@@ -6,6 +6,9 @@ const PHB_ROGUE_SOULKNIFE_3: Level = {
   label: "Rogue (Soulknife) 3",
   choices: [
     ...PHB_ROGUE_3.choices
+  ],
+  longRest: [
+    ...PHB_ROGUE_3.longRest
   ]
 } as const;
 const PHB_ROGUE_SOULKNIFE_4: Level = {
@@ -13,6 +16,9 @@ const PHB_ROGUE_SOULKNIFE_4: Level = {
   label: "Rogue (Soulknife) 4",
   choices: [
     ...PHB_ROGUE_4.choices
+  ],
+  longRest: [
+    ...PHB_ROGUE_4.longRest
   ]
 } as const;
 

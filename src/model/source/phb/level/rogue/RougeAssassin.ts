@@ -25,6 +25,9 @@ const PHB_ROGUE_ASSASSIN_3: Level = {
       choiceID: "rogue (assassin)::item-2",
       condition: is<ItemID>("Poisoner's Kit"),
     }}
+  ],
+  longRest: [
+    ...PHB_ROGUE_3.longRest
   ]
 } as const;
 const PHB_ROGUE_ASSASSIN_4: Level = {
@@ -32,6 +35,9 @@ const PHB_ROGUE_ASSASSIN_4: Level = {
   label: "Rogue (Assassin) 4",
   choices: [
     ...PHB_ROGUE_4.choices
+  ],
+  longRest: [
+    ...PHB_ROGUE_4.longRest
   ]
 } as const;
 

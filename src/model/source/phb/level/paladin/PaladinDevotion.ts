@@ -16,6 +16,9 @@ const PHB_PALADIN_DEVOTION_3: Level = {
       choiceID: "paladin (devotion)::spell-2",
       condition: is<SpellID>("Shield of Faith")
     }},
+  ],
+  longRest: [
+    ...PHB_PALADIN_3.longRest
   ]
 } as const;
 const PHB_PALADIN_DEVOTION_4: Level = {
@@ -23,6 +26,9 @@ const PHB_PALADIN_DEVOTION_4: Level = {
   label: "Paladin (Devotion) 4",
   choices: [
     ...PHB_PALADIN_4.choices
+  ],
+  longRest: [
+    ...PHB_PALADIN_4.longRest
   ]
 } as const;
 

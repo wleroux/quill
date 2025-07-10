@@ -95,26 +95,6 @@ const maxPaladinSpellLongRest: Condition<SpellID> = (_, value) => maxPaladinLeve
 const PHB_PALADIN_1: Level = {
   label: "Paladin 1",
   prerequisite: any(noClasses(), all(minStat("str", 13), minStat("cha", 13))),
-  longRest: [
-    {type: "spell", data: {
-      choiceID: "paladin::spell-1",
-      condition: maxPaladinSpellLongRest
-    }},
-    {type: "spell", data: {
-      choiceID: "paladin::spell-2",
-        condition: maxPaladinSpellLongRest
-    }},
-    {type: "simple", data: {
-      choiceID: "paladin::weapon-mastery-1",
-      label: "Weapon Mastery",
-      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
-    }},
-    {type: "simple", data: {
-      choiceID: "paladin::weapon-mastery-2",
-      label: "Weapon Mastery",
-      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
-    }}
-  ],
   choices: [
     {type: "saving-throw", data: {
       choiceID: "paladin::saving-throw-1",
@@ -136,18 +116,32 @@ const PHB_PALADIN_1: Level = {
       enabled: isMainClass(),
       condition: paladinSkills
     }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "paladin::spell-1",
+      condition: maxPaladinSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "paladin::spell-2",
+      condition: maxPaladinSpellLongRest
+    }},
+    {type: "simple", data: {
+      choiceID: "paladin::weapon-mastery-1",
+      label: "Weapon Mastery",
+      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
+    }},
+    {type: "simple", data: {
+      choiceID: "paladin::weapon-mastery-2",
+      label: "Weapon Mastery",
+      options: WEAPON_TYPES.map(weaponType => ({optionID: weaponType, label: weaponType}))
+    }}
   ]
 } as const;
 
 const PHB_PALADIN_2: Level = {
   label: "Paladin 2",
   replace: "Paladin 1",
-  longRest: [
-    {type: "spell", data: {
-      choiceID: "paladin::spell-3",
-      condition: maxPaladinSpellLongRest
-    }}
-  ],
   choices: [
     {type: "simple", data: {
       label: "Fighting Style",
@@ -180,10 +174,17 @@ const PHB_PALADIN_2: Level = {
       choiceID: "paladin::divine-smite-1",
       condition: is("Divine Smite")
     }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "paladin::spell-3",
+      condition: maxPaladinSpellLongRest
+    }}
   ]
 } as const;
 export const PHB_PALADIN_3 = {
-  choices: []
+  choices: [],
+  longRest: []
 } as const satisfies Partial<Level>;
 export const PHB_PALADIN_4 = {
   choices: [
@@ -191,7 +192,8 @@ export const PHB_PALADIN_4 = {
       choiceID: "paladin::feat-1",
       condition: featType("general", "origin")
     }}
-  ]
+  ],
+  longRest: []
 } as const satisfies Partial<Level>;
 
 export default {

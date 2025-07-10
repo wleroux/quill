@@ -6,6 +6,9 @@ const PHB_BARD_VALOR_3: Level = {
   replace: "Bard 2",
   choices: [
     ...BASE_BARD_3.choices
+  ],
+  longRest: [
+    ...BASE_BARD_3.longRest
   ]
 };
 const PHB_BARD_VALOR_4: Level = {
@@ -13,6 +16,9 @@ const PHB_BARD_VALOR_4: Level = {
   replace: "Bard (Valor) 3",
   choices: [
     ...BASE_BARD_4.choices
+  ],
+  longRest: [
+    ...BASE_BARD_4.longRest
   ]
 };
 

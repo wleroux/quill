@@ -7,6 +7,6 @@ export type Level = {
   label: string;
   replace?: ClassID;
   prerequisite?: Condition<any>;
-  longRest?: Choice[];
+  longRest: Choice[];
   choices: Choice[];
 };

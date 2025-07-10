@@ -6,6 +6,9 @@ const PHB_BARBARIAN_BERSERKER_3: Level = {
   label: "Barbarian (Berserker) 3",
   choices: [
     ...PHB_BARBARIAN_3.choices
+  ],
+  longRest: [
+    ...PHB_BARBARIAN_3.longRest
   ]
 };
 const PHB_BARBARIAN_BERSERKER_4: Level = {
@@ -13,6 +16,9 @@ const PHB_BARBARIAN_BERSERKER_4: Level = {
   label: "Barbarian (Berserker) 4",
   choices: [
     ...PHB_BARBARIAN_4.choices
+  ],
+  longRest: [
+    ...PHB_BARBARIAN_4.longRest
   ]
 };
 

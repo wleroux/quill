@@ -24,6 +24,9 @@ const PHB_FIGHTER_BATTLE_MASTER_3: Level = {
       choiceID: "fighter (battle master)::tool-1",
       condition: toolType("artisan tool")
     }}
+  ],
+  longRest: [
+    ...PHB_FIGHTER_3.longRest
   ]
 } as const;
 
@@ -32,6 +35,9 @@ const PHB_FIGHTER_BATTLE_MASTER_4: Level = {
   label: "Fighter (Battle Master) 4",
   choices: [
     ...PHB_FIGHTER_4.choices
+  ],
+  longRest: [
+    ...PHB_FIGHTER_4.longRest
   ]
 } as const;
 

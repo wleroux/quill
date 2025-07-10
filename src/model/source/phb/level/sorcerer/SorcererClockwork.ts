@@ -24,6 +24,9 @@ const PHB_SORCERER_CLOCKWORK_3: Level = {
       choiceID: "sorcerer (clockwork)::spell-4",
       condition: is<SpellID>("Protection from Evil and Good")
     }}
+  ],
+  longRest: [
+    ...PHB_SORCERER_3.longRest
   ]
 } as const;
 const PHB_SORCERER_CLOCKWORK_4: Level = {
@@ -31,6 +34,9 @@ const PHB_SORCERER_CLOCKWORK_4: Level = {
   label: "Sorcerer (Clockwork) 4",
   choices: [
     ...PHB_SORCERER_4.choices
+  ],
+  longRest: [
+    ...PHB_SORCERER_4.longRest
   ]
 } as const;
 

@@ -17,6 +17,9 @@ const PHB_RANGER_GLOOM_STALKER_3: Level = {
       choiceID: "ranger (gloom stalker)::skill-1",
       condition: is<SkillID>("deception", "performance", "persuasion")
     }}
+  ],
+  longRest: [
+    ...PHB_RANGER_3.longRest
   ]
 } as const;
 
@@ -25,6 +28,9 @@ const PHB_RANGER_GLOOM_STALKER_4: Level = {
   label: "Ranger (Gloom Stalker) 4",
   choices: [
     ...PHB_RANGER_4.choices
+  ],
+  longRest: [
+    ...PHB_RANGER_4.longRest
   ]
 } as const;
 

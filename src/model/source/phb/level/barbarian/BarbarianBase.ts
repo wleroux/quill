@@ -1,12 +1,12 @@
-import {Level, ClassID} from "@/model/source/model/Level";
+import {ClassID, Level} from "@/model/source/model/Level";
 import {isMainClass, noClasses} from "@/model/source/choice/Choice";
 import {barbarianSkills} from "@/model/source/phb/level/barbarian/BarbarianSkillCondition";
 import {minStat} from "@/model/source/condition/attribute/minStat";
 import {any} from "@/model/source/condition/generic/AnyCondition";
-import { featType } from "@/model/source/condition/feat/FeatTypeCondition";
-import { is } from "@/model/source/condition/generic/IsCondition";
-import { AttributeID } from "@/model/source/model/Attribute";
-import {MELEE_SIMPLE_WEAPON_TYPES, MELEE_WEAPON_TYPES, WEAPON_TYPES} from "@/model/source/phb/weapon-mastery/weapons";
+import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
+import {is} from "@/model/source/condition/generic/IsCondition";
+import {AttributeID} from "@/model/source/model/Attribute";
+import {MELEE_WEAPON_TYPES} from "@/model/source/phb/weapon-mastery/weapons";
 
 const PHB_BARBARIAN_1: Level = {
   label: "Barbarian 1",
@@ -49,7 +49,8 @@ const PHB_BARBARIAN_1: Level = {
 const PHB_BARBARIAN_2: Level = {
   label: "Barbarian 2",
   replace: "Barbarian 1",
-  choices: []
+  choices: [],
+  longRest: []
 };
 
 export const PHB_BARBARIAN_3 = {
@@ -59,7 +60,8 @@ export const PHB_BARBARIAN_3 = {
       choiceID: "barbarian::skill-3",
       condition: barbarianSkills()
     }}
-  ]
+  ],
+  longRest: []
 } as const satisfies Partial<Level>;
 export const PHB_BARBARIAN_4 = {
   choices: [
@@ -67,7 +69,8 @@ export const PHB_BARBARIAN_4 = {
       choiceID: "barbarian::feat-1",
       condition: featType("general", "origin")
     }}
-  ]
+  ],
+  longRest: []
 } as const satisfies Partial<Level>;
 
 export default {

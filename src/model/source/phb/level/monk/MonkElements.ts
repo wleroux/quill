@@ -12,6 +12,9 @@ const PHB_MONK_ELEMENTS_3: Level = {
       choiceID: "monk (elements)::spell-1",
       condition: is<SpellID>("Elementalism")
     }}
+  ],
+  longRest: [
+    ...PHB_MONK_3.longRest
   ]
 } as const;
 
@@ -20,6 +23,9 @@ const PHB_MONK_ELEMENTS_4: Level = {
   label: "Monk (Elements) 4",
   choices: [
     ...PHB_MONK_4.choices
+  ],
+  longRest: [
+    ...PHB_MONK_4.longRest
   ]
 } as const;
 

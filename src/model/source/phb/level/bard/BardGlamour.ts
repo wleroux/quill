@@ -15,6 +15,9 @@ const PHB_BARD_GLAMOUR_3: Level = {
       choiceID: "bard (glamour)::spell-2",
       condition: is("Mirror Image")
     }}
+  ],
+  longRest: [
+    ...BASE_BARD_3.longRest
   ]
 };
 const PHB_BARD_GLAMOUR_4: Level = {
@@ -22,6 +25,9 @@ const PHB_BARD_GLAMOUR_4: Level = {
   replace: "Bard (Glamour) 3",
   choices: [
     ...BASE_BARD_4.choices
+  ],
+  longRest: [
+    ...BASE_BARD_4.longRest
   ]
 };
 

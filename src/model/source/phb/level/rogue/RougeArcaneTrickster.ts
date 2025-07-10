@@ -56,6 +56,9 @@ const PHB_ROGUE_ARCANE_TRICKSTER_3: Level = {
       choiceID: "rogue (arcane trickster)::spell-3",
       condition: maxWizardLeveledSpell(1)
     }}
+  ],
+  longRest: [
+    ...PHB_ROGUE_3.longRest
   ]
 } as const;
 const PHB_ROGUE_ARCANE_TRICKSTER_4: Level = {
@@ -81,6 +84,9 @@ const PHB_ROGUE_ARCANE_TRICKSTER_4: Level = {
       choiceID: "rogue (arcane trickster)::spell-2",
       condition: maxWizardLeveledSpell(1)
     }}
+  ],
+  longRest: [
+    ...PHB_ROGUE_4.longRest
   ]
 } as const;
 
