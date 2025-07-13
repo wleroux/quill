@@ -8,9 +8,8 @@ import {SkillID} from "@/model/source/model/Skill";
 import {all} from "@/model/source/condition/generic/AllCondition";
 import {cantripSpell} from "@/model/source/condition/spell/CantripSpellCondition";
 import {clericSpell} from "@/model/source/phb/level/cleric/clericSpell";
-import { AttributeID } from "@/model/source/model/Attribute";
+import {AttributeID} from "@/model/source/model/Attribute";
 import {SpellID, SpellLevel} from "@/model/source/model/Spell";
-import {wizardSpell} from "@/model/source/phb/level/wizard/wizardSpell";
 import {maxSpellLevel} from "@/model/source/condition/spell/LeveledSpellCondition";
 import {Condition} from "@/model/source/condition/Condition";
 import {getLevelsIn} from "@/model/source/condition/level/NeverTaken";
@@ -27,7 +26,7 @@ const clericCantripSources = is<string>(
 const clericSkill = is<SkillID>("history","insight","medicine","persuasion","religion");
 const clericCantripSpell = all(cantripSpell, clericSpell)
 const maxClericLeveledSpells = (level: Exclude<SpellLevel, "cantrip">) => all(
-  wizardSpell,
+  clericSpell,
   maxSpellLevel(level)
 );
 function getClericMaxSpellLevel(level: number): Exclude<SpellLevel, "cantrip"> {
