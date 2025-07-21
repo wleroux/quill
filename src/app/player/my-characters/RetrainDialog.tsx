@@ -98,9 +98,11 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
   const backgroundResult =
     speciesResult
       .flatMap(value => speciesProcessor(value, DefaultSpeciesChoice, decision.data.species));
-  const currentLevelResult =
+  const postBackgroundResult =
     speciesResult
       .flatMap(value => backgroundProcessor(value, DefaultBackgroundChoice, decision.data.background))
+  const currentLevelResult =
+    postBackgroundResult
       .flatMap(value => {
         const level = step.type === "level" ? step.level : 0;
         let result = ValidResult.of(value);
@@ -115,7 +117,7 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
     if (!startingStatResult.valid) return 0;
     if (!speciesResult.valid) return 1;
     if (!backgroundResult.valid) return 2;
-    if (!currentLevelResult.valid) return 3;
+    if (!postBackgroundResult.valid) return 3;
     return 3;
   };
 
