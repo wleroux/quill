@@ -46,7 +46,9 @@ export function ChoiceField({character, choice, decision, onChange}: {
         return fn(decision)
     })} />
   } else if (choice.type === "feat" && (decision === undefined || decision.type === "feat")) {
-    return <FeatField character={character} choice={choice} value={decision} onChange={(value) => onChange(_ => value)} />
+    return <FeatField character={character} choice={choice} value={decision} onChange={fn => onChange(decision => {
+      if (decision === undefined || decision.type === "feat") return fn(decision);
+    })} />
   } else if (choice.type === "feat-replacement" && (decision === undefined || decision.type === "feat-replacement")) {
     return <FeatReplacementField value={character} choice={choice} decision={decision} onChange={fn => onChange(decision => {
       if (decision === undefined || decision.type === "feat-replacement") return fn(decision)
