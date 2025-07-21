@@ -21,11 +21,13 @@ const dropdownPt: DropdownPassThroughOptions = {
     className: "pointer-events-none pr-4"
   },
   itemGroup: {
-    className: "bg-transparent px-4 py-1 rounded-md text-nowrap",
+    className: "bg-transparent px-4 py-1 rounded-md text-nowrap disabled:bg-white",
   },
   item: (options) => ({
     className: twMerge(
       "bg-transparent px-4 py-1 hover:bg-black/20 rounded-md text-nowrap",
+      "aria-[p-disabled=true]:opacity-50",
+      options?.context.disabled && "opacity-50",
       options?.context.selected && "bg-black/20 hover:bg-black/40"
     )
   }),

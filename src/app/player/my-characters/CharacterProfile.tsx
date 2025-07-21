@@ -20,6 +20,7 @@ import {Menu} from "primereact/menu";
 import {LevelDialog} from "@/lib/character/train/LevelDialog";
 import {getCurrentLevel} from "@/model/character/level/LevelChoice";
 import {LongRestDialog} from "@/lib/character/long-rest/LongRestDialog";
+import {RetrainDialog} from "@/app/player/my-characters/RetrainDialog";
 
 function PlayerActionButton({value}: {value: Character}) {
   const router = useRouter();
@@ -41,6 +42,7 @@ function PlayerActionButton({value}: {value: Character}) {
   const [isRenameOpen, setIsRenameOpen] = React.useState(false);
   const [isLevelUpOpen, setIsLevelUpOpen] = React.useState(false);
   const [isLongRestOpen, setIsLongRestOpen] = React.useState(false);
+  const [isRetrainOpen, setIsRetrainOpen] = React.useState(false);
 
   return <>
     <Button ref={retireButtonRef} size="small" label="Actions" onClick={(ev) => {
@@ -53,6 +55,9 @@ function PlayerActionButton({value}: {value: Character}) {
       {label: `Long Rest`, disabled: isRenameOpen, command() {
         setIsLongRestOpen(true);
       }},
+      {label: "Initiate Retrain", visible: getCurrentLevel(value) < 5, command() {
+        setIsRetrainOpen(true)
+      }},
       {label: `Rename`, disabled: isRenameOpen, command() {
         setIsRenameOpen(true);
       }},
@@ -63,6 +68,7 @@ function PlayerActionButton({value}: {value: Character}) {
     <RenameDialog value={value} visible={isRenameOpen} onClose={() => setIsRenameOpen(false)} />
     <LevelDialog value={value} visible={isLevelUpOpen} onClose={() => setIsLevelUpOpen(false)} />
     <LongRestDialog value={value} visible={isLongRestOpen} onClose={() => setIsLongRestOpen(false)} />
+    <RetrainDialog value={value} visible={isRetrainOpen} onClose={() => setIsRetrainOpen(false)} />
 
     <ConfirmPopup pt={{
       root: {className: "bg-red-800 border-red-400/50 text-red-50 dark:bg-red-950 border dark:border-red-400/50 p-4 mt-4 gap-4 flex flex-col"},

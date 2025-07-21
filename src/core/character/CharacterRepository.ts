@@ -4,7 +4,7 @@ import {Character, INITIAL_CHARACTER} from "@/model/character/Character";
 import {dynamoDBClient, getLoader, send} from "@/core/DynamoDBClient";
 import {QueryCommand, QueryCommandOutput} from "@aws-sdk/lib-dynamodb";
 import {QueueRepository} from "@/core/queue/QueueRepository";
-import {Result, ValidResult} from "@/model/processor/Result";
+import {ErrorResult, Result, ValidResult} from "@/model/processor/Result";
 import {CharacterCreationDecision} from "@/model/character/create/CharacterCreationDecision";
 import {PlayerID} from "@/model/player/PlayerID";
 import {getMetadata} from "@/core/RequestContext";
@@ -23,6 +23,7 @@ import {retrainProcessor} from "@/model/character/retrain/retrainProcessor";
 import {DefaultRetrainChoice} from "@/model/character/retrain/RetrainChoice";
 import {LongRestDecision} from "@/model/character/long-rest/LongRestDecision";
 import {getLongRestChoice, longRestProcessor} from "@/model/character/long-rest/longRestProcessor";
+import {getCurrentLevel} from "@/model/character/level/LevelChoice";
 
 export type CreateCharacterOperation = {type: "create", data: {
   id: CharacterID;
@@ -59,6 +60,10 @@ export const CharacterReducer = (initialValue: Character | undefined, operation:
       case "retrain": {
         const result = retrainProcessor(initialValue, DefaultRetrainChoice, operation.data);
         if (result.valid) {
+          // You can only retrain to your current level
+          if (getCurrentLevel(result.value) !== getCurrentLevel(initialValue))
+            return ErrorResult.of([new ProcessorError("MISMATCH LEVEL", [DefaultRetrainChoice.data.choiceID], DefaultRetrainChoice, operation)])
+
           return ValidResult.of({
             ...result.value,
             revision: initialValue.revision

@@ -32,7 +32,7 @@ import {nameProcessor} from "@/model/character/name/NameProcessor";
 import {backgroundProcessor} from "@/model/character/create/background/BackgroundProcessor";
 import {LevelField} from "@/model/character/level/LevelField";
 import {levelProcessor} from "@/model/character/level/LevelProcessor";
-import {DefaultLevelChoice} from "@/model/character/level/LevelChoice";
+import {DefaultLevelChoice, getCurrentLevel} from "@/model/character/level/LevelChoice";
 import {DropdownField} from "@/lib/components/DropdownField";
 import {ProcessorError} from "@/model/processor/Processor";
 import {useRetrainMutation} from "@/lib/character/retrain/useRetrainMutation";
@@ -135,6 +135,18 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
     if (index === 3) setStep({type: "level", level: 0});
   };
 
+  let maxLevel = 0;
+  if (backgroundResult.valid) {
+    let result: Result<Character, ProcessorError[]> = backgroundResult;
+    for (let i = 0; i < 20; i ++) {
+      result = result.flatMap(value => levelProcessor(value, DefaultLevelChoice[i], decision.data.levels[i]));
+      if (!result.valid) {
+        maxLevel = i;
+        break;
+      }
+    }
+  }
+
   return <Modal
     visible={visible} onClose={onClose}
     header={<PageTitle>Retrain Character</PageTitle>}
@@ -177,6 +189,7 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
             <FieldSet inline>
               <DropdownField label="Level" value={step.type === "level" ? step.level : 0} options={decision.data.levels.map((level, index) => ({
                 value: index,
+                disabled: (index > maxLevel),
                 label: `Level ${index + 1}`
               }))} onChange={(ev) => {
                 let targetLevel = ev.target.value;
@@ -213,14 +226,22 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
       </Stepper>
     </div>}
     footer={<div className="flex flex-row w-full gap-4 items-center">
+      {step.type === "level" && step.level > 0 && <>
+        <Button label="Previous Level" onClick={() => setStep({type: "level", level: step.level - 1})} />
+      </>}
+
       <Spacer />
 
-      {!result.valid &&
-        <span className="pi pi-info-circle text-red-400/20" title={result.error.map(error => `${error.code} ${error.path.slice(1).join("/")}`).join(", ")}></span>
-      }
+      {step.type === "level" && step.level < (getCurrentLevel(value) - 1) && <>
+        <Button label="Next Level" disabled={step.level >= maxLevel} onClick={() => setStep({type: "level", level: step.level + 1})} />
+      </>}
+
       <Button disabled={!result.valid || retrainMutation.isPending} label="Retrain" onClick={() => {
         retrainMutation.mutate({characterID: value.id, decision})
       }}/>
+      {!result.valid &&
+        <span className="pi pi-info-circle text-red-400/20" title={result.error.map(error => `${error.code} ${error.path.slice(1).join("/")}`).join(", ")}></span>
+      }
     </div>}
   />;
 }

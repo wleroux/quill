@@ -6,6 +6,7 @@ import {CharacterRepository} from "@/core/character/CharacterRepository";
 import {isScribe} from "@/lib/authentication/isAuthenticated";
 import {tx} from "@/core/DynamoDBClient";
 import {RetrainDecision} from "@/model/character/retrain/RetrainDecision";
+import {getCurrentLevel} from "@/model/character/level/LevelChoice";
 
 export async function POST(
   request: Request,
@@ -13,9 +14,11 @@ export async function POST(
 ): Promise<Response> {
   const authorizingUserID = await getUserID();
   if (!authorizingUserID) return new Response("Unauthorized", {status: 403});
-  if (!(await isScribe())) return new Response("Unauthorized", {status: 403});
   const {characterID} = await params;
   const character = await CharacterRepository.getCharacterByID(characterID);
+
+  if (getCurrentLevel(character) >= 5 && !(await isScribe()))
+    return new Response("Unauthorized", {status: 403});
 
   const result = await withMetadata({
     requestID: ulid(),
