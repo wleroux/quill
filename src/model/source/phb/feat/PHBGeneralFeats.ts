@@ -81,6 +81,10 @@ const PHB_FEAT_CROSSBOW_EXPERT: Feat = {
       choiceID: "crossbow expert::attribute-1",
       condition: is<AttributeID>("dex")
     }},
+    {type: "item", data: {
+      choiceID: "crossbow expert::item-1",
+      condition: is("Hand Crossbow", "Heavy Crossbow", "Light Crossbow")
+    }}
   ]
 };
 const PHB_FEAT_CRUSHER: Feat = {
