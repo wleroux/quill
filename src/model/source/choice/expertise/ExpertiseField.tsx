@@ -19,9 +19,9 @@ export function ExpertiseField({value, choice, decision, onChange}: {value: Char
     label={choice.data.label ?? "Expertise"}
     value={decision?.data.skillID}
     options={VALID_SKILLS
-    .map((skillID) => ({
-      value: skillID,
-      label: SKILLS[skillID].label ?? skillID
-    }))}
+      .map((skillID) => ({
+        value: skillID,
+        label: SKILLS[skillID] ? `${SKILLS[skillID].label} (${SKILLS[skillID].attribute.toUpperCase()})` : skillID
+      }))}
     onChange={ev => onChange({type: "expertise", data: {skillID: ev.target.value}})} />
 }

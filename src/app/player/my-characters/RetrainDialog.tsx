@@ -137,7 +137,9 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
 
   let maxLevel = 0;
   if (backgroundResult.valid) {
-    let result: Result<Character, ProcessorError[]> = backgroundResult;
+    let result: Result<Character, ProcessorError[]> =
+      speciesResult
+        .flatMap(value => backgroundProcessor(value, DefaultBackgroundChoice, decision.data.background));
     for (let i = 0; i < 20; i ++) {
       result = result.flatMap(value => levelProcessor(value, DefaultLevelChoice[i], decision.data.levels[i]));
       if (!result.valid) {
