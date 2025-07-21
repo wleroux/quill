@@ -5,14 +5,14 @@ const PHB_DICE: Tool = {
   label: "Dice",
   type: "gaming set",
   choices: [
-    {type: "item", data: {choiceID: "tool::item-1", condition: is("Dice")}}
+    {type: "item", data: {choiceID: "tool::item-1", condition: is("Dice Set")}}
   ]
 };
 const PHB_DRAGONCHESS: Tool = {
   label: "Dragonchess",
   type: "gaming set",
   choices: [
-    {type: "item", data: {choiceID: "tool::item-1", condition: is("Dragonchess")}}
+    {type: "item", data: {choiceID: "tool::item-1", condition: is("Dragonchess Set")}}
   ]
 };
 const PHB_PLAYING_CARDS: Tool = {
@@ -26,7 +26,7 @@ const PHB_THREE_DRAGON_ANTE: Tool = {
   label: "Three-Dragon Ante",
   type: "gaming set",
   choices: [
-    {type: "item", data: {choiceID: "tool::item-1", condition: is("Three-Dragon Ante")}}
+    {type: "item", data: {choiceID: "tool::item-1", condition: is("Three-Dragon Ante Set")}}
   ]
 };
 
