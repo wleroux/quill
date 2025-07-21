@@ -4,7 +4,7 @@ import {EldritchInvocationDecision} from "@/model/source/choice/eldritch-invocat
 import {ErrorResult, ValidResult} from "@/model/processor/Result";
 import {Character} from "@/model/character/Character";
 import {REPOSITORY} from "@/model/source/index";
-import {choiceProcessor} from "@/model/source/choice/ChoiceProcessor";
+import {choicesReducer} from "@/model/source/choice/ChoiceProcessor";
 
 export const eldritchInvocationProcessor: Processor<EldritchInvocationChoice, EldritchInvocationDecision | undefined> = (value: Character, choice, decision) => {
   // VERIFY ENABLED
@@ -27,16 +27,9 @@ export const eldritchInvocationProcessor: Processor<EldritchInvocationChoice, El
     }
 
     // VALIDATE ELDRITCH INVOCATION CHOICES
-    value = {...value, eldritchInvocations: {
+    return invocation.choices.reduce(choicesReducer(decision.data.decisions), ValidResult.of({...value, eldritchInvocations: {
       ...value.eldritchInvocations,
       [choice.data.sourceID]: {eldritchInvocationID: decision.data.eldritchInvocationID, decisions: decision.data.decisions}
-    }};
-    for (const subchoice of invocation.choices) {
-      const subdecision = decision.data.decisions[subchoice.data.choiceID];
-      const result = choiceProcessor(value, subchoice, subdecision);
-      if (!result.valid) return result;
-      value = result.value;
-    }
-    return ValidResult.of(value);
+    }}));
   }
 };

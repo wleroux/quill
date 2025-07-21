@@ -118,6 +118,26 @@ const PHB_DRUID_1: Level = {
       choiceID: "druid::spell::cantrip-magician",
       condition: druidCantripSpell
     }},
+    {type: "tool", data: {
+      choiceID: "druid::tool-1",
+      condition: is("Herbalism Kit")
+    }},
+    {type: "item", data: {
+      choiceID: "druid::item-2",
+      condition: is("Shield")
+    }},
+    {type: "item", data: {
+      choiceID: "druid::item-3",
+      condition: is("Sickle")
+    }},
+    {type: "item", data: {
+      choiceID: "druid::item-4",
+      condition: is("Quarterstaff")
+    }},
+    {type: "item", data: {
+      choiceID: "druid::item-5",
+      condition: is("Explorer's Pack")
+    }},
   ],
   longRest: [
     {type: "spell", data: {
@@ -135,6 +155,10 @@ const PHB_DRUID_1: Level = {
     {type: "spell", data: {
       choiceID: "druid::spell-4",
       condition: maxDruidSpellLongRest
+    }},
+    {type: "item", data: {
+      choiceID: "druid::item-1",
+      condition: is("Leather Armor")
     }}
   ]
 } as const;

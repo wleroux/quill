@@ -2,7 +2,6 @@ import {ClassID, Level} from "@/model/source/model/Level";
 import {is} from "@/model/source/condition/generic/IsCondition";
 import {PHB_ROGUE_3, PHB_ROGUE_4} from "./RougeBase";
 import {ToolID} from "@/model/source/model/Tool";
-import {ItemID} from "@/model/source/model/Item";
 
 const PHB_ROGUE_ASSASSIN_3: Level = {
   replace: "Rogue 2",
@@ -16,14 +15,6 @@ const PHB_ROGUE_ASSASSIN_3: Level = {
     {type: "tool", data: {
       choiceID: "rogue (assassin)::tool-2",
       condition: is<ToolID>("Poisoner's Kit"),
-    }},
-    {type: "item", data: {
-      choiceID: "rogue (assassin)::item-1",
-      condition: is<ItemID>("Disguise Kit"),
-    }},
-    {type: "item", data: {
-      choiceID: "rogue (assassin)::item-2",
-      condition: is<ItemID>("Poisoner's Kit"),
     }}
   ],
   longRest: [

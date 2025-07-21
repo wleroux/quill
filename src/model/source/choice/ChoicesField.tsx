@@ -29,9 +29,9 @@ export function ChoicesField({value, choices, decisions, onChange}: {
     if (choiceProcessor(prevCharacter, choice, decision).valid) {
       value = choiceProcessor(prevCharacter, choice, decision).orThrow();
     }
-    group.push(<ChoiceField key={choice.data.choiceID} character={prevCharacter} choice={choice} decision={decisions[choice.data.choiceID]} onChange={choiceValue => onChange(prev => ({
+    group.push(<ChoiceField key={choice.data.choiceID} character={prevCharacter} choice={choice} decision={decisions[choice.data.choiceID]} onChange={fn => onChange(prev => ({
       ...prev,
-      [choice.data.choiceID]: choiceValue!
+      [choice.data.choiceID]: fn(prev[choice.data.choiceID]!)!
     }))} />);
 
     let isLastOfType = (choices.length === index + 1) || (choices[index].data.label ?? choices[index].type) !== (choices[index + 1].data.label ?? choices[index + 1].type);

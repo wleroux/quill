@@ -43,12 +43,44 @@ const PHB_ROGUE_1: Level = {
       enabled: isMainClass(),
       condition: rogueSkills
     }},
+    {type: "tool", data: {
+      choiceID: "rogue::tool-1",
+      condition: is("Thieves' Tools")
+    }},
     {type: "expertise", data: {
       choiceID: "rogue::expertise::expertise-1"
     }},
     {type: "expertise", data: {
       choiceID: "rogue::expertise::expertise-2"
     }},
+    {type: "item", data: {
+      choiceID: "rogue::item-1",
+      condition: is("Leather Armor"),
+    }},
+    {type: "item", data: {
+      choiceID: "rogue::item-2",
+      condition: is("Dagger"),
+    }},
+    {type: "item", data: {
+      choiceID: "rogue::item-3",
+      condition: is("Shortsword"),
+    }},
+    {type: "item", data: {
+      choiceID: "rogue::item-4",
+      condition: is("Shortbow"),
+    }},
+    {type: "item", data: {
+      choiceID: "rogue::item-5",
+      condition: is("Arrows (20)"),
+    }},
+    {type: "item", data: {
+      choiceID: "rogue::item-6",
+      condition: is("Quiver"),
+    }},
+    {type: "item", data: {
+      choiceID: "rogue::item-7",
+      condition: is("Burglar's Pack"),
+    }}
   ],
   longRest: [
     {type: "simple", data: {

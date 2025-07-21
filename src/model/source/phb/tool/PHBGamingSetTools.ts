@@ -1,20 +1,33 @@
 import {Tool, ToolID} from "@/model/source/model/Tool";
+import {is} from "../../condition/generic/IsCondition";
 
 const PHB_DICE: Tool = {
   label: "Dice",
-  type: "gaming set"
+  type: "gaming set",
+  choices: [
+    {type: "item", data: {choiceID: "tool::item-1", condition: is("Dice")}}
+  ]
 };
 const PHB_DRAGONCHESS: Tool = {
   label: "Dragonchess",
-  type: "gaming set"
+  type: "gaming set",
+  choices: [
+    {type: "item", data: {choiceID: "tool::item-1", condition: is("Dragonchess")}}
+  ]
 };
 const PHB_PLAYING_CARDS: Tool = {
   label: "Playing Cards",
-  type: "gaming set"
+  type: "gaming set",
+  choices: [
+    {type: "item", data: {choiceID: "tool::item-1", condition: is("Playing Cards")}}
+  ]
 };
 const PHB_THREE_DRAGON_ANTE: Tool = {
   label: "Three-Dragon Ante",
-  type: "gaming set"
+  type: "gaming set",
+  choices: [
+    {type: "item", data: {choiceID: "tool::item-1", condition: is("Three-Dragon Ante")}}
+  ]
 };
 
 export const PHB_GAMING_SET_TOOLS: {[toolID: ToolID]: Tool} = {

@@ -39,6 +39,18 @@ const PHB_MONK_1: Level = {
       choiceID: "monk::tool::tool-1",
       enabled: isMainClass(),
       condition: any(toolType("artisan tool"), toolType("musical instrument"))
+    }},
+    {type: "item", data: {
+      choiceID: "item::item-1",
+      condition: is("Spear")
+    }},
+    {type: "item", data: {
+      choiceID: "item::item-2",
+      condition: is("Dagger")
+    }},
+    {type: "item", data: {
+      choiceID: "item::item-3",
+      condition: is("Explorer's Pack")
     }}
   ],
   longRest: [

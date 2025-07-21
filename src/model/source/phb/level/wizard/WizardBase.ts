@@ -6,7 +6,7 @@ import {is} from "@/model/source/condition/generic/IsCondition";
 import {SkillID} from "@/model/source/model/Skill";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 import {AttributeID} from "@/model/source/model/Attribute";
-import {maxWizardLeveledSpell, wizardCantripSpell} from "@/model/source/phb/level/wizard/wizardCantripSpell";
+import {wizardCantripSpell} from "@/model/source/phb/level/wizard/wizardCantripSpell";
 import {Condition} from "@/model/source/condition/Condition";
 import {SpellID, SpellLevel} from "@/model/source/model/Spell";
 import {getLevelsIn} from "@/model/source/condition/level/NeverTaken";
@@ -55,7 +55,27 @@ const PHB_WIZARD_1: Level = {
       choiceID: "wizard::skill-2",
       enabled: isMainClass(),
       condition: wizardSkill
-    }}
+    }},
+    {type: "item", data: {
+      choiceID: "wizard::item-1",
+      condition: is("Dagger")
+    }},
+    {type: "item", data: {
+      choiceID: "wizard::item-2",
+      condition: is("Quarterstaff")
+    }},
+    {type: "item", data: {
+      choiceID: "wizard::item-3",
+      condition: is("Robe")
+    }},
+    {type: "item", data: {
+      choiceID: "wizard::item-4",
+      condition: is("Enduring Spellbook")
+    }},
+    {type: "item", data: {
+      choiceID: "wizard::item-5",
+      condition: is("Scholar's Pack")
+    }},
   ],
   longRest: [
     {type: "spell", data: {

@@ -94,7 +94,27 @@ const PHB_CLERIC_1: Level = {
       label: "Cantrip",
       choiceID: "cleric::cantrip-thaumaturge",
       condition: clericCantripSpell
-    }}
+    }},
+    {type: "item", data: {
+      choiceID: "cleric::item-1",
+      condition: is("Chain Shirt")
+    }},
+    {type: "item", data: {
+      choiceID: "cleric::item-2",
+      condition: is("Shield")
+    }},
+    {type: "item", data: {
+      choiceID: "cleric::item-3",
+      condition: is("Mace")
+    }},
+    {type: "item", data: {
+      choiceID: "cleric::item-4",
+      condition: is("Holy Symbol")
+    }},
+    {type: "item", data: {
+      choiceID: "cleric::item-5",
+      condition: is("Priest's Pack")
+    }},
   ],
   longRest: [
     {type: "spell", data: {

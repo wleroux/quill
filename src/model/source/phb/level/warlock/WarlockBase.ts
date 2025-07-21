@@ -86,7 +86,31 @@ const PHB_WARLOCK_1: Level = {
     {type: "eldritch-invocation", data: {
       choiceID: "warlock::eldritch-invocation::1",
       sourceID: "warlock::eldritch-invocation-1"
-    }}
+    }},
+    {type: "item", data: {
+      choiceID: "warlock::item-1",
+      condition: is("Leather Armor")
+    }},
+    {type: "item", data: {
+      choiceID: "warlock::item-2",
+      condition: is("Sickle")
+    }},
+    {type: "item", data: {
+      choiceID: "warlock::item-3",
+      condition: is("Dagger")
+    }},
+    {type: "item", data: {
+      choiceID: "warlock::item-4",
+      condition: is("Orb")
+    }},
+    {type: "item", data: {
+      choiceID: "warlock::item-5",
+      condition: is("Book")
+    }},
+    {type: "item", data: {
+      choiceID: "warlock::item-6",
+      condition: is("Scholar's Pack")
+    }},
   ],
   longRest: []
 } as const;

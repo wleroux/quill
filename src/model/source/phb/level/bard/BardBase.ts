@@ -86,7 +86,19 @@ const PHB_BARD_1: Level = {
       label: "Level 1 Spell",
       choiceID: "bard::spell::spell-4",
       condition: bardLeveledSpell(1)
-    }}
+    }},
+    {type: "item", data: {
+      choiceID: "bard::item-1",
+      condition: is("Leather Armor")
+    }},
+    {type: "item", data: {
+      choiceID: "bard::item-2",
+      condition: is("Dagger")
+    }},
+    {type: "item", data: {
+      choiceID: "bard::item-3",
+      condition: is("Entertainer's Pack")
+    }},
   ],
   longRest: [
   ]

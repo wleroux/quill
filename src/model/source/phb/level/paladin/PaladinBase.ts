@@ -115,6 +115,30 @@ const PHB_PALADIN_1: Level = {
       choiceID: "paladin::skill::skill-2",
       enabled: isMainClass(),
       condition: paladinSkills
+    }},
+    {type: "item", data: {
+      choiceID: "paladin::item-1",
+      condition: is("Chain Mail")
+    }},
+    {type: "item", data: {
+      choiceID: "paladin::item-2",
+      condition: is("Shield")
+    }},
+    {type: "item", data: {
+      choiceID: "paladin::item-3",
+      condition: is("Longsword")
+    }},
+    {type: "item", data: {
+      choiceID: "paladin::item-4",
+      condition: is("Javelin")
+    }},
+    {type: "item", data: {
+      choiceID: "paladin::item-5",
+      condition: is("Holy Symbol")
+    }},
+    {type: "item", data: {
+      choiceID: "paladin::item-6",
+      condition: is("Priest's Pack")
     }}
   ],
   longRest: [

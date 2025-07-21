@@ -57,6 +57,38 @@ const PHB_RANGER_1: Level = {
       enabled: isMainClass(),
       condition: rangerSkills
     }},
+    {type: "item", data: {
+      choiceID: "ranger::item-1",
+      condition: is("Studded Leather Armor")
+    }},
+    {type: "item", data: {
+      choiceID: "ranger::item-2",
+      condition: is("Scimitar")
+    }},
+    {type: "item", data: {
+      choiceID: "ranger::item-3",
+      condition: is("Shortsword")
+    }},
+    {type: "item", data: {
+      choiceID: "ranger::item-4",
+      condition: is("Longbow")
+    }},
+    {type: "item", data: {
+      choiceID: "ranger::item-5",
+      condition: is("Arrows (20)")
+    }},
+    {type: "item", data: {
+      choiceID: "ranger::item-6",
+      condition: is("Quiver")
+    }},
+    {type: "item", data: {
+      choiceID: "ranger::item-7",
+      condition: is("Sprig of Mistletoe")
+    }},
+    {type: "item", data: {
+      choiceID: "ranger::item-8",
+      condition: is("Explorer's Pack")
+    }}
   ],
   longRest: [
     {type: "spell", data: {

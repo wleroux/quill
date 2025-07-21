@@ -1,4 +1,5 @@
 import {Item, ItemID} from "@/model/source/model/Item";
+import { is } from "../../condition/generic/IsCondition";
 
 export default {
   "Acid": {
@@ -166,7 +167,52 @@ export default {
     tier: "Minor",
     rarity: "Mundane",
     label: "Burglar's Pack",
-    choices: [],
+    choices: [
+      {type: "item", data: {
+        choiceID: "item::item-1",
+        condition: is("Backpack")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-2",
+        condition: is("Ball Bearings")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-3",
+        condition: is("Bell")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-4",
+        condition: is("Candle")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-5",
+        condition: is("Crowbar")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-6",
+        condition: is("Hooded Lantern")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-7",
+        condition: is("Oil")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-8",
+        condition: is("Rations")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-9",
+        condition: is("Rope")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-10",
+        condition: is("Tinderbox")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-11",
+        condition: is("Waterskin")
+      }},
+    ],
     value: 16_00
   },
   "Burnt Othur Fumes": {
@@ -334,7 +380,52 @@ export default {
     tier: "Minor",
     rarity: "Mundane",
     label: "Diplomat's Pack",
-    choices: [],
+    choices: [
+      {type: "item", data: {
+        choiceID: "item::item-1",
+        condition: is("Chest")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-2",
+        condition: is("Fine Clothes")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-3",
+        condition: is("Ink")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-4",
+        condition: is("Ink Pen")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-5",
+        condition: is("Lamp")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-6",
+        condition: is("Map or Scroll Case")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-7",
+        condition: is("Oil")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-8",
+        condition: is("Paper")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-9",
+        condition: is("Parchment")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-10",
+        condition: is("Perfume")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-11",
+        condition: is("Tinderbox")
+      }},
+    ],
     value: 39_00
   },
   "Disguise Kit": {
@@ -362,7 +453,44 @@ export default {
     tier: "Minor",
     rarity: "Mundane",
     label: "Dungeoneer's Pack",
-    choices: [],
+    choices: [
+      {type: "item", data: {
+        choiceID: "item::item-1",
+        condition: is("Backpack")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-2",
+        condition: is("Caltrops")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-3",
+        condition: is("Crowbar")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-4",
+        condition: is("Oil")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-5",
+        condition: is("Rations")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-6",
+        condition: is("Rope")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-7",
+        condition: is("Tinderbox")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-8",
+        condition: is("Torch")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-9",
+        condition: is("Waterskin")
+      }}
+    ],
     value: 12_00
   },
   "Dynamite Stick": {
@@ -389,7 +517,48 @@ export default {
     tier: "Minor",
     rarity: "Mundane",
     label: "Entertainer's Pack",
-    choices: [],
+    choices: [
+      {type: "item", data: {
+        choiceID: "item::item-1",
+        condition: is("Backpack")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-2",
+        condition: is("Bedroll")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-3",
+        condition: is("Bell")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-4",
+        condition: is("Bullseye Lantern")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-5",
+        condition: is("Costume")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-6",
+        condition: is("Mirror")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-7",
+        condition: is("Oil")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-8",
+        condition: is("Rations")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-9",
+        condition: is("Tinderbox")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-10",
+        condition: is("Waterskin")
+      }}
+    ],
     value: 40_00
   },
   "Essence of Ether": {
@@ -410,8 +579,41 @@ export default {
     tier: "Minor",
     rarity: "Mundane",
     label: "Explorer's Pack",
-    choices: [],
-    value: 10_00
+    choices: [
+      {type: "item", data: {
+        choiceID: "explorer-pack::item-1",
+        condition: is("Backpack")
+      }},
+      {type: "item", data: {
+        choiceID: "explorer-pack::item-2",
+        condition: is("Bedroll")
+      }},
+      {type: "item", data: {
+        choiceID: "explorer-pack::item-3",
+        condition: is("Oil")
+      }},
+      {type: "item", data: {
+        choiceID: "explorer-pack::item-4",
+        condition: is("Rations")
+      }},
+      {type: "item", data: {
+        choiceID: "explorer-pack::item-5",
+        condition: is("Rope")
+      }},
+      {type: "item", data: {
+        choiceID: "explorer-pack::item-6",
+        condition: is("Tinderbox")
+      }},
+      {type: "item", data: {
+        choiceID: "explorer-pack::item-7",
+        condition: is("Torch")
+      }},
+      {type: "item", data: {
+        choiceID: "explorer-pack::item-8",
+        condition: is("Waterskin")
+      }}
+    ],
+    value: 10_00,
   },
   "Feed (per day)": {
     tier: "Minor",
@@ -823,7 +1025,36 @@ export default {
     tier: "Minor",
     rarity: "Mundane",
     label: "Priest's Pack",
-    choices: [],
+    choices: [
+      {type: "item", data: {
+        choiceID: "item::item-1",
+        condition: is("Backpack")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-2",
+        condition: is("Blanket")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-3",
+        condition: is("Holy Water")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-4",
+        condition: is("Lamp")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-5",
+        condition: is("Rations")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-6",
+        condition: is("Robe")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-7",
+        condition: is("Tinderbox")
+      }},
+    ],
     value: 33_00
   },
   "Psychic Blade": {
@@ -913,7 +1144,40 @@ export default {
     tier: "Minor",
     rarity: "Mundane",
     label: "Scholar's Pack",
-    choices: [],
+    choices: [
+      {type: "item", data: {
+        choiceID: "item::item-1",
+        condition: is("Backpack")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-2",
+        condition: is("Book")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-3",
+        condition: is("Ink")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-4",
+        condition: is("Ink Pen")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-5",
+        condition: is("Lamp")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-6",
+        condition: is("Oil")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-7",
+        condition: is("Parchment")
+      }},
+      {type: "item", data: {
+        choiceID: "item::item-8",
+        condition: is("Tinderbox")
+      }},
+    ],
     value: 40_00
   },
   "Serpent Venom": {
@@ -1153,7 +1417,12 @@ export default {
     tier: "Minor",
     rarity: "Mundane",
     label: "Holy Symbol",
-    choices: [],
+    choices: [
+      {type: "item", data: {
+        choiceID: "item::item-1",
+        condition: is("Amulet", "Emblem", "Reliquary")
+      }}
+    ],
   },
   "Musical Instrument": {
     tier: "Minor",

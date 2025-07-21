@@ -31,6 +31,18 @@ const PHB_BARBARIAN_1: Level = {
       choiceID: "skill::barbarian::2",
       enabled: isMainClass(),
       condition: barbarianSkills()
+    }},
+    {type: "item", data: {
+      choiceID: "barbarian::item-1",
+      condition: is("Greataxe")
+    }},
+    {type: "item", data: {
+      choiceID: "barbarian::item-2",
+      condition: is("Handaxe")
+    }},
+    {type: "item", data: {
+      choiceID: "barbarian::item-3",
+      condition: is("Explorer's Pack")
     }}
   ],
   longRest: [

@@ -97,6 +97,9 @@ function Skill({id, proficient, expertise}: { id: SkillID, proficient: boolean, 
 }
 
 export function CharacterProfile({value, full}: { value: Character, full?: boolean }) {
+  const [isMundaneExpanded, setIsMundaneExpanded] = useState(false);
+  const [isMagicalExpanded, setIsMagicalExpanded] = useState(true);
+
   return <div className={twMerge(
     "relative w-full box-content rounded-md bg-white dark:bg-black/40 border border-[color:var(--foreground)]/20 flex flex-col gap-4"
   )}>
@@ -121,7 +124,7 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
       </div>
     </div>
     {full && <div className="px-4 flex flex-col gap-4 pb-4">
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row gap-4 flex-wrap">
         {ATTRIBUTE_IDS.map(attributeID => <div key={attributeID} className="flex-1 flex flex-col">
           <Stat label={attributeID.toUpperCase()} value={value.stats[attributeID]} proficient={value.savingThrows[attributeID]}/>
           {SKILL_IDS.filter(skillID => SKILLS[skillID].attribute === attributeID).map(skillID => <div key={skillID}>
@@ -142,10 +145,31 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
       <div className="flex flex-row">
         {value.items.length > 0 && <div className="flex-1">
           <strong>Items</strong>
-          <div className="flex flex-col">
-            {value.items.map((item, index) => <div key={`${item.itemID}-${index}`}>
-              - {REPOSITORY.ITEMS[item.itemID].label}
-            </div>)}
+          <div className="flex flex-col gap-2">
+            <div>
+              <strong className="inline-flex items-center gap-2 cursor-pointer" onClick={() => setIsMundaneExpanded(prev => !prev)}>
+                {isMundaneExpanded && <span className="pi pi-chevron-down"/>}
+                {!isMundaneExpanded && <span className="pi pi-chevron-right"/>}
+                <span>Mundane</span>
+              </strong>
+              {isMundaneExpanded && value.items.filter(item => REPOSITORY.ITEMS[item.itemID].rarity === "Mundane")
+                .sort((a, b) => REPOSITORY.ITEMS[a.itemID].label.localeCompare(REPOSITORY.ITEMS[b.itemID].label))
+                .map((item, index) => <div key={`${item.itemID}-${index}`}>
+                  - {REPOSITORY.ITEMS[item.itemID]?.label}
+                </div>)}
+            </div>
+            <div>
+              <strong className="inline-flex items-center gap-2 cursor-pointer" onClick={() => setIsMagicalExpanded(prev => !prev)}>
+                {isMagicalExpanded && <span className="pi pi-chevron-down"/>}
+                {!isMagicalExpanded && <span className="pi pi-chevron-right"/>}
+                Magical
+              </strong>
+              {isMagicalExpanded && value.items.filter(item => REPOSITORY.ITEMS[item.itemID].rarity !== "Mundane")
+                .sort((a, b) => REPOSITORY.ITEMS[a.itemID].label.localeCompare(REPOSITORY.ITEMS[b.itemID].label))
+                .map((item, index) => <div key={`${item.itemID}-${index}`}>
+                  - {REPOSITORY.ITEMS[item.itemID]?.label}
+                </div>)}
+            </div>
           </div>
         </div>}
         {(Object.values(value.spells).length > 0 || Object.values(value.metamagics).length > 0) && <div className="flex-1">

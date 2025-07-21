@@ -105,7 +105,23 @@ const PHB_SORCERER_1: Level = {
       label: "Level 1 Spell",
       choiceID: "sorcerer::spell-2",
       condition: maxSorcererSpellLevel(1)
-    }}
+    }},
+    {type: "item", data: {
+      choiceID: "sorcerer::item-1",
+      condition: is("Spear")
+    }},
+    {type: "item", data: {
+      choiceID: "sorcerer::item-2",
+      condition: is("Dagger")
+    }},
+    {type: "item", data: {
+      choiceID: "sorcerer::item-3",
+      condition: is("Crystal")
+    }},
+    {type: "item", data: {
+      choiceID: "sorcerer::item-4",
+      condition: is("Dungeoneer's Pack")
+    }},
   ],
   longRest: []
 } as const;

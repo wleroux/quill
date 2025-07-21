@@ -1,7 +1,7 @@
 import {REPOSITORY} from "@/model/source/index";
 import {FeatChoice} from "./FeatChoice";
 import {FeatDecision} from "./FeatDecision";
-import {choiceProcessor} from "@/model/source/choice/ChoiceProcessor";
+import {choicesReducer} from "@/model/source/choice/ChoiceProcessor";
 import {Processor, ProcessorError} from "@/model/processor/Processor";
 import {ErrorResult, ValidResult} from "@/model/processor/Result";
 
@@ -25,20 +25,13 @@ export const featProcessor: Processor<FeatChoice, FeatDecision | undefined> = (v
       return ErrorResult.of([new ProcessorError("NON-REPEATABLE FEAT", [choice.data.choiceID], choice, decision)]);
 
     // VALIDATE FEAT CHOICES
-    value = {
+    return feat.choices.reduce(choicesReducer(decision.data.decisions), ValidResult.of({
       ...value,
       feats: {
         ...value.feats,
         [choice.data.choiceID]: decision.data,
       },
       choices: {...value.choices, [choice.data.choiceID]: decision.data.featID}
-    };
-    for (const featChoice of feat.choices) {
-      const choiceDecision = decision.data.decisions[featChoice.data.choiceID];
-      const result = choiceProcessor(value, featChoice, choiceDecision).mapError(errors => errors.map(error => error.extend(choice.data.choiceID)));
-      if (!result.valid) return result;
-      value = result.value;
-    }
-    return ValidResult.of(value);
+    }));
   }
 }

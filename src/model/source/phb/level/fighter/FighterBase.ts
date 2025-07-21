@@ -1,6 +1,6 @@
 import {ClassID, Level} from "@/model/source/model/Level";
 import {any} from "@/model/source/condition/generic/AnyCondition";
-import {isMainClass, noClasses} from "@/model/source/choice/Choice";
+import {isMainClass, noClasses, selectedChoice} from "@/model/source/choice/Choice";
 import {minStat} from "@/model/source/condition/attribute/minStat";
 import {SkillID} from "@/model/source/model/Skill";
 import {is} from "@/model/source/condition/generic/IsCondition";
@@ -39,6 +39,72 @@ const PHB_FIGHTER_1: Level = {
       label: "Fighting Style",
       choiceID: "fighter::fighting-style::feat-1",
       condition: featType("fighting style")
+    }},
+    {type: "simple", data: {
+      choiceID: "fighter::item-pack-1",
+      label: "Item Pack",
+      options: [
+        {optionID: "heavy", label: "Option A (Heavy)"},
+        {optionID: "light", label: "Option B (Light)"},
+      ]
+    }},
+    {type: "item", data: {
+      choiceID: "fighter::item-1",
+      enabled: selectedChoice("fighter::item-pack-1", "heavy"),
+      condition: is("Chain Mail")
+    }},
+    {type: "item", data: {
+      choiceID: "fighter::item-2",
+      enabled: selectedChoice("fighter::item-pack-1", "heavy"),
+      condition: is("Greatsword")
+    }},
+    {type: "item", data: {
+      choiceID: "fighter::item-3",
+      enabled: selectedChoice("fighter::item-pack-1", "heavy"),
+      condition: is("Flail")
+    }},
+    {type: "item", data: {
+      choiceID: "fighter::item-4",
+      enabled: selectedChoice("fighter::item-pack-1", "heavy"),
+      condition: is("Javelin")
+    }},
+    {type: "item", data: {
+      choiceID: "fighter::item-5",
+      enabled: selectedChoice("fighter::item-pack-1", "light"),
+      condition: is("Studded Leather Armor")
+    }},
+    {type: "item", data: {
+      choiceID: "fighter::item-6",
+      enabled: selectedChoice("fighter::item-pack-1", "light"),
+      condition: is("Scimitar")
+    }},
+    {type: "item", data: {
+      choiceID: "fighter::item-7",
+      enabled: selectedChoice("fighter::item-pack-1", "light"),
+      condition: is("Shortsword")
+    }},
+    {type: "item", data: {
+      choiceID: "fighter::item-8",
+      enabled: selectedChoice("fighter::item-pack-1", "light"),
+      condition: is("Longbow")
+    }},
+    {type: "item", data: {
+      choiceID: "fighter::item-9",
+      enabled: selectedChoice("fighter::item-pack-1", "light"),
+      condition: is("Arrows (20)")
+    }},
+    {type: "item", data: {
+      choiceID: "fighter::item-10",
+      enabled: selectedChoice("fighter::item-pack-1", "light"),
+      condition: is("Quiver")
+    }},
+    {type: "item", data: {
+      choiceID: "fighter::item-11",
+      enabled: any(
+        selectedChoice("fighter::item-pack-1", "light"),
+        selectedChoice("fighter::item-pack-1", "heavy")
+      ),
+      condition: is("Dungeoneer's Pack")
     }}
   ],
   longRest: [

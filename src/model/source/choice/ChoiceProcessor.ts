@@ -13,17 +13,31 @@ import {backgroundAttributeProcessor} from "@/model/character/create/background/
 import {skillOrToolProcessor} from "@/model/source/choice/skill-or-tool/SkillOrToolProcessor";
 import {spellReplacementProcessor} from "@/model/source/choice/spell-replacement/SpellReplacementProcessor";
 import {Processor, ProcessorError} from "@/model/processor/Processor";
-import {ErrorResult} from "@/model/processor/Result";
+import {ErrorResult, Result} from "@/model/processor/Result";
 import {eldritchInvocationProcessor} from "@/model/source/choice/eldritch-invocation/eldritchInvocationProcessor";
 import {eldritchInvocationReplacementProcessor} from "@/model/source/choice/eldritch-invocation-replacement/eldritchInvocationReplacementProcessor";
 import {featReplacementProcessor} from "./feat-replacement/featReplacementProcessor";
 import {maneuverProcessor} from "@/model/source/choice/maneuver/maneuverProcessor";
 import {savingThrowProcessor} from "./saving-throw/savingThrowProcessor";
+import {itemProcessor} from "@/model/character/level/item/ItemProcessor";
+import {Character} from "@/model/character/Character";
+import {ChoiceID} from "./ChoiceID";
+
+export const choicesReducer = (decisions: {[choiceID: ChoiceID]: Decision}) => {
+  return (result: Result<Character, ProcessorError[]>, choice: Choice): Result<Character, ProcessorError[]> => {
+    const decision = decisions[choice.data.choiceID];
+    return result.flatMap(
+      value => choiceProcessor(value, choice, decision)
+        .mapError(errors => errors.map(error => error.extend(choice.data.choiceID)))
+    );
+  };
+}
 
 export const choiceProcessor: Processor<Choice, Decision | undefined> = (value, choice, decision) => {
   if (choice.type === "attribute" && (decision === undefined || decision.type === "attribute")) return attributeProcessor(value, choice, decision)
   else if (choice.type === "background-attribute" && (decision === undefined || decision.type === "background-attribute")) return backgroundAttributeProcessor(value, choice, decision);
   else if (choice.type === "expertise" && (decision === undefined || decision.type === "expertise")) return expertiseProcessor(value, choice, decision);
+  else if (choice.type === "item" && (decision === undefined || decision.type === "item")) return itemProcessor(value, choice, decision);
   else if (choice.type === "feat" && (decision === undefined || decision.type === "feat")) return featProcessor(value, choice, decision);
   else if (choice.type === "feat-replacement" && (decision === undefined || decision.type === "feat-replacement")) return featReplacementProcessor(value, choice, decision);
   else if (choice.type === "eldritch-invocation" && (decision === undefined || decision.type === "eldritch-invocation")) return eldritchInvocationProcessor(value, choice, decision);

@@ -2,7 +2,7 @@ import {Processor, ProcessorError} from "@/model/processor/Processor";
 import {ErrorResult, ValidResult} from "@/model/processor/Result";
 import {Character} from "@/model/character/Character";
 import {REPOSITORY} from "@/model/source/index";
-import {choiceProcessor} from "@/model/source/choice/ChoiceProcessor";
+import {choicesReducer} from "@/model/source/choice/ChoiceProcessor";
 import {EldritchInvocationReplacementChoice} from "@/model/source/choice/eldritch-invocation-replacement/EldritchInvocationReplacementChoice";
 import {EldritchInvocationReplacementDecision} from "@/model/source/choice/eldritch-invocation-replacement/EldritchInvocationReplacementDecision";
 
@@ -47,16 +47,9 @@ export const eldritchInvocationReplacementProcessor: Processor<EldritchInvocatio
     }
 
     // VALIDATE ELDRITCH INVOCATION CHOICES
-    value = {...value, eldritchInvocations: {
+    return invocation.choices.reduce(choicesReducer(decision.data.decisions), ValidResult.of({...value, eldritchInvocations: {
       ...value.eldritchInvocations,
       [decision.data.sourceID]: {eldritchInvocationID: decision.data.eldritchInvocationID, decisions: decision.data.decisions}
-    }};
-    for (const subchoice of invocation.choices) {
-      const subdecision = decision.data.decisions[subchoice.data.choiceID];
-      const result = choiceProcessor(value, subchoice, subdecision);
-      if (!result.valid) return result;
-      value = result.value;
-    }
-    return ValidResult.of(value);
+    }}));
   }
 };

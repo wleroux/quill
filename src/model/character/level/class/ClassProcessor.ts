@@ -2,7 +2,7 @@ import {Processor, ProcessorError} from "@/model/processor/Processor";
 import {REPOSITORY} from "@/model/source/index";
 import {ClassID} from "@/model/source/model/Level";
 import {neverTaken} from "@/model/source/condition/level/NeverTaken";
-import {choiceProcessor} from "@/model/source/choice/ChoiceProcessor";
+import {choicesReducer} from "@/model/source/choice/ChoiceProcessor";
 import {ErrorResult, ValidResult} from "@/model/processor/Result";
 import {ClassChoice} from "@/model/character/level/class/ClassChoice";
 import {ClassDecision} from "@/model/character/level/class/ClassDecision";
@@ -67,11 +67,6 @@ export const classProcessor: Processor<ClassChoice, ClassDecision | undefined> =
       decision.data.classID
     ]};
   }
-  for (const levelChoice of _class.choices) {
-    const choiceDecision = decision.data.decisions[levelChoice.data.choiceID];
-    const result = choiceProcessor(value, levelChoice, choiceDecision).mapError(errors => errors.map(error => error.extend(choice.data.choiceID)));
-    if (!result.valid) return result;
-    value = result.value;
-  }
-  return ValidResult.of(value);
+
+  return _class.choices.reduce(choicesReducer(decision.data.decisions), ValidResult.of(value));
 }
