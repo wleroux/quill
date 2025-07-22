@@ -120,6 +120,7 @@ const PHB_DRUID_1: Level = {
     }},
     {type: "tool", data: {
       choiceID: "druid::tool-1",
+      enabled: (_, context) => !context.tools.includes("Herbalism Kit"),
       condition: is("Herbalism Kit")
     }},
     {type: "item", data: {
