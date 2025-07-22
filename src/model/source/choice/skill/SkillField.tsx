@@ -10,7 +10,7 @@ export function SkillField({character, choice, value, onChange}: {character: Cha
     .filter(skillID => character.skills[skillID] === "untrained")
     .filter(skillID => choice.data.condition === undefined || choice.data.condition(skillID, character));
   useEffect(() => {
-    if (value === undefined && VALID_SKILLS.length === 1) {
+    if (VALID_SKILLS.length === 1 && VALID_SKILLS[0] !== value?.data.skillID) {
       onChange({type: "skill", data: {skillID: VALID_SKILLS[0]}})
     }
   }, [value === undefined])

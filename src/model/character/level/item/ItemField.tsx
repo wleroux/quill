@@ -16,7 +16,7 @@ export function ItemField({value, choice, decision, onChange}: {
   const VALID_ITEMS = Object.keys(REPOSITORY.ITEMS)
     .filter(itemID => choice.data.condition === undefined || choice.data.condition(itemID, value));
   useEffect(() => {
-    if (decision === undefined && VALID_ITEMS.length === 1) {
+    if (VALID_ITEMS.length === 1 && VALID_ITEMS[0] !== decision?.data.itemID) {
       onChange(_ => ({type: "item", data: {itemID: VALID_ITEMS[0], decisions: {}}}));
     }
   }, [decision === undefined]);
