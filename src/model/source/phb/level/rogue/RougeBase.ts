@@ -45,6 +45,7 @@ const PHB_ROGUE_1: Level = {
     }},
     {type: "tool", data: {
       choiceID: "rogue::tool-1",
+      enabled: (_, context) => !context.tools.includes("Thieves' Tools"),
       condition: is("Thieves' Tools")
     }},
     {type: "expertise", data: {
