@@ -9,6 +9,7 @@ import MANEUVERS from "./maneuver/index";
 import SPELLS from "./spell/index";
 import METAMAGICS from "./metamagic/index";
 import ELDRITCH_INVOCATIONS from "./eldritch-invocation";
+import LANGUAGES from "./language/index";
 
 export default {
   BACKGROUNDS,
@@ -20,5 +21,6 @@ export default {
   ITEMS,
   SPECIES,
   SPELLS,
+  LANGUAGES,
   TOOLS,
 } as const satisfies Source;

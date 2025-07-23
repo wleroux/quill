@@ -22,6 +22,7 @@ import {savingThrowProcessor} from "./saving-throw/savingThrowProcessor";
 import {itemProcessor} from "@/model/character/level/item/ItemProcessor";
 import {Character} from "@/model/character/Character";
 import {ChoiceID} from "./ChoiceID";
+import {languageProcessor} from "@/model/source/choice/language/languageProcessor";
 
 export const choicesReducer = (decisions: {[choiceID: ChoiceID]: Decision}) => {
   return (result: Result<Character, ProcessorError[]>, choice: Choice): Result<Character, ProcessorError[]> => {
@@ -42,6 +43,7 @@ export const choiceProcessor: Processor<Choice, Decision | undefined> = (value, 
   else if (choice.type === "feat-replacement" && (decision === undefined || decision.type === "feat-replacement")) return featReplacementProcessor(value, choice, decision);
   else if (choice.type === "eldritch-invocation" && (decision === undefined || decision.type === "eldritch-invocation")) return eldritchInvocationProcessor(value, choice, decision);
   else if (choice.type === "eldritch-invocation-replacement" && (decision === undefined || decision.type === "eldritch-invocation-replacement")) return eldritchInvocationReplacementProcessor(value, choice, decision);
+  else if (choice.type === "language" && (decision === undefined || decision.type === "language")) return languageProcessor(value, choice, decision);
   else if (choice.type === "maneuver" && (decision === undefined || decision.type === "maneuver")) return maneuverProcessor(value, choice, decision);
   else if (choice.type === "metamagic" && (decision === undefined || decision.type === "metamagic")) return metamagicProcessor(value, choice, decision);
   else if (choice.type === "metamagic-replacement" && (decision === undefined || decision.type === "metamagic-replacement")) return metamagicReplacementProcessor(value, choice, decision);

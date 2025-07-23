@@ -8,6 +8,7 @@ import {Tool, ToolID} from "./Tool";
 import {Item, ItemID} from "./Item";
 import {ClassID, Level} from "@/model/source/model/Level";
 import {EldritchInvocation, EldritchInvocationID} from "@/model/source/model/EldritchInvocation";
+import {Language, LanguageID} from "@/model/source/model/Language";
 
 export type Source = {
   BACKGROUNDS?: {[backgroundID: BackgroundID]: Background};
@@ -18,6 +19,7 @@ export type Source = {
   MANEUVERS?: {[maneuverID: ManeuverID]: Maneuver};
   METAMAGICS?: {[metamagicID: MetamagicID]: Metamagic};
   SPECIES?: {[specieID: SpeciesID]: Species};
+  LANGUAGES?: {[languageID: LanguageID]: Language};
   SPELLS?: {[spellID: SpellID]: Spell};
   TOOLS?: {[toolID: ToolID]: Tool};
 };

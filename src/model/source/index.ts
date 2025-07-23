@@ -11,6 +11,7 @@ import {Metamagic, MetamagicID} from "./model/Metamagic";
 import {Species, SpeciesID} from "./model/Species";
 import {Spell, SpellID} from "./model/Spell";
 import {EldritchInvocation, EldritchInvocationID} from "./model/EldritchInvocation";
+import {LanguageID, Language} from "./model/Language";
 
 const ALL_SOURCES: Source[] = [
   PHB24
@@ -22,6 +23,7 @@ export const REPOSITORY = {
   FEATS: Object.assign({}, ...ALL_SOURCES.map(source => source.FEATS).filter(Boolean)) satisfies {[featID: FeatID]: Feat},
   ITEMS: Object.assign({}, ...ALL_SOURCES.map(source => source.ITEMS).filter(Boolean)) satisfies {[itemID: ItemID]: Item},
   CLASSES: Object.assign({}, ...ALL_SOURCES.map(source => source.LEVELS).filter(Boolean)) satisfies {[levelID: ClassID]: Level},
+  LANGUAGES: Object.assign({}, ...ALL_SOURCES.map(source => source.LANGUAGES).filter(Boolean)) satisfies {[languageID: LanguageID]: Language},
   MANEUVERS: Object.assign({}, ...ALL_SOURCES.map(source => source.MANEUVERS).filter(Boolean)) satisfies {[maneuverID: ManeuverID]: Maneuver},
   METAMAGICS: Object.assign({}, ...ALL_SOURCES.map(source => source.METAMAGICS).filter(Boolean)) satisfies {[metamagicID: MetamagicID]: Metamagic},
   SPECIES: Object.assign({}, ...ALL_SOURCES.map(source => source.SPECIES).filter(Boolean)) satisfies {[specieID: SpeciesID]: Species},

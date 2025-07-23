@@ -17,6 +17,7 @@ import {ClassID} from "@/model/source/model/Level";
 import {ProgressDecision} from "@/model/character/progress/ProgressDecision";
 import {ManeuverID} from "@/model/source/model/Maneuver";
 import {LongRestDecision} from "@/model/character/long-rest/LongRestDecision";
+import {LanguageID} from "@/model/source/model/Language";
 
 type Proficiency = "untrained" | "proficient" | "expertise";
 
@@ -46,6 +47,7 @@ export type Character = {
     itemID: ItemID;
     decisions: {[choiceID: ChoiceID]: Decision}
   }[];
+  languages?: LanguageID[],
   savingThrows: {
     [attributeID in AttributeID]: "untrained" | "proficient"
   };
@@ -82,6 +84,7 @@ export const INITIAL_CHARACTER = (id: CharacterID, ownerID: Snowflake): Characte
   classIDs: [],
   choices: {},
   items: [],
+  languages: [],
   feats: {},
   eldritchInvocations: {},
   maneuvers: {},

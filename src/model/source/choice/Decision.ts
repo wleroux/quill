@@ -16,6 +16,7 @@ import {ManeuverDecision} from "@/model/source/choice/maneuver/ManeuverDecision"
 import {FeatReplacementDecision} from "@/model/source/choice/feat-replacement/FeatReplacementDecision";
 import {ItemDecision} from "@/model/character/level/item/ItemDecision";
 import {SavingThrowDecision} from "@/model/source/choice/saving-throw/SavingThrowDecision";
+import {LanguageDecision} from "@/model/source/choice/language/LanguageDecision";
 
 export type Decision =
   | AttributeDecision
@@ -26,6 +27,7 @@ export type Decision =
   | FeatDecision
   | FeatReplacementDecision
   | ItemDecision
+  | LanguageDecision
   | ManeuverDecision
   | MetamagicDecision
   | MetamagicReplacementDecision

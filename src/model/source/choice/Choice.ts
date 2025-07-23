@@ -18,6 +18,7 @@ import {ManeuverChoice} from "@/model/source/choice/maneuver/ManeuverChoice";
 import {FeatReplacementChoice} from "@/model/source/choice/feat-replacement/FeatReplacementChoice";
 import {ItemChoice} from "@/model/character/level/item/ItemChoice";
 import {SavingThrowChoice} from "@/model/source/choice/saving-throw/SavingThrowChoice";
+import {LanguageChoice} from "@/model/source/choice/language/LanguageChoice";
 
 export function selectedChoice(choiceID: string, optionID: string): Condition<any> {
   return (_: any, value: Character) => value.choices[choiceID] === optionID;
@@ -42,6 +43,7 @@ export type Choice =
   | FeatChoice
   | FeatReplacementChoice
   | ItemChoice
+  | LanguageChoice
   | ManeuverChoice
   | MetamagicChoice
   | MetamagicReplacementChoice

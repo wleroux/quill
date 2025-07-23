@@ -5,6 +5,20 @@ import {is} from "@/model/source/condition/generic/IsCondition";
 import {SkillID} from "@/model/source/model/Skill";
 import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 import {FeatID} from "@/model/source/model/Feat";
+import {Choice} from "@/model/source/choice/Choice";
+
+const LANGUAGES: Choice[] = [
+  {type: "language", data: {
+    choiceID: "language-1",
+    condition: is("Common")
+  }},
+  {type: "language", data: {
+    choiceID: "language-2"
+  }},
+  {type: "language", data: {
+    choiceID: "language-3"
+  }}
+];
 
 const PHB_BACKGROUND_ACOLYTE: Background = {
   label: "Acolyte",
@@ -28,7 +42,8 @@ const PHB_BACKGROUND_ACOLYTE: Background = {
     {type: "tool", data: {
       choiceID: "charlatan::tool::tool-1",
       condition: is("Calligrapher's Supplies")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 const PHB_BACKGROUND_ARTISAN: Background = {
@@ -55,6 +70,7 @@ const PHB_BACKGROUND_ARTISAN: Background = {
       choiceID: "artisan::tool:tool-1",
       condition: toolType("artisan tool")
     }},
+    ...LANGUAGES
   ]
 };
 const PHB_BACKGROUND_CUSTOM: Background = {
@@ -75,7 +91,8 @@ const PHB_BACKGROUND_CUSTOM: Background = {
     }},
     {type: "tool", data: {
       choiceID: "custom::tool::tool-1"
-    }}
+    }},
+    ...LANGUAGES
   ]
 } as const;
 const PHB_BACKGROUND_CHARLATAN: Background = {
@@ -101,6 +118,7 @@ const PHB_BACKGROUND_CHARLATAN: Background = {
       choiceID: "charlatan::tool::tool-1",
       condition: is("Forgery Kit")
     }},
+    ...LANGUAGES
   ]
 };
 const PHB_BACKGROUND_CRIMINAL: Background = {
@@ -125,7 +143,8 @@ const PHB_BACKGROUND_CRIMINAL: Background = {
     {type: "tool", data: {
       choiceID: "criminal::tool::tool-2",
       condition: is("Thieves' Tools")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 const PHB_BACKGROUND_ENTERTAINER: Background = {
@@ -150,7 +169,8 @@ const PHB_BACKGROUND_ENTERTAINER: Background = {
     {type: "tool", data: {
       choiceID: "entertainer::tool::tool-2",
       condition: toolType("musical instrument")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 const PHB_BACKGROUND_FARMER: Background = {
@@ -175,7 +195,8 @@ const PHB_BACKGROUND_FARMER: Background = {
     {type: "tool", data: {
       choiceID: "farmer::tool::tool-1",
       condition: is("Carpenter's Tools")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 const PHB_BACKGROUND_GUARD: Background = {
@@ -201,7 +222,8 @@ const PHB_BACKGROUND_GUARD: Background = {
       label: "Gaming Set",
       choiceID: "guard::tool::tool-1",
       condition: toolType("gaming set")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 const PHB_BACKGROUND_GUIDE: Background = {
@@ -226,7 +248,8 @@ const PHB_BACKGROUND_GUIDE: Background = {
     {type: "tool", data: {
       choiceID: "guide::tool::tool-1",
       condition: is("Cartographer's Tools")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 const PHB_BACKGROUND_HERMIT: Background = {
@@ -251,7 +274,8 @@ const PHB_BACKGROUND_HERMIT: Background = {
     {type: "tool", data: {
       choiceID: "hermit::tool::tool-1",
       condition: is("Herbalism Kit")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 const PHB_BACKGROUND_MERCHANT: Background = {
@@ -276,7 +300,8 @@ const PHB_BACKGROUND_MERCHANT: Background = {
     {type: "tool", data: {
       choiceID: "merchant::tool::tool-1",
       condition: is("Navigator's Tools")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 const PHB_BACKGROUND_NOBLE: Background = {
@@ -302,7 +327,8 @@ const PHB_BACKGROUND_NOBLE: Background = {
       label: "Gaming Set",
       choiceID: "noble::tool::tool-1",
       condition: toolType("gaming set")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 
@@ -328,7 +354,8 @@ const PHB_BACKGROUND_SAGE: Background = {
     {type: "tool", data: {
       choiceID: "sage::tool::tool-1",
       condition: is("Calligrapher's Supplies")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 
@@ -354,7 +381,8 @@ const PHB_BACKGROUND_SAILOR: Background = {
     {type: "tool", data: {
       choiceID: "sailor::tool::tool-1",
       condition: is("Navigator's Tools")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 
@@ -380,7 +408,8 @@ const PHB_BACKGROUND_SCRIBE: Background = {
     {type: "tool", data: {
       choiceID: "scribe::tool::tool-1",
       condition: is("Calligrapher's Supplies")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 const PHB_BACKGROUND_SOLDIER: Background = {
@@ -406,7 +435,8 @@ const PHB_BACKGROUND_SOLDIER: Background = {
       label: "Gaming Set",
       choiceID: "soldier::tool::tool-1",
       condition: toolType("gaming set")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 
@@ -432,7 +462,8 @@ const PHB_BACKGROUND_WAYFARER: Background = {
     {type: "tool", data: {
       choiceID: "wayfarer::tool::tool-1",
       condition: is("Thieves' Tools")
-    }}
+    }},
+    ...LANGUAGES
   ]
 };
 

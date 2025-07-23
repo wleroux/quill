@@ -21,6 +21,7 @@ import {FeatReplacementField} from "@/model/source/choice/feat-replacement/FeatR
 import {ItemField} from "@/model/character/level/item/ItemField";
 import {MetamagicReplacementField} from "@/model/source/choice/metamagic-replacement/MetamagicReplacementField";
 import {SavingThrowField} from "@/model/source/choice/saving-throw/SavingThrowField";
+import {LanguageField} from "@/model/source/choice/language/LanguageField";
 
 export function ChoiceField({character, choice, decision, onChange}: {
   character: Character,
@@ -42,20 +43,28 @@ export function ChoiceField({character, choice, decision, onChange}: {
     return <EldritchInvocationField character={character} choice={choice} value={decision} onChange={(value) => onChange(_ => value)} />
   } else if (choice.type === "eldritch-invocation-replacement" && (decision === undefined || decision.type === "eldritch-invocation-replacement")) {
     return <EldritchInvocationReplacementField value={character} choice={choice} decision={decision} onChange={fn => onChange(decision => {
-      if (decision === undefined || decision.type === "eldritch-invocation-replacement")
-        return fn(decision)
+      if (decision === undefined || decision.type === "eldritch-invocation-replacement") return fn(decision)
+      return decision;
     })} />
   } else if (choice.type === "feat" && (decision === undefined || decision.type === "feat")) {
     return <FeatField character={character} choice={choice} value={decision} onChange={fn => onChange(decision => {
       if (decision === undefined || decision.type === "feat") return fn(decision);
+      return decision;
     })} />
   } else if (choice.type === "feat-replacement" && (decision === undefined || decision.type === "feat-replacement")) {
     return <FeatReplacementField value={character} choice={choice} decision={decision} onChange={fn => onChange(decision => {
       if (decision === undefined || decision.type === "feat-replacement") return fn(decision)
+      return decision;
     })} />
   } else if (choice.type === "item" && (decision === undefined || decision.type === "item")) {
     return <ItemField value={character} choice={choice} decision={decision} onChange={fn => onChange(decision => {
-      if (decision === undefined || decision.type === "item") return fn(decision)
+      if (decision === undefined || decision.type === "item") return fn(decision);
+      return decision;
+    })} />
+  } else if (choice.type === "language" && (decision === undefined || decision.type === "language")) {
+    return <LanguageField value={character} choice={choice} decision={decision} onChange={fn => onChange(decision => {
+      if (decision === undefined || decision.type === "language") return fn(decision);
+      return decision;
     })} />
   } else if (choice.type === "maneuver" && (decision === undefined || decision.type === "maneuver")) {
     return <ManeuverField value={character} choice={choice} decision={decision} onChange={(value) => onChange(_ => value)} />
@@ -68,6 +77,7 @@ export function ChoiceField({character, choice, decision, onChange}: {
   } else if (choice.type === "saving-throw" && (decision === undefined || decision.type === "saving-throw")) {
     return <SavingThrowField value={character} choice={choice} decision={decision} onChange={fn => onChange(decision => {
       if (decision === undefined || decision.type === "saving-throw") return fn(decision)
+      return decision;
     })}/>
   } else if (choice.type === "skill" && (decision === undefined || decision.type === "skill")) {
     return <SkillField character={character} choice={choice} value={decision} onChange={(value) => onChange(_ => value)}/>
@@ -78,6 +88,7 @@ export function ChoiceField({character, choice, decision, onChange}: {
   } else if (choice.type === "spell-replacement" && (decision === undefined || decision?.type === "spell-replacement")) {
     return <SpellReplacementFields value={character} choice={choice} decision={decision} onChange={fn => onChange(decision => {
       if (decision === undefined || decision.type === "spell-replacement") return fn(decision)
+      return decision;
     })} />
   } else if (choice.type === "tool" && (decision === undefined || decision.type === "tool")) {
     return <ToolField character={character} choice={choice} value={decision} onChange={(value => onChange(_ => value))} />
