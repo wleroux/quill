@@ -239,6 +239,7 @@ export default {
   "Camel": {
     tier: "Minor",
     rarity: "Mundane",
+    type: "Mount",
     label: "Camel",
     choices: [],
     value: 50_00
@@ -438,6 +439,7 @@ export default {
   "Draft Horse": {
     tier: "Minor",
     rarity: "Mundane",
+    type: "Mount",
     label: "Draft Horse",
     choices: [],
     value: 50_00
@@ -502,6 +504,7 @@ export default {
   "Elephant": {
     tier: "Minor",
     rarity: "Mundane",
+    type: "Mount",
     label: "Elephant",
     choices: [],
     value: 200_00
@@ -877,6 +880,7 @@ export default {
   "Mastiff": {
     tier: "Minor",
     rarity: "Mundane",
+    type: "Mount",
     label: "Mastiff",
     choices: [],
     value: 25_00
@@ -905,6 +909,7 @@ export default {
   "Mule": {
     tier: "Minor",
     rarity: "Mundane",
+    type: "Mount",
     label: "Mule",
     choices: [],
     value: 8_00
@@ -996,6 +1001,7 @@ export default {
   "Pony": {
     tier: "Minor",
     rarity: "Mundane",
+    type: "Mount",
     label: "Pony",
     choices: [],
     value: 30_00
@@ -1094,6 +1100,7 @@ export default {
   "Riding Horse": {
     tier: "Minor",
     rarity: "Mundane",
+    type: "Mount",
     label: "Riding Horse",
     choices: [],
     value: 75_00
@@ -1343,6 +1350,7 @@ export default {
   "Warhorse": {
     tier: "Minor",
     rarity: "Mundane",
+    type: "Mount",
     label: "Warhorse",
     choices: [],
     value: 400_00

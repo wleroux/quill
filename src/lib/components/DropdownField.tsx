@@ -25,7 +25,7 @@ const dropdownPt: DropdownPassThroughOptions = {
   },
   item: (options) => ({
     className: twMerge(
-      "bg-transparent px-4 py-1 hover:bg-black/20 rounded-md text-nowrap",
+      "bg-transparent px-4 py-1 hover:bg-black/20 rounded-md text-nowrap h-8",
       "aria-[p-disabled=true]:opacity-50",
       options?.context.disabled && "opacity-50",
       options?.context.selected && "bg-black/20 hover:bg-black/40"

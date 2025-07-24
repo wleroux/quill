@@ -6,7 +6,8 @@ export type ItemChoice = {
   type: "item",
   data: {
     label?: string;
-    enabled?: Condition<any>;
+    enabled?: Condition<undefined>;
+    required?: Condition<undefined>;
     choiceID: ChoiceID;
     condition?: Condition<ItemID>;
   }

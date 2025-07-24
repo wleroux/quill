@@ -1,6 +1,7 @@
 import {ItemID, ItemRarity, ItemTier} from "../../model/Item";
 import {REPOSITORY} from "@/model/source/index";
 import {all} from "@/model/source/condition/generic/AllCondition";
+import {not} from "@/model/source/condition/generic/NotCondition";
 
 
 export function itemTier(tier: ItemTier) {
@@ -15,10 +16,20 @@ export function itemRarity(rarity: ItemRarity) {
   }
 }
 
-export const initiateMundaneItem = all(itemRarity("Mundane"), itemID => {
+const mount = (itemID: ItemID) => {
   const item = REPOSITORY.ITEMS[itemID];
-  return item.value ? item.value <= 50_00 : false;
-});
+  return (item.type === "Mount")
+};
+function worth(value: number) {
+  return (itemID: ItemID) => {
+    const item = REPOSITORY.ITEMS[itemID];
+    return item.value ? item.value <= value : false;
+  };
+}
+
+export const initiatePet = all(itemRarity("Mundane"), worth(50_00), mount);
+
+export const initiateMundaneItem = all(itemRarity("Mundane"), worth(50_00), not(mount));
 
 export const minorCommonItem = all(itemTier("Minor"), itemRarity("Common"));
 export const minorUncommonItem = all(itemTier("Minor"), itemRarity("Uncommon"));

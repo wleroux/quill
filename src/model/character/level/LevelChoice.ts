@@ -2,7 +2,7 @@ import {ChoiceID} from "@/model/source/choice/ChoiceID";
 import {Condition} from "@/model/source/condition/Condition";
 import {ItemChoice} from "@/model/character/level/item/ItemChoice";
 import {ClassChoice} from "./class/ClassChoice";
-import {initiateMundaneItem, majorCommonItem, minorCommonItem} from "@/model/source/condition/item/itemTypeCondition";
+import {initiateMundaneItem, initiatePet, majorCommonItem, minorCommonItem} from "@/model/source/condition/item/itemTypeCondition";
 import {Character} from "@/model/character/Character";
 import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
 
@@ -52,6 +52,12 @@ const LEVEL_1: LevelChoice = {
         label: "Minor Common Item",
         choiceID: "level::item::minor-common-1",
         condition: minorCommonItem
+      }},
+      {type: "item", data: {
+        choiceID: "pet-1",
+        label: "Pet",
+        required: alwaysFalse(),
+        condition: initiatePet
       }}
     ]
   }

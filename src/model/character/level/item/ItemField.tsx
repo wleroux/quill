@@ -22,25 +22,46 @@ export function ItemField({value, choice, decision, onChange}: {
     }
   }, [decision === undefined]);
 
+  const required = choice.data.required?.(undefined, value) ?? true;
+
   const item = decision?.data.itemID ? REPOSITORY.ITEMS[decision.data.itemID] : undefined;
 
   if (item === undefined || item.choices.length === 0) {
-    return <DropdownField disabled={VALID_ITEMS.length === 1} label={choice.data.label ?? "Item"} value={decision?.data.itemID} onChange={ev => onChange(_ => ({type: "item", data: {itemID: ev.value, decisions: {}}}))} options={
-      VALID_ITEMS
-        .map((itemID) => ({
-          value: itemID,
-          label: REPOSITORY.ITEMS[itemID].label
-        }))
-    } />;
-  } else {
-    return <FieldSet inline>
-      <DropdownField disabled={VALID_ITEMS.length === 1} label={choice.data.label ?? "Item"} value={decision?.data.itemID} onChange={ev => onChange(_ => ({type: "item", data: {itemID: ev.value, decisions: {}}}))} options={
-        VALID_ITEMS
+    return <DropdownField disabled={VALID_ITEMS.length === 1} label={choice.data.label ?? "Item"} value={decision?.data.itemID} onChange={ev => {
+      const value = typeof ev.value === "string" ? ev.value : ev.value.value;
+      if (value === undefined) onChange(_ => undefined);
+      else onChange(_ => ({type: "item", data: {itemID: value, decisions: {}}}))
+    }} options={
+      [
+        ...(required ? [] : [{value: undefined, label: ""}]),
+        ...VALID_ITEMS
           .map((itemID) => ({
             value: itemID,
             label: REPOSITORY.ITEMS[itemID].label
           }))
-      } />
+      ]
+    } />;
+  } else {
+    return <FieldSet inline>
+      <DropdownField
+        disabled={VALID_ITEMS.length === 1}
+        label={choice.data.label ?? "Item"}
+        value={decision?.data.itemID}
+        onChange={ev => {
+          const value = typeof ev.value === "string" ? ev.value : ev.value.value;
+          if (value === undefined) onChange(_ => undefined);
+          else onChange(_ => ({type: "item", data: {itemID: value, decisions: {}}}))
+        }}
+        options={
+          [
+            ...(required ? [] : [{value: undefined, label: ""}]),
+            ...VALID_ITEMS
+              .map((itemID) => ({
+                value: itemID,
+                label: REPOSITORY.ITEMS[itemID].label
+              }))
+          ]
+        } />
       {decision?.type === "item" && <ChoicesField value={value} choices={item.choices} decisions={decision.data.decisions} onChange={fn => onChange(prev => {
         if (prev === undefined) return undefined;
         return ({

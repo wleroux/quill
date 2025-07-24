@@ -12,11 +12,15 @@ export type ItemRarity =
   | "Very Rare"
   | "Legendary"
   ;
+export type ItemType =
+  | "Mount"
+  ;
 
 export type ItemID = string;
 export type Item = {
   label: string;
   tier: ItemTier;
+  type?: ItemType;
   rarity: ItemRarity;
   value?: number;
   choices: Choice[];
