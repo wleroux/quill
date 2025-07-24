@@ -219,12 +219,12 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
         </div>}
 
         {(value.languages ?? []).length > 0 && <div className="flex-1">
-          <strong>Languages</strong>
-          <div className="flex flex-col">
-            {(value.languages ?? []).map((languageID) => <div key={languageID}>
-              - {REPOSITORY.LANGUAGES[languageID].label}
-            </div>)}
-          </div>
+            <strong>Languages</strong>
+            <div className="flex flex-col">
+              {(value.languages ?? []).map((languageID) => <div key={languageID}>
+                - {REPOSITORY.LANGUAGES[languageID].label}
+              </div>)}
+            </div>
         </div>}
         </div>
         </div>}

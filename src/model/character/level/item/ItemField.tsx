@@ -14,7 +14,8 @@ export function ItemField({value, choice, decision, onChange}: {
   onChange: (fn: (value: ItemDecision | undefined) => (ItemDecision | undefined)) => void
 }) {
   const VALID_ITEMS = Object.keys(REPOSITORY.ITEMS)
-    .filter(itemID => choice.data.condition === undefined || choice.data.condition(itemID, value));
+    .filter(itemID => choice.data.condition === undefined || choice.data.condition(itemID, value))
+    .sort((a,b) => REPOSITORY.ITEMS[a].label.localeCompare(REPOSITORY.ITEMS[b].label));
   useEffect(() => {
     if (VALID_ITEMS.length === 1 && VALID_ITEMS[0] !== decision?.data.itemID) {
       onChange(_ => ({type: "item", data: {itemID: VALID_ITEMS[0], decisions: {}}}));
