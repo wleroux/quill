@@ -74,6 +74,11 @@ const PHB_FEAT_MAGIC_INITIATE_CLERIC: Feat = {
     {type: "spell", data: {
       choiceID: "magic initiate (cleric)::spell-1",
       condition: all(clericSpell, maxSpellLevel(1))
+    }},
+    {type: "item", data: {
+      choiceID: "item-1",
+      enabled: (_, context) => !context.items.some(item => item.itemID === "Component Pouch"),
+      condition: is("Component Pouch")
     }}
   ]
 };
@@ -101,6 +106,11 @@ const PHB_FEAT_MAGIC_INITIATE_DRUID: Feat = {
     {type: "spell", data: {
       choiceID: "magic initiate (druid)::spell-1",
       condition: all(druidSpell, maxSpellLevel(1))
+    }},
+    {type: "item", data: {
+      choiceID: "item-1",
+      enabled: (_, context) => !context.items.some(item => item.itemID === "Component Pouch"),
+      condition: is("Component Pouch")
     }}
   ]
 };
@@ -128,6 +138,11 @@ const PHB_FEAT_MAGIC_INITIATE_WIZARD: Feat = {
     {type: "spell", data: {
       choiceID: "magic initiate (wizard)::spell-1",
       condition: all(wizardSpell, maxSpellLevel(1))
+    }},
+    {type: "item", data: {
+      choiceID: "item-1",
+      enabled: (_, context) => !context.items.some(item => item.itemID === "Component Pouch"),
+      condition: is("Component Pouch")
     }}
   ]
 };
