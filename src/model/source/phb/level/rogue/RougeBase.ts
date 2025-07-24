@@ -54,6 +54,11 @@ const PHB_ROGUE_1: Level = {
     {type: "expertise", data: {
       choiceID: "rogue::expertise::expertise-2"
     }},
+    {type: "language", data: {
+      choiceID: "language-1",
+      enabled: (_, value) => !(value.languages?.includes("Thieves' Cant") ?? false),
+      condition: is("Thieves' Cant")
+    }},
     {type: "item", data: {
       choiceID: "rogue::item-1",
       condition: is("Leather Armor"),

@@ -145,6 +145,12 @@ const PHB_RANGER_2: Level = {
       enabled: selectedChoice("ranger::fighting-style::2", "druidic warrior"),
       choiceID: "ranger::spell-druidic-warrior-2",
       condition: druidCantripSpell
+    }},
+    {type: "language", data: {
+      choiceID: "language-1",
+    }},
+    {type: "language", data: {
+      choiceID: "language-2",
     }}
   ],
   longRest: [
