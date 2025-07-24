@@ -12,8 +12,6 @@ export const simpleProcessor: Processor<SimpleChoice, SimpleDecision | undefined
     return ErrorResult.of([new ProcessorError("REQUIRED", [choice.data.choiceID], choice, decision)]);
   } else {
     // VALIDATE CHOICE
-    if (value.choices[choice.data.choiceID] !== undefined)
-      return ErrorResult.of([new ProcessorError("CHOICE ALREADY MADE", [choice.data.choiceID], choice, decision)]);
     if (!choice.data.options.some(option => option.optionID === decision?.data.optionID))
       return ErrorResult.of([new ProcessorError("INVALID CHOICE", [choice.data.choiceID], choice, decision)]);
 
