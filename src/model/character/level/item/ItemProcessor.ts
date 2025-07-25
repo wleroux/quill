@@ -11,7 +11,7 @@ export const itemProcessor: Processor<ItemChoice, ItemDecision | undefined> = (v
 
   if (decision === undefined) {
     // VALIDATE REQUIRED
-    if (choice.data.required && choice.data.required(undefined, value))
+    if (choice.data.required === undefined || choice.data.required(undefined, value))
       return ErrorResult.of([new ProcessorError("REQUIRED", [choice.data.choiceID], choice, decision)]);
     return ValidResult.of(value);
   } else {

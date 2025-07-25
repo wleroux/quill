@@ -2,7 +2,7 @@
 import {PageTitle} from "@/lib/components/PageTitle";
 import {Stepper} from "primereact/stepper";
 import {StepperPanel} from "primereact/stepperpanel";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Button} from "@/lib/components/Button";
 import {SpeciesField} from "@/model/character/create/species/SpeciesField";
 import {startingStatProcessor} from "@/model/character/create/starting-stat/StartingStatProcessor";
@@ -115,19 +115,20 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
 
   const maxValidStep = () => {
     if (!startingStatResult.valid) return 0;
-    if (!speciesResult.valid) return 1;
-    if (!backgroundResult.valid) return 2;
-    if (!postBackgroundResult.valid) return 3;
+    if (!speciesResult.valid) return 0;
+    if (!backgroundResult.valid) return 1;
+    if (!postBackgroundResult.valid) return 2;
     return 3;
   };
 
-  const getActiveStep = (step: RetrainStep) => {
+  const getActiveStep = (step: RetrainStep): number => {
     const max = maxValidStep();
     if (step.type === "name") return Math.min(0, max);
     if (step.type === "starting-stat") return Math.min(0, max);
     if (step.type === "species") return Math.min(1, max);
     if (step.type === "background") return Math.min(2, max);
     if (step.type === "level") return Math.min(3, max);
+    return 0;
   };
   const setActiveStep = (index: number) => {
     index = Math.min(index, maxValidStep());
@@ -138,10 +139,8 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
   };
 
   let maxLevel = 0;
-  if (backgroundResult.valid) {
-    let result: Result<Character, ProcessorError[]> =
-      speciesResult
-        .flatMap(value => backgroundProcessor(value, DefaultBackgroundChoice, decision.data.background));
+  if (postBackgroundResult.valid) {
+    let result: Result<Character, ProcessorError[]> = postBackgroundResult;
     for (let i = 0; i < 20; i ++) {
       result = result.flatMap(value => levelProcessor(value, DefaultLevelChoice[i], decision.data.levels[i]));
       if (!result.valid) {
@@ -150,6 +149,10 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
       }
     }
   }
+
+  useEffect(() => {
+    stepper.current?.setActiveStep(getActiveStep(step));
+  }, [step]);
 
   return <Modal
     visible={visible} onClose={onClose}
@@ -212,17 +215,17 @@ export function RetrainDialog({value, visible, onClose}: {value: Character, visi
             </FieldSet>
             {step.type === "level" && <>
             <LevelField
-              value={currentLevelResult.orElse(initial)}
+              value={currentLevelResult.orThrow()}
               choice={DefaultLevelChoice[step.level]}
               decision={decision.data.levels[step.level]}
               onChange={fn => setDecision(prev => {
                 const value = fn(prev.data.levels[step.level]);
                 if (!value) return prev;
                 return {...prev, data: {...prev.data, levels: [
-                      ...prev.data.levels.slice(0, step.level),
-                      value,
-                      ...prev.data.levels.slice(step.level + 1),
-                    ]}}
+                  ...prev.data.levels.slice(0, step.level),
+                  value,
+                  ...prev.data.levels.slice(step.level + 1),
+                ]}}
               })} />
             </>}
           </FieldSet>
