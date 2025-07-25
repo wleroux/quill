@@ -22,7 +22,7 @@ export const skillOrToolProcessor: Processor<SkillOrToolChoice, SkillOrToolDecis
     } else if (REPOSITORY.TOOLS[skillOrToolID] !== undefined) {
       return toolProcessor(value,
         {type: "tool", data: {choiceID: choice.data.choiceID, condition: choice.data.condition}},
-        {type: "tool", data: {toolID: skillOrToolID}}
+        {type: "tool", data: {toolID: skillOrToolID, decisions: decision.data.decisions}}
       );
     } else {
       return ErrorResult.of([new ProcessorError("INVALID SKILL OR TOOL", [choice.data.choiceID], choice, decision)]);

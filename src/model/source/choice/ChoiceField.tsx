@@ -82,7 +82,10 @@ export function ChoiceField({character, choice, decision, onChange}: {
   } else if (choice.type === "skill" && (decision === undefined || decision.type === "skill")) {
     return <SkillField character={character} choice={choice} value={decision} onChange={(value) => onChange(_ => value)}/>
   } else if (choice.type === "skill-or-tool" && (decision === undefined || decision?.type === "skill-or-tool")) {
-    return <SkillOrToolField character={character} choice={choice} decision={decision} onChange={(value) => onChange(_ => value)} />
+    return <SkillOrToolField character={character} choice={choice} decision={decision} onChange={fn => onChange(decision => {
+      if (decision === undefined || decision.type === "skill-or-tool") return fn(decision)
+      return decision;
+    })} />
   } else if (choice.type === "spell" && (decision === undefined || decision.type === "spell")) {
     return <SpellField character={character} choice={choice} value={decision} onChange={(value) => onChange(_ => value)}/>
   } else if (choice.type === "spell-replacement" && (decision === undefined || decision?.type === "spell-replacement")) {

@@ -5,8 +5,15 @@ import {DropdownField} from "@/lib/components/DropdownField";
 import {SKILL_IDS, SKILLS} from "@/model/source/Skill";
 import {REPOSITORY} from "@/model/source/index";
 import {SkillID} from "@/model/source/model/Skill";
+import {ChoicesField} from "@/model/source/choice/ChoicesField";
+import {FieldSet} from "@/lib/components/FieldSet";
 
-export function SkillOrToolField({character, choice, decision, onChange}: {character: Character, choice: SkillOrToolChoice, decision: SkillOrToolDecision | undefined, onChange: (value: SkillOrToolDecision | undefined) => void}) {
+export function SkillOrToolField({character, choice, decision, onChange}: {
+  character: Character,
+  choice: SkillOrToolChoice,
+  decision: SkillOrToolDecision | undefined,
+  onChange: (fn: (value: SkillOrToolDecision | undefined) => SkillOrToolDecision | undefined) => void
+}) {
   const VALID_SKILLS =
     (Object.keys(SKILLS) as SkillID[])
       .filter(skillID => character.skills[skillID] === "untrained")
@@ -16,7 +23,7 @@ export function SkillOrToolField({character, choice, decision, onChange}: {chara
       .filter(toolID => !character.tools.includes(toolID))
       .filter(toolID => choice.data.condition === undefined || choice.data.condition(toolID, character))
 
-  return <DropdownField label={choice.data.label ?? "Skill or Tool"} value={decision?.data.skillOrToolID} onChange={ev => onChange({type: "skill-or-tool", data: {skillOrToolID: ev.target.value}})} options={
+  const skillOrToolField = <DropdownField label={choice.data.label ?? "Skill or Tool"} value={decision?.data.skillOrToolID} onChange={ev => onChange(_ => ({type: "skill-or-tool", data: {skillOrToolID: ev.target.value, decisions: {}}}))} options={
     [
       ...VALID_SKILLS,
       ...VALID_TOOLS
@@ -29,5 +36,25 @@ export function SkillOrToolField({character, choice, decision, onChange}: {chara
           return ({value: skillOrToolID, label: REPOSITORY.TOOLS[skillOrToolID]?.label});
         }
       })
-  } />
+  } />;
+
+  const tool = REPOSITORY.TOOLS[decision?.data.skillOrToolID ?? ""];
+  if (tool === undefined) {
+    return skillOrToolField;
+  } else {
+    return <FieldSet inline>
+      {skillOrToolField}
+      {tool && tool.choices.length > 0 && decision?.type === "skill-or-tool" && <ChoicesField value={character} choices={tool.choices} decisions={decision.data.decisions ?? {}} onChange={fn => onChange(prev => {
+        if (prev === undefined) return undefined;
+        return ({
+          ...prev,
+            data: {
+              ...prev.data,
+              decisions: fn(prev.data.decisions ?? {})
+          }
+        });
+      })} />}
+    </FieldSet>
+  }
+
 }
