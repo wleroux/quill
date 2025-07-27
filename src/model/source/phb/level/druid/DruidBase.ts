@@ -10,10 +10,10 @@ import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 import {AttributeID} from "@/model/source/model/Attribute";
 import {SpellID, SpellLevel} from "@/model/source/model/Spell";
 import {all} from "@/model/source/condition/generic/AllCondition";
-import {wizardSpell} from "@/model/source/phb/level/wizard/wizardSpell";
 import {maxSpellLevel} from "@/model/source/condition/spell/LeveledSpellCondition";
 import {Condition} from "@/model/source/condition/Condition";
 import {getLevelsIn} from "@/model/source/condition/level/NeverTaken";
+import {druidSpell} from "@/model/source/phb/level/druid/druidSpell";
 
 const druidForms = [
   "Badger",
@@ -54,7 +54,7 @@ const druidCantripSourceIDs = is(
 );
 const druidSkills = is<SkillID>("arcana","animal handling","insight","medicine","nature","perception","religion","survival");
 const maxDruidLeveledSpells = (level: Exclude<SpellLevel, "cantrip">) => all(
-  wizardSpell,
+  druidSpell,
   maxSpellLevel(level)
 );
 function getDruidMaxSpellLevel(level: number): Exclude<SpellLevel, "cantrip"> {
