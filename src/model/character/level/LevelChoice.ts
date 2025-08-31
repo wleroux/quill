@@ -5,6 +5,35 @@ import {ClassChoice} from "./class/ClassChoice";
 import {initiateMundaneItem, initiatePet, majorCommonItem, minorCommonItem} from "@/model/source/condition/item/itemTypeCondition";
 import {Character} from "@/model/character/Character";
 import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
+import {Game} from "@/model/game/Game";
+import {GAME_TIERS, GameTier} from "@/model/game/GameTier";
+
+
+export function getCanLevelUp(character: Character, games: Game[]): boolean {
+  const finishedGames = games.filter(game => game.status === "SUCCESS" || game.status === "FAILURE");
+  const gameTiers: {[tier in GameTier]: number} = Object.fromEntries(GAME_TIERS.map(tier => [tier, finishedGames.filter(game => game.tier === tier).length])) as {[tier in GameTier]: number};
+
+  const currentLevel = getCurrentLevel(character);
+  if (currentLevel === 2) return true;
+  else if (currentLevel === 3) return gameTiers["Initiate"] >= 5;
+  // else if (currentLevel === 4) return gameTiers["Initiate"] >= 10;
+  // else if (currentLevel === 5) return gameTiers["Adept"] >= 5;
+  // else if (currentLevel === 6) return gameTiers["Adept"] >= 10;
+  // else if (currentLevel === 7) return gameTiers["Adept"] >= 15;
+  // else if (currentLevel === 8) return gameTiers["Adept"] >= 20;
+  // else if (currentLevel === 9) return gameTiers["Vanguard"] >= 5;
+  // else if (currentLevel === 10) return gameTiers["Vanguard"] >= 10;
+  // else if (currentLevel === 11) return gameTiers["Vanguard"] >= 15;
+  // else if (currentLevel === 12) return gameTiers["Vanguard"] >= 20;
+  // else if (currentLevel === 13) return gameTiers["Exemplar"] >= 5;
+  // else if (currentLevel === 14) return gameTiers["Exemplar"] >= 10;
+  // else if (currentLevel === 15) return gameTiers["Exemplar"] >= 15;
+  // else if (currentLevel === 16) return gameTiers["Exemplar"] >= 20;
+  // else if (currentLevel === 17) return gameTiers["Harbinger"] >= 5;
+  // else if (currentLevel === 18) return gameTiers["Harbinger"] >= 10;
+  // else if (currentLevel === 19) return gameTiers["Harbinger"] >= 15;
+  return false;
+}
 
 export function getCurrentLevel(value: Character) {
   return value.progress.filter(progress => progress.type === "level" &&

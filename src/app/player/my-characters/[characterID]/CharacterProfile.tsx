@@ -184,7 +184,7 @@ export function CharacterProfile({value, games}: { value: Character, games: Game
     </TabView>
 
     {!value.retired && <div className="absolute right-4 top-4">
-      <CharacterActionButton value={value}/>
+      <CharacterActionButton value={value} games={games}/>
     </div>}
   </div>
 }

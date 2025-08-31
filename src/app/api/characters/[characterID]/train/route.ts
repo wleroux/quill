@@ -8,8 +8,7 @@ import {isScribe} from "@/lib/authentication/isAuthenticated";
 import {tx} from "@/core/DynamoDBClient";
 import {ErrorResult} from "@/model/processor/Result";
 import {GameRepository} from "@/core/game/GameRepository";
-import {getTier} from "@/model/game/GameTier";
-import {getCurrentLevel} from "@/model/character/level/LevelChoice";
+import {getCanLevelUp} from "@/model/character/level/LevelChoice";
 
 export async function POST(
   request: Request,
@@ -32,17 +31,10 @@ export async function POST(
         {type: "train", data: [decision]}
       ]);
     } else if (decision.type === "level") {
-      // Check if you can level up!
       const games = await GameRepository.getGamesByCharacterID(characterID);
-      const level = getCurrentLevel(character);
-      const tier = getTier(level);
-      const tierGames = games.filter(game => game.tier === tier && game.status === "SUCCESS").length;
-      if (level <= 2) {
-        if (tierGames < 0) return ErrorResult.of("Insufficient Games")
-      } else {
+      if (!getCanLevelUp(character, games)) {
         return ErrorResult.of("Cannot level up yet!")
       }
-
       return CharacterRepository.applyToCharacter(character, [
         {type: "train", data: [decision]}
       ]);

@@ -6,14 +6,15 @@ import React, {useRef, useState} from "react";
 import {Menu} from "primereact/menu";
 import {Button} from "@/lib/components/Button";
 import {MENU_PASSTHROUGH} from "@/lib/components/Menu";
-import {getCurrentLevel} from "@/model/character/level/LevelChoice";
+import {getCanLevelUp, getCurrentLevel} from "@/model/character/level/LevelChoice";
 import {RenameDialog} from "@/lib/character/train/RenameDialog";
 import {LevelDialog} from "@/lib/character/train/LevelDialog";
 import {LongRestDialog} from "@/lib/character/long-rest/LongRestDialog";
 import {RetrainDialog} from "@/app/player/my-characters/RetrainDialog";
 import {ConfirmPopup} from "primereact/confirmpopup";
+import {Game} from "@/model/game/Game";
 
-export function CharacterActionButton({value}: {value: Character}) {
+export function CharacterActionButton({value, games}: {value: Character, games: Game[]}) {
   const router = useRouter();
   const retire = useMutation({
     mutationFn: ({characterID}: {characterID: CharacterID}) => {
@@ -35,14 +36,16 @@ export function CharacterActionButton({value}: {value: Character}) {
   const [isLongRestOpen, setIsLongRestOpen] = React.useState(false);
   const [isRetrainOpen, setIsRetrainOpen] = React.useState(false);
 
+  const canLevelUp = getCanLevelUp(value, games);
+
   return <>
     <Button ref={retireButtonRef} size="small" label="Actions" onClick={(ev) => {
       menu.current?.toggle(ev);
     }} />
     <Menu pt={MENU_PASSTHROUGH} ref={menu} popup popupAlignment="right" model={[
-      {label: `Level Up`, visible: getCurrentLevel(value) < 3,  disabled: isLevelUpOpen, command() {
-          setIsLevelUpOpen(true);
-        }},
+      {label: `Level Up`, visible: canLevelUp,  disabled: isLevelUpOpen, command() {
+        setIsLevelUpOpen(true);
+      }},
       {label: `Long Rest`, disabled: isRenameOpen, command() {
           setIsLongRestOpen(true);
         }},
@@ -57,7 +60,7 @@ export function CharacterActionButton({value}: {value: Character}) {
         }}
     ]} />
     <RenameDialog value={value} visible={isRenameOpen} onClose={() => setIsRenameOpen(false)} />
-    <LevelDialog value={value} visible={isLevelUpOpen} onClose={() => setIsLevelUpOpen(false)} />
+    {canLevelUp && <LevelDialog value={value} visible={isLevelUpOpen} onClose={() => setIsLevelUpOpen(false)} />}
     <LongRestDialog value={value} visible={isLongRestOpen} onClose={() => setIsLongRestOpen(false)} />
     <RetrainDialog value={value} visible={isRetrainOpen} onClose={() => setIsRetrainOpen(false)} />
 
