@@ -82,7 +82,7 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
       {ACTIVE_CHARACTERS.map(character => {
         const result = validateCharacter(character);
         return (<tr key={character.id} className={twMerge("even:bg-black/50 h-12")}>
-          <td className="text-center w-[18%] cursor-pointer" onClick={() => router.push(`/scribe/characters/${character.id}`)}>{character.name}</td>`
+          <td className="text-center w-[18%] cursor-pointer" onClick={() => router.push(`/scribe/characters/${character.id}`)}>{character.name}</td>
           <td className="text-center w-[18%]">{members[character.ownerID] ?? character.ownerID}</td>
           <td className="text-center w-[18%]">{character.species?.speciesID}</td>
           <td className="text-center w-[18%]">{character.background?.backgroundID}</td>
