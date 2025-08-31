@@ -19,7 +19,7 @@
     "next": "canary",
     "next-auth": "^4.24.11",
     "primeicons": "^7.0.0",
-    "primereact": "^10.9.3",
+    "primereact": "^10.9.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sst": "3.10.14",

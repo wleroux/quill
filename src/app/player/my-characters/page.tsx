@@ -5,7 +5,7 @@ import {MyCharacters} from "@/app/player/my-characters/MyCharacters";
 import {getUserID} from "@/lib/authentication/getUserID";
 import {CharacterRepository} from "@/core/character/CharacterRepository";
 
-export default async function Page() {
+export default async function MyCharactersPage() {
   const userID = await getUserID();
   const characters = userID
     ? await CharacterRepository.getCharactersByUserID(userID)

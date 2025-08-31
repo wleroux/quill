@@ -1,21 +1,20 @@
 "use client";
 import {Character} from "@/model/character/Character";
-import React, {useRef, useState} from "react";
+import React, {useRef} from "react";
 import {PageTitle} from "@/lib/components/PageTitle";
 import {validateCharacter} from "@/app/scribe/characters/validateCharacter";
 import {ClassID} from "@/model/source/model/Level";
 import {REPOSITORY} from "@/model/source/index";
 import {Button} from "@/lib/components/Button";
-import {CharacterID} from "@/model/character/CharacterID";
 import {useRouter} from "next/navigation";
 import {Menu} from "primereact/menu";
 import {MENU_PASSTHROUGH} from "@/lib/components/Menu";
 import {RenameDialog} from "@/lib/character/train/RenameDialog";
-import {CharacterProfile} from "@/app/player/my-characters/CharacterProfile";
 import {RetrainDialog} from "@/app/player/my-characters/RetrainDialog";
 import {twMerge} from "tailwind-merge";
 import {useRetireMutation} from "@/lib/character/retire/useRetireMutation";
 import {useUnretireMutation} from "@/lib/character/unretire/useUnretireMutation";
+import {TABLE_PT} from "@/app/theme/TableTheme";
 
 function getLevelDisplay(classIDs: ClassID[]) {
   return classIDs.filter(classID => {
@@ -62,19 +61,14 @@ function ScribeActionButton({value}: {value: Character}) {
 }
 
 export function ScribeCharacters({characters, members}: {characters: Character[], members: {[userID: string]: string}}) {
-  const [selectedCharacterID, setSelectedCharacterID] = useState<CharacterID | undefined>(undefined);
   const ACTIVE_CHARACTERS = characters.filter(character => !character.retired);
   const RETIRED_CHARACTERS = characters.filter(character => character.retired);
-  const selectedCharacter = characters.find(character => character.id === selectedCharacterID);
+  const router = useRouter();
   return <>
     <PageTitle>All Characters</PageTitle>
-    {selectedCharacter && <>
-      <PageTitle>Selected Character</PageTitle>
-      <CharacterProfile value={selectedCharacter} full />
-    </>}
     <PageTitle>Active Characters</PageTitle>
-    <table className="w-full bg-black/20 dark:bg-black/50 rounded-md overflow-hidden shadow-md">
-      <thead className="bg-black/50">
+    <table className={TABLE_PT.root.className}>
+      <thead className={TABLE_PT.thead.className}>
       <tr className="h-10">
         <th>Name</th>
         <th>Owner</th>
@@ -87,8 +81,8 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
       <tbody>
       {ACTIVE_CHARACTERS.map(character => {
         const result = validateCharacter(character);
-        return (<tr key={character.id} className={twMerge("even:bg-black/50 h-12", selectedCharacterID === character.id && "rounded-md outline -outline-offset-2 outline-2 outline-blue-500/50")}>
-          <td className="text-center w-[18%] cursor-pointer" onClick={() => setSelectedCharacterID(character.id)}>{character.name}</td>
+        return (<tr key={character.id} className={twMerge("even:bg-black/50 h-12")}>
+          <td className="text-center w-[18%] cursor-pointer" onClick={() => router.push(`/scribe/characters/${character.id}`)}>{character.name}</td>`
           <td className="text-center w-[18%]">{members[character.ownerID] ?? character.ownerID}</td>
           <td className="text-center w-[18%]">{character.species?.speciesID}</td>
           <td className="text-center w-[18%]">{character.background?.backgroundID}</td>
@@ -104,9 +98,9 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
 
     {RETIRED_CHARACTERS.length > 0 && <>
       <PageTitle>Retired Characters</PageTitle>
-      <table className="w-full bg-black/20 dark:bg-black/50 rounded-md overflow-hidden shadow-md">
-        <thead className="bg-black/50">
-        <tr className="h-10">
+      <table className={TABLE_PT.root.className}>
+        <thead className={TABLE_PT.thead.className}>
+        <tr className={TABLE_PT.theadRow.className}>
           <th>Name</th>
           <th>Owner</th>
           <th>Specie</th>
@@ -118,8 +112,8 @@ export function ScribeCharacters({characters, members}: {characters: Character[]
         <tbody>
         {RETIRED_CHARACTERS.map(character => {
           const result = validateCharacter(character);
-          return (<tr key={character.id} className={twMerge("even:bg-black/50 h-12", selectedCharacterID === character.id && "rounded-md outline -outline-offset-2 outline-2 outline-blue-500/50")}>
-            <td className="text-center w-[18%] cursor-pointer" onClick={() => setSelectedCharacterID(character.id)}>{character.name}</td>
+          return (<tr key={character.id} className={TABLE_PT.tbodyRow.className}>
+            <td className="text-center w-[18%] cursor-pointer" onClick={() => router.push(`/scribe/characters/${character.id}`)}>{character.name}</td>
             <td className="text-center w-[18%]">{members[character.ownerID] ?? character.ownerID}</td>
             <td className="text-center w-[18%]">{character.species?.speciesID}</td>
             <td className="text-center w-[18%]">{character.background?.backgroundID}</td>

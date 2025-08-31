@@ -3,83 +3,18 @@ import {SkillID} from "@/model/source/model/Skill";
 import {ProficiencyIcon} from "@/app/player/my-characters/proficiency/ProficiencyIcon";
 import {SKILL_IDS, SKILLS} from "@/model/source/Skill";
 import {Character} from "@/model/character/Character";
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
 import {REPOSITORY} from "@/model/source/index";
 import {ATTRIBUTE_IDS} from "@/model/source/model/Attribute";
 import {ProficientIcon} from "@/app/player/my-characters/proficiency/ProficientIcon";
-import {Button} from "@/lib/components/Button";
-import {useRouter} from "next/navigation";
-import {useMutation} from "@tanstack/react-query";
 import {twMerge} from "tailwind-merge";
-import {ConfirmPopup} from "primereact/confirmpopup";
 import {SPELL_LEVELS} from "@/model/source/model/Spell";
-import {CharacterID} from "@/model/character/CharacterID";
-import {MENU_PASSTHROUGH} from "@/lib/components/Menu";
-import {RenameDialog} from "@/lib/character/train/RenameDialog";
-import {Menu} from "primereact/menu";
-import {LevelDialog} from "@/lib/character/train/LevelDialog";
-import {getCurrentLevel} from "@/model/character/level/LevelChoice";
-import {LongRestDialog} from "@/lib/character/long-rest/LongRestDialog";
-import {RetrainDialog} from "@/app/player/my-characters/RetrainDialog";
+import {CharacterActionButton} from "@/app/player/my-characters/CharacterActionButton";
+import {TabPanel, TabView} from "primereact/tabview";
+import {TAB_PANEL_PT, TAB_VIEW_PT} from "@/app/theme/TabPanelTheme";
+import {Game} from "@/model/game/Game";
+import {TABLE_PT} from "@/app/theme/TableTheme";
 
-function PlayerActionButton({value}: {value: Character}) {
-  const router = useRouter();
-  const retire = useMutation({
-    mutationFn: ({characterID}: {characterID: CharacterID}) => {
-      return fetch(`/api/characters/${characterID}/retire`, {
-        method: "POST"
-      });
-    },
-    onSuccess: () => {
-      router.refresh();
-    }
-  });
-  const menu = useRef<Menu>(null);
-
-  const [isConfirmRetireVisible, setIsConfirmRetireVisible] = useState(false);
-  const retireButtonRef = useRef(null);
-
-  const [isRenameOpen, setIsRenameOpen] = React.useState(false);
-  const [isLevelUpOpen, setIsLevelUpOpen] = React.useState(false);
-  const [isLongRestOpen, setIsLongRestOpen] = React.useState(false);
-  const [isRetrainOpen, setIsRetrainOpen] = React.useState(false);
-
-  return <>
-    <Button ref={retireButtonRef} size="small" label="Actions" onClick={(ev) => {
-      menu.current?.toggle(ev);
-    }} />
-    <Menu pt={MENU_PASSTHROUGH} ref={menu} popup popupAlignment="right" model={[
-      {label: `Level Up`, visible: getCurrentLevel(value) < 3,  disabled: isLevelUpOpen, command() {
-        setIsLevelUpOpen(true);
-      }},
-      {label: `Long Rest`, disabled: isRenameOpen, command() {
-        setIsLongRestOpen(true);
-      }},
-      {label: "Initiate Retrain", visible: getCurrentLevel(value) < 5, command() {
-        setIsRetrainOpen(true)
-      }},
-      {label: `Rename`, disabled: isRenameOpen, command() {
-        setIsRenameOpen(true);
-      }},
-      {label: `Retire`, disabled: retire.isPending || isConfirmRetireVisible, command() {
-        setIsConfirmRetireVisible(true);
-      }}
-    ]} />
-    <RenameDialog value={value} visible={isRenameOpen} onClose={() => setIsRenameOpen(false)} />
-    <LevelDialog value={value} visible={isLevelUpOpen} onClose={() => setIsLevelUpOpen(false)} />
-    <LongRestDialog value={value} visible={isLongRestOpen} onClose={() => setIsLongRestOpen(false)} />
-    <RetrainDialog value={value} visible={isRetrainOpen} onClose={() => setIsRetrainOpen(false)} />
-
-    <ConfirmPopup pt={{
-      root: {className: "bg-red-800 border-red-400/50 text-red-50 dark:bg-red-950 border dark:border-red-400/50 p-4 mt-4 gap-4 flex flex-col"},
-      message: {className: "pl-4 text-red-100"},
-      icon: {className: "text-red-100"}
-    }} target={retireButtonRef.current ?? undefined} visible={isConfirmRetireVisible} onHide={() => setIsConfirmRetireVisible(false)}
-                  message={`Are you sure you want to retire ${value.name}? Once retired, they cannot be unretired.`} icon="pi pi-exclamation-triangle" accept={() => {
-      retire.mutate({characterID: value.id});
-    }} reject={() => setIsConfirmRetireVisible(false)}  />
-  </>
-}
 
 function Stat({label, value, proficient}: {label: string, value: number, proficient: "untrained" | "proficient"}) {
   return <div className="flex flex-row gap-2 items-center border-b border-b-2">
@@ -96,19 +31,18 @@ function Skill({id, proficient, expertise}: { id: SkillID, proficient: boolean, 
   </div>
 }
 
-export function CharacterProfile({value, full}: { value: Character, full?: boolean }) {
+export function CharacterProfile({value, games}: { value: Character, games: Game[] }) {
   const [isMundaneExpanded, setIsMundaneExpanded] = useState(false);
   const [isMagicalExpanded, setIsMagicalExpanded] = useState(true);
-
   return <div className={twMerge(
     "relative w-full box-content rounded-md bg-white dark:bg-black/40 border border-[color:var(--foreground)]/20 flex flex-col gap-4"
   )}>
     <div className={twMerge(
       "flex-1 flex flex-row p-4 rounded-t-md h-24 box-content gap-4",
-      full && "bg-black/20 dark:bg-black/50"
+      "bg-black/20 dark:bg-black/50"
     )}>
-      <span className={twMerge("pi pi-user w-24 h-24 text-[96px]", !full && "opacity-50")}/>
-      <div className={twMerge("w-full", !full && "opacity-50")}>
+      <span className={twMerge("pi pi-user w-24 h-24 text-[96px]")}/>
+      <div className={twMerge("w-full")}>
         <h2 className="font-bold text-xl">{value.name}</h2>
         <div>
           <strong>Specie:</strong> {REPOSITORY.SPECIES[value.species.speciesID]?.label}
@@ -123,7 +57,7 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
         </div>
       </div>
     </div>
-    {full && <div className="px-4 flex flex-col gap-4 pb-4">
+    <div className="px-4 flex flex-col gap-4 pb-4">
       <div className="flex flex-row gap-4 flex-wrap">
         {ATTRIBUTE_IDS.map(attributeID => <div key={attributeID} className="flex-1 flex flex-col">
           <Stat label={attributeID.toUpperCase()} value={value.stats[attributeID]} proficient={value.savingThrows[attributeID]}/>
@@ -141,10 +75,10 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
           </div>
         </div>}
       </div>
-      <hr/>
-      <div className="flex flex-row">
-        {value.items.length > 0 && <div className="flex-1">
-          <strong>Items</strong>
+    </div>
+    <TabView pt={TAB_VIEW_PT}>
+      <TabPanel header="Items" pt={TAB_PANEL_PT}>
+        <div className="p-4">
           <div className="flex flex-col gap-2">
             <div>
               <strong className="inline-flex items-center gap-2 cursor-pointer" onClick={() => setIsMundaneExpanded(prev => !prev)}>
@@ -171,8 +105,26 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
                 </div>)}
             </div>
           </div>
-        </div>}
-        {(Object.values(value.spells).length > 0 || Object.values(value.metamagics).length > 0) && <div className="flex-1">
+        </div>
+      </TabPanel>
+      <TabPanel header="Feats" pt={TAB_PANEL_PT}>
+        <div className="p-4">
+          <div className="flex flex-col">
+            {Object.values(value.feats).length > 0 && <>
+              {Object.keys(value.feats).map((choiceID) => <div key={choiceID}>
+                - {REPOSITORY.FEATS[value.feats[choiceID].featID].label}
+              </div>)}
+            </>}
+            {Object.values(value.maneuvers).length > 0 && <>
+              {Object.keys(value.maneuvers).map((choiceID) => <div key={choiceID}>
+                - {REPOSITORY.MANEUVERS[value.maneuvers[choiceID]].label}
+              </div>)}
+            </>}
+          </div>
+        </div>
+      </TabPanel>
+      {(Object.values(value.spells).length > 0 || Object.values(value.metamagics).length > 0) && <TabPanel header="Spells" pt={TAB_PANEL_PT}>
+        <div className="p-4">
           {Object.values(value.spells).length > 0 && <>
             <div className="flex flex-col">
               {SPELL_LEVELS.map(spellLevel => {
@@ -197,39 +149,39 @@ export function CharacterProfile({value, full}: { value: Character, full?: boole
               </div>)}
             </div>
           </>}
-        </div>}
-
-        {(Object.values(value.feats).length > 0 || Object.values(value.maneuvers).length > 0) && <div className="flex-1">
-          {Object.values(value.feats).length > 0 && <>
-            <strong>Feats</strong>
-            <div className="flex flex-col">
-              {Object.keys(value.feats).map((choiceID) => <div key={choiceID}>
-                - {REPOSITORY.FEATS[value.feats[choiceID].featID].label}
-              </div>)}
-            </div>
-          </>}
-          {Object.values(value.maneuvers).length > 0 && <>
-            <strong>Feats</strong>
-            <div className="flex flex-col">
-              {Object.keys(value.maneuvers).map((choiceID) => <div key={choiceID}>
-                - {REPOSITORY.MANEUVERS[value.maneuvers[choiceID]].label}
-              </div>)}
-            </div>
-          </>}
-        </div>}
-
-        {(value.languages ?? []).length > 0 && <div className="flex-1">
-            <strong>Languages</strong>
-            <div className="flex flex-col">
-              {(value.languages ?? []).map((languageID) => <div key={languageID}>
-                - {REPOSITORY.LANGUAGES[languageID].label}
-              </div>)}
-            </div>
-        </div>}
         </div>
-        </div>}
-        {!value.retired && <div className="absolute right-4 top-4">
-          <PlayerActionButton value={value}/>
-        </div>}
-      </div>
-      }
+      </TabPanel>}
+      <TabPanel header="Languages" pt={TAB_PANEL_PT}>
+        <div className="p-4">
+          <div className="flex flex-col">
+            {(value.languages ?? []).map((languageID) => <div key={languageID}>
+              - {REPOSITORY.LANGUAGES[languageID].label}
+            </div>)}
+          </div>
+        </div>
+      </TabPanel>
+      <TabPanel header="Games" pt={TAB_PANEL_PT}>
+        <table className={TABLE_PT.root.className}>
+          <thead className={TABLE_PT.thead.className}>
+          <tr className={TABLE_PT.theadRow.className}>
+            <th>Name</th>
+            <th>Tier</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          {games.map(game => <tr key={game.id} className={TABLE_PT.tbodyRow.className}>
+            <td className="text-center w-[33%]">{game.name}</td>
+            <td className="text-center w-[33%]">{game.tier}</td>
+            <td className="text-center w-[33%]">{game.status}</td>
+          </tr>)}
+          </tbody>
+        </table>
+      </TabPanel>
+    </TabView>
+
+    {!value.retired && <div className="absolute right-4 top-4">
+      <CharacterActionButton value={value}/>
+    </div>}
+  </div>
+}
