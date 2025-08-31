@@ -35,11 +35,10 @@ export function CharacterProfile({value, games}: { value: Character, games: Game
   const [isMundaneExpanded, setIsMundaneExpanded] = useState(false);
   const [isMagicalExpanded, setIsMagicalExpanded] = useState(true);
   return <div className={twMerge(
-    "relative w-full box-content rounded-md bg-white dark:bg-black/40 border border-[color:var(--foreground)]/20 flex flex-col gap-4"
+    "relative w-full box-content rounded-md bg-white dark:bg-black/40 border border-[color:var(--foreground)]/20 flex flex-col"
   )}>
     <div className={twMerge(
-      "flex-1 flex flex-row p-4 rounded-t-md h-24 box-content gap-4",
-      "bg-black/20 dark:bg-black/50"
+      "flex-1 flex flex-row p-4 rounded-t-md h-24 box-content gap-4"
     )}>
       <span className={twMerge("pi pi-user w-24 h-24 text-[96px]")}/>
       <div className={twMerge("w-full")}>
@@ -57,26 +56,30 @@ export function CharacterProfile({value, games}: { value: Character, games: Game
         </div>
       </div>
     </div>
-    <div className="px-4 flex flex-col gap-4 pb-4">
-      <div className="flex flex-row gap-4 flex-wrap">
-        {ATTRIBUTE_IDS.map(attributeID => <div key={attributeID} className="flex-1 flex flex-col">
-          <Stat label={attributeID.toUpperCase()} value={value.stats[attributeID]} proficient={value.savingThrows[attributeID]}/>
-          {SKILL_IDS.filter(skillID => SKILLS[skillID].attribute === attributeID).map(skillID => <div key={skillID}>
-            <Skill id={skillID} proficient={value.skills[skillID] === "proficient"} expertise={value.skills[skillID] === "expertise"}/>
-          </div>)}
-        </div>)}
-        {value.tools.length > 0 && <div className="flex-1 gap-2">
-          <strong>Tools</strong>
-          <div>
-            {value.tools.map(toolID => <div key={toolID} className="flex flex-row gap-2 items-center">
-              <ProficientIcon/>
-              <span>{REPOSITORY.TOOLS[toolID].label}</span>
-            </div>)}
-          </div>
-        </div>}
-      </div>
-    </div>
     <TabView pt={TAB_VIEW_PT}>
+      <TabPanel header="Skills" pt={TAB_PANEL_PT}>
+        <div className="px-4 flex flex-col gap-4 p-4">
+          <div className="flex flex-row gap-4 flex-wrap">
+            {ATTRIBUTE_IDS.map(attributeID => <div key={attributeID} className="flex-1 flex flex-col">
+              <Stat label={attributeID.toUpperCase()} value={value.stats[attributeID]} proficient={value.savingThrows[attributeID]}/>
+              {SKILL_IDS.filter(skillID => SKILLS[skillID].attribute === attributeID).map(skillID => <div key={skillID}>
+                <Skill id={skillID} proficient={value.skills[skillID] === "proficient"} expertise={value.skills[skillID] === "expertise"}/>
+              </div>)}
+            </div>)}
+            {value.tools.length > 0 && <div className="flex-1 gap-2">
+              <div className="flex flex-row gap-2 items-center border-b border-b-2">
+                <strong>Tools</strong>
+              </div>
+              <div>
+                {value.tools.map(toolID => <div key={toolID} className="flex flex-row gap-2 items-center">
+                  <ProficientIcon/>
+                  <span>{REPOSITORY.TOOLS[toolID].label}</span>
+                </div>)}
+              </div>
+            </div>}
+          </div>
+        </div>
+      </TabPanel>
       <TabPanel header="Items" pt={TAB_PANEL_PT}>
         <div className="p-4">
           <div className="flex flex-col gap-2">
