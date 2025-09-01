@@ -53,9 +53,9 @@ export async function Navigation() {
     ]});
   }
   if (gameMaster) {
-    // model.push({label: "Game Master", items: [
-    //   {label: "My Games", url: "/game-master/my-games"}
-    // ]})
+    model.push({label: "Game Master", items: [
+      {label: "My Games", url: "/game-master/my-games"}
+    ]})
   }
   if (scribe) {
     model.push({label: "Scribe", items: [

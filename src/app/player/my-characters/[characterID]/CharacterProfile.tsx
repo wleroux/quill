@@ -14,6 +14,7 @@ import {TabPanel, TabView} from "primereact/tabview";
 import {TAB_PANEL_PT, TAB_VIEW_PT} from "@/app/theme/TabPanelTheme";
 import {Game} from "@/model/game/Game";
 import {TABLE_PT} from "@/app/theme/TableTheme";
+import {useRouter} from "next/navigation";
 
 
 function Stat({label, value, proficient}: {label: string, value: number, proficient: "untrained" | "proficient"}) {
@@ -34,6 +35,7 @@ function Skill({id, proficient, expertise}: { id: SkillID, proficient: boolean, 
 export function CharacterProfile({value, games}: { value: Character, games: Game[] }) {
   const [isMundaneExpanded, setIsMundaneExpanded] = useState(false);
   const [isMagicalExpanded, setIsMagicalExpanded] = useState(true);
+  const router = useRouter();
   return <div className={twMerge(
     "relative w-full box-content rounded-md bg-white dark:bg-black/40 border border-[color:var(--foreground)]/20 flex flex-col"
   )}>
@@ -173,7 +175,7 @@ export function CharacterProfile({value, games}: { value: Character, games: Game
           </tr>
           </thead>
           <tbody>
-          {games.map(game => <tr key={game.id} className={TABLE_PT.tbodyRow.className}>
+          {games.map(game => <tr key={game.id} className={twMerge(TABLE_PT.tbodyRow.className, "cursor-pointer")} onClick={() => router.push(`/games/${game.id}`)}>
             <td className="text-center w-[33%]">{game.name}</td>
             <td className="text-center w-[33%]">{game.tier}</td>
             <td className="text-center w-[33%]">{game.status}</td>

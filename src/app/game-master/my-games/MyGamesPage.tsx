@@ -1,6 +1,5 @@
 "use client";
 import {PageTitle} from "@/lib/components/PageTitle";
-import {SectionLabel} from "@/lib/components/SectionLabel";
 import {Button} from "@/lib/components/Button";
 import {Spacer} from "@/lib/components/Spacer";
 import React, {useState} from "react";
@@ -9,17 +8,36 @@ import {Field} from "@/lib/components/Field";
 import {FieldLabel} from "@/lib/components/FieldLabel";
 import {FieldSet} from "@/lib/components/FieldSet";
 import {StringField} from "@/lib/components/StringField";
-import { Game } from "@/model/game/Game";
+import {Game} from "@/model/game/Game";
+import {Card, CardHeader} from "@/lib/components/Card";
+import {useRouter} from "next/navigation";
+import {Tag} from "@/lib/components/Tag";
 
-function GameSlot({value}: {
+export function GameStatusTag({status}: {
+  status: Game["status"]
+}) {
+  return <>
+    {status === "RUNNING" && <Tag variant="yellow">{status}</Tag>}
+    {status === "SUCCESS" && <Tag variant="green">{status}</Tag>}
+    {status === "FAILURE" && <Tag variant="red">{status}</Tag>}
+    {status === "CANCELED" && <Tag variant="red">{status}</Tag>}
+  </>
+}
+
+function GameCard({value}: {
   value: Game
 }) {
-  return <div>
-    <h1>{value.name}</h1>
-    <strong>Tier: {value.tier}</strong>
-    <hr />
-    <strong>Status: {value.status}</strong>
-  </div>
+  const router = useRouter();
+  return <Card className="cursor-pointer" onClick={() => router.push(`/games/${value.id}`)}>
+    <CardHeader>
+      <span>{value.name}</span>
+      <GameStatusTag status={value.status} />
+      <Spacer/>
+      <span className="text-sm [font-variant:small-caps]">
+      {value.tier}
+      </span>
+    </CardHeader>
+  </Card>
 }
 
 export function StartGameModal({visible, onClose}: {
@@ -47,27 +65,13 @@ export function StartGameModal({visible, onClose}: {
    />
 }
 
-export function MyGamesPage({activeGame, pastGames}: {
-  activeGame: Game | undefined,
-  pastGames: Game[]
+export function MyGamesPage({games}: {
+  games: Game[]
 }) {
-  const [startGameModalOpen, setStartGameModalOpen] = React.useState(false);
-  
   return <>
     <div className="flex flex-row">
-      <PageTitle>Games</PageTitle>
-      <Spacer />
-      <Button disabled={activeGame !== undefined} label="Start Game" onClick={() => setStartGameModalOpen(true)} />
+      <PageTitle>My Games</PageTitle>
     </div>
-    <StartGameModal visible={startGameModalOpen} onClose={() => setStartGameModalOpen(false)} />
-
-    {activeGame && <>
-        <SectionLabel>Active Game</SectionLabel>
-        <GameSlot value={activeGame} />
-    </>}
-    {pastGames.length > 0 && <>
-        <SectionLabel>Previous Games</SectionLabel>
-      {pastGames.map(game => <GameSlot key={game.id} value={game} />)}
-    </>}
+    {games.map(game => <GameCard key={game.id} value={game} />)}
   </>
 }
