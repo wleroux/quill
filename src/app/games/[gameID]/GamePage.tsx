@@ -12,7 +12,7 @@ export function GamePage({game, characters}: {
 }) {
   return <Page>
     <PageTitle>
-      {game.name}
+      <span>{game.name}</span>
       <GameStatusTag status={game.status} />
     </PageTitle>
     <span>Tier: {game.tier}</span>
