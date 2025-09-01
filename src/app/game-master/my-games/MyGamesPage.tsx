@@ -30,12 +30,10 @@ function GameCard({value}: {
   const router = useRouter();
   return <Card className="cursor-pointer" onClick={() => router.push(`/games/${value.id}`)}>
     <CardHeader>
-      <span>{value.name}</span>
+      <div>{value.name}</div>
       <GameStatusTag status={value.status} />
       <Spacer/>
-      <span className="text-sm [font-variant:small-caps]">
-      {value.tier}
-      </span>
+      <span className="text-sm [font-variant:small-caps]">{value.tier}</span>
     </CardHeader>
   </Card>
 }
