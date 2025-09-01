@@ -2,15 +2,11 @@
 import {Character} from "@/model/character/Character";
 import React from "react";
 import {REPOSITORY} from "@/model/source/index";
-import {useRouter} from "next/navigation";
 import {twMerge} from "tailwind-merge";
-import {Card, CardHeader} from "@/lib/components/Card";
+import {Card, CardHeader, CardProps} from "@/lib/components/Card";
 
-export function CharacterCard({value}: { value: Character }) {
-  const navigate = useRouter();
-  return <Card className="cursor-pointer" onClick={() => {
-    navigate.push(`/player/my-characters/${value.id}`)
-  }}>
+export function CharacterCard({value, ...props}: { value: Character } & CardProps) {
+  return <Card {...props}>
     <CardHeader className="font-light">
       <span className={twMerge("pi pi-user w-24 h-24 text-[96px]")}/>
       <div className={twMerge("w-full")}>

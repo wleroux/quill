@@ -15,6 +15,7 @@ import {TAB_PANEL_PT, TAB_VIEW_PT} from "@/app/theme/TabPanelTheme";
 import {Game} from "@/model/game/Game";
 import {TABLE_PT} from "@/app/theme/TableTheme";
 import {useRouter} from "next/navigation";
+import {GameStatusTag} from "@/app/game-master/my-games/MyGamesPage";
 
 
 function Stat({label, value, proficient}: {label: string, value: number, proficient: "untrained" | "proficient"}) {
@@ -176,9 +177,9 @@ export function CharacterProfile({value, games}: { value: Character, games: Game
           </thead>
           <tbody>
           {games.map(game => <tr key={game.id} className={twMerge(TABLE_PT.tbodyRow.className, "cursor-pointer")} onClick={() => router.push(`/games/${game.id}`)}>
-            <td className="text-center w-[33%]">{game.name}</td>
-            <td className="text-center w-[33%]">{game.tier}</td>
-            <td className="text-center w-[33%]">{game.status}</td>
+            <td className="text-center w-[50%]">{game.name}</td>
+            <td className="text-center w-[25%] [font-variant:small-caps]">{game.tier}</td>
+            <td className="text-center w-[25%]"><GameStatusTag status={game.status} /></td>
           </tr>)}
           </tbody>
         </table>

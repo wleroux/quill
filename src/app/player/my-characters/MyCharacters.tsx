@@ -6,12 +6,14 @@ import {Spacer} from "@/lib/components/Spacer";
 import {Button} from "@/lib/components/Button";
 import {CreateCharacterDialog} from "./CreateCharacterDialog";
 import {CharacterCard} from "@/app/player/my-characters/CharacterCard";
+import {useRouter} from "next/navigation";
 
 export function MyCharacters({characters}: {characters: Character[]}) {
   const [createNewCharacterDialog, setCreateNewCharacterDialog] = React.useState<boolean>(false);
 
   const ACTIVE_CHARACTERS = characters.filter(character => !character.retired);
   const RETIRED_CHARACTERS = characters.filter(character => character.retired);
+  const router = useRouter();
 
   return <>
     <div className="flex flex-row items-center">
@@ -34,13 +36,13 @@ export function MyCharacters({characters}: {characters: Character[]}) {
     {ACTIVE_CHARACTERS.length > 0 && <>
       <PageTitle>Active Character</PageTitle>
       <div className="flex flex-row gap-4 justify-around justify-items-center flex-wrap">
-        {ACTIVE_CHARACTERS.map(character => <CharacterCard key={character.id} value={character} />)}
+        {ACTIVE_CHARACTERS.map(character => <CharacterCard key={character.id} value={character} className={"cursor-pointer"} onClick={() => router.push(`/player/my-characters/${character.id}`) } />)}
       </div>
     </>}
     {RETIRED_CHARACTERS.length > 0 && <>
       <PageTitle>Retired Characters</PageTitle>
       <div className="flex flex-row gap-4 justify-around justify-items-center flex-wrap">
-        {RETIRED_CHARACTERS.map(character => <CharacterCard key={character.id} value={character} />)}
+        {RETIRED_CHARACTERS.map(character => <CharacterCard key={character.id} value={character} className={"cursor-pointer"} onClick={() => router.push(`/player/my-characters/${character.id}`) } />)}
       </div>
     </>}
   </>
