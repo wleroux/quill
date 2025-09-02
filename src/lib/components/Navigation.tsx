@@ -82,7 +82,7 @@ export async function Navigation() {
         />
       </Link>}
     end={<>
-      <Link href="https://discord.gg/aAnYjDsqVE" className="inline-flex gap-2 items-center">
+      <Link href="https://discord.gg/s392ffmAvS" className="inline-flex gap-2 items-center">
         <i className="pi pi-discord"/>
       </Link>
       <SignedIn>
