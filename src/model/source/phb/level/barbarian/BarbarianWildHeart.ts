@@ -14,7 +14,7 @@ const PHB_BARBARIAN_WILD_HEART_3: Level = {
     }},
     {type: "spell", data: {
       label: "Animal Speaker",
-      choiceID: "barbarian (wild heart)::spell-1",
+      choiceID: "barbarian (wild heart)::spell-2",
       condition: is("Speak with Animals"),
     }}
   ],
