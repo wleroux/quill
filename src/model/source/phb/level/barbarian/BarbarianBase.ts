@@ -85,6 +85,49 @@ export const PHB_BARBARIAN_4 = {
   longRest: []
 } as const satisfies Partial<Level>;
 
+export const PHB_BARBARIAN_5 = {
+  choices: [],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_BARBARIAN_6 = {
+  choices: [],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_BARBARIAN_7 = {
+  choices: [],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_BARBARIAN_8 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "feat",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_BARBARIAN_9 = {
+  choices: [],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_BARBARIAN_10 = {
+  choices: [],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_BARBARIAN_11 = {
+  choices: [],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_BARBARIAN_12 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "feat",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+
 export default {
   [PHB_BARBARIAN_1.label]: PHB_BARBARIAN_1,
   [PHB_BARBARIAN_2.label]: PHB_BARBARIAN_2,
