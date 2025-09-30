@@ -13,6 +13,7 @@ import {SpellID, SpellLevel} from "@/model/source/model/Spell";
 import {maxSpellLevel} from "@/model/source/condition/spell/LeveledSpellCondition";
 import {Condition} from "@/model/source/condition/Condition";
 import {getLevelsIn} from "@/model/source/condition/level/NeverTaken";
+import {featType} from "@/model/source/condition/feat/FeatTypeCondition";
 
 const clericCantripSources = is<string>(
   "cleric::cantrip-1",
@@ -187,6 +188,162 @@ export const PHB_CLERIC_4 = {
       choiceID: "cleric::spell-7",
       condition: maxClericSpellLongRest
     }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_CLERIC_5 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "cleric::cantrip-replacement::5",
+      sourceID: clericCantripSources,
+      condition: clericCantripSpell
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "cleric::spell-8",
+      condition: maxClericSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "cleric::spell-9",
+      condition: maxClericSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_CLERIC_6 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "cleric::cantrip-replacement::6",
+      sourceID: clericCantripSources,
+      condition: clericCantripSpell
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "cleric::spell-10",
+      condition: maxClericSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_CLERIC_7 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "cleric::cantrip-replacement::7",
+      sourceID: clericCantripSources,
+      condition: clericCantripSpell
+    }},
+    {type: "simple", data: {
+      label: "Blessed Strikes",
+      choiceID: "blessed strike",
+      options: [
+        {optionID: "divine strike", label: "Divine Strike"},
+        {optionID: "potent spellcasting", label: "Potent Spellcasting"}
+      ]
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "cleric::spell-11",
+      condition: maxClericSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_CLERIC_8 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "cleric::cantrip-replacement::8",
+      sourceID: clericCantripSources,
+      condition: clericCantripSpell
+    }},
+    {type: "feat", data: {
+      choiceID: "feat",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "cleric::spell-12",
+      condition: maxClericSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_CLERIC_9 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "cleric::cantrip-replacement::9",
+      sourceID: clericCantripSources,
+      condition: clericCantripSpell
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "cleric::spell-13",
+      condition: maxClericSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "cleric::spell-14",
+      condition: maxClericSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_CLERIC_10 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "cleric::cantrip-replacement::10",
+      sourceID: clericCantripSources,
+      condition: clericCantripSpell
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "cleric::spell-15",
+      condition: maxClericSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_CLERIC_11 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "cleric::cantrip-replacement::11",
+      sourceID: clericCantripSources,
+      condition: clericCantripSpell
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "cleric::spell-16",
+      condition: maxClericSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_CLERIC_12 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "cleric::cantrip-replacement::12",
+      sourceID: clericCantripSources,
+      condition: clericCantripSpell
+    }},
+    {type: "feat", data: {
+      choiceID: "feat",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
   ]
 } as const satisfies Partial<Level>;
 
