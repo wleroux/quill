@@ -228,7 +228,7 @@ export const PHB_DRUID_4 = {
   choices: [
     {type: "spell-replacement", data: {
       label: "Cantrip Replacement",
-      choiceID: "druid::cantrip-replacement::3",
+      choiceID: "druid::cantrip-replacement::4",
       condition: druidCantripSpell,
       required: alwaysFalse(),
       sourceID: druidCantripSourceIDs
@@ -245,6 +245,164 @@ export const PHB_DRUID_4 = {
     }}
   ]
 } as const satisfies Partial<Level>;
+export const PHB_DRUID_5 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      choiceID: "druid::cantrip-replacement::5",
+      condition: druidCantripSpell,
+      required: alwaysFalse(),
+      sourceID: druidCantripSourceIDs
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "druid::spell-8",
+      condition: maxDruidSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "druid::spell-9",
+      condition: maxDruidSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_DRUID_6 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      choiceID: "druid::cantrip-replacement::6",
+      condition: druidCantripSpell,
+      required: alwaysFalse(),
+      sourceID: druidCantripSourceIDs
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "druid::spell-10",
+      condition: maxDruidSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_DRUID_7 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      choiceID: "druid::cantrip-replacement::7",
+      condition: druidCantripSpell,
+      required: alwaysFalse(),
+      sourceID: druidCantripSourceIDs
+    }},
+    {type: "simple", data: {
+      choiceID: "elemental fury",
+      label: "Elemental Fury",
+      options: [
+        {optionID: "potent spellcasting", label: "Potent Spellcasting"},
+        {optionID: "primal strike", label: "Primal Strike"}
+      ]
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "druid::spell-11",
+      condition: maxDruidSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_DRUID_8 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      choiceID: "druid::cantrip-replacement::5",
+      condition: druidCantripSpell,
+      required: alwaysFalse(),
+      sourceID: druidCantripSourceIDs
+    }},
+    {type: "feat", data: {
+      choiceID: "druid::feat-2",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "druid::spell-12",
+      condition: maxDruidSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_DRUID_9 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      choiceID: "druid::cantrip-replacement::9",
+      condition: druidCantripSpell,
+      required: alwaysFalse(),
+      sourceID: druidCantripSourceIDs
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "druid::spell-13",
+      condition: maxDruidSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "druid::spell-14",
+      condition: maxDruidSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_DRUID_10 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      choiceID: "druid::cantrip-replacement::15",
+      condition: druidCantripSpell,
+      required: alwaysFalse(),
+      sourceID: druidCantripSourceIDs
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "druid::spell-15",
+      condition: maxDruidSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_DRUID_11 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      choiceID: "druid::cantrip-replacement::11",
+      condition: druidCantripSpell,
+      required: alwaysFalse(),
+      sourceID: druidCantripSourceIDs
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "druid::spell-16",
+      condition: maxDruidSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_DRUID_12 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Cantrip Replacement",
+      choiceID: "druid::cantrip-replacement::12",
+      condition: druidCantripSpell,
+      required: alwaysFalse(),
+      sourceID: druidCantripSourceIDs
+    }},
+    {type: "feat", data: {
+      choiceID: "druid::feat-3",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+
+
 
 export default {
   [PHB_DRUID_1.label]: PHB_DRUID_1,
