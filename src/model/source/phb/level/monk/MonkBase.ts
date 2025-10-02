@@ -79,6 +79,62 @@ export const PHB_MONK_4 = {
   longRest: [
   ]
 } as const satisfies Partial<Level>;
+export const PHB_MONK_5 = {
+  choices: [
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_MONK_6 = {
+  choices: [
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_MONK_7 = {
+  choices: [
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_MONK_8 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "monk::feat-2",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_MONK_9 = {
+  choices: [
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_MONK_10 = {
+  choices: [
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_MONK_11 = {
+  choices: [
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_MONK_12 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "monk::feat-3",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
 
 export default {
   [PHB_MONK_1.label]: PHB_MONK_1,
