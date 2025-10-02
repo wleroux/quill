@@ -11,6 +11,11 @@ import {WEAPON_TYPES} from "../../weapon-mastery/weapons";
 
 export const fighterSkills = is<SkillID>("acrobatics","animal handling","athletics","history","insight","intimidation","persuasion","perception","survival");
 
+export const fightingStyleSource = is(
+  "fighter::fighting-style::feat-1",
+  "fighter (champion)::fighting-style::feat-1"
+);
+
 const PHB_FIGHTER_1: Level = {
   label: "Fighter 1",
   prerequisite: any(noClasses(), minStat("str", 13), minStat("dex", 13)),
@@ -134,7 +139,7 @@ const PHB_FIGHTER_2: Level = {
       label: "Replace Fighting Style",
       choiceID: "fighter::fighting-style-replacement-2",
       required: alwaysFalse(),
-      sourceID: is("fighter::fighting-style::feat-1"),
+      sourceID: fightingStyleSource,
       condition: featType("fighting style")
     }}
   ],
@@ -148,7 +153,7 @@ export const PHB_FIGHTER_3 = {
       label: "Replace Fighting Style",
       choiceID: "fighter::fighting-style-replacement-2",
       required: alwaysFalse(),
-      sourceID: is("fighter::fighting-style::feat-1"),
+      sourceID: fightingStyleSource,
       condition: featType("fighting style")
     }}
   ],
@@ -162,7 +167,7 @@ export const PHB_FIGHTER_4 = {
       label: "Replace Fighting Style",
       choiceID: "fighter::fighting-style-replacement-2",
       required: alwaysFalse(),
-      sourceID: is("fighter::fighting-style::feat-1"),
+      sourceID: fightingStyleSource,
       condition: featType("fighting style")
     }},
     {type: "feat", data: {
@@ -178,6 +183,124 @@ export const PHB_FIGHTER_4 = {
     }}
   ]
 } as const satisfies Partial<Level>;
+
+export const PHB_FIGHTER_5 = {
+  choices: [
+    {type: "feat-replacement", data: {
+      label: "Replace Fighting Style",
+      choiceID: "fighting-style-replacement",
+      required: alwaysFalse(),
+      sourceID: fightingStyleSource,
+      condition: featType("fighting style")
+    }}
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_FIGHTER_6 = {
+  choices: [
+    {type: "feat-replacement", data: {
+      label: "Replace Fighting Style",
+      choiceID: "fighting-style-replacement",
+      required: alwaysFalse(),
+      sourceID: fightingStyleSource,
+      condition: featType("fighting style")
+    }},
+    {type: "feat", data: {
+      choiceID: "fighter::feat-1",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_FIGHTER_7 = {
+  choices: [
+    {type: "feat-replacement", data: {
+      label: "Replace Fighting Style",
+      choiceID: "fighting-style-replacement",
+      required: alwaysFalse(),
+      sourceID: fightingStyleSource,
+      condition: featType("fighting style")
+    }}
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_FIGHTER_8 = {
+  choices: [
+    {type: "feat-replacement", data: {
+      label: "Replace Fighting Style",
+      choiceID: "fighting-style-replacement",
+      required: alwaysFalse(),
+      sourceID: fightingStyleSource,
+      condition: featType("fighting style")
+    }},
+    {type: "feat", data: {
+      choiceID: "fighter::feat-3",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_FIGHTER_9 = {
+  choices: [
+    {type: "feat-replacement", data: {
+      label: "Replace Fighting Style",
+      choiceID: "fighting-style-replacement",
+      required: alwaysFalse(),
+      sourceID: fightingStyleSource,
+      condition: featType("fighting style")
+    }}
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_FIGHTER_10 = {
+  choices: [
+    {type: "feat-replacement", data: {
+      label: "Replace Fighting Style",
+      choiceID: "fighting-style-replacement",
+      required: alwaysFalse(),
+      sourceID: fightingStyleSource,
+      condition: featType("fighting style")
+    }}
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_FIGHTER_11 = {
+  choices: [
+    {type: "feat-replacement", data: {
+      label: "Replace Fighting Style",
+      choiceID: "fighting-style-replacement",
+      required: alwaysFalse(),
+      sourceID: fightingStyleSource,
+      condition: featType("fighting style")
+    }}
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_FIGHTER_12 = {
+  choices: [
+    {type: "feat-replacement", data: {
+      label: "Replace Fighting Style",
+      choiceID: "fighting-style-replacement",
+      required: alwaysFalse(),
+      sourceID: fightingStyleSource,
+      condition: featType("fighting style")
+    }},
+    {type: "feat", data: {
+      choiceID: "fighter::feat-4",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
+  ]
+} as const satisfies Partial<Level>;
+
 
 export default {
   [PHB_FIGHTER_1.label]: PHB_FIGHTER_1,
