@@ -208,12 +208,98 @@ const PHB_PALADIN_2: Level = {
 } as const;
 export const PHB_PALADIN_3 = {
   choices: [],
-  longRest: []
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "paladin::spell-4",
+      condition: maxPaladinSpellLongRest
+    }}
+  ]
 } as const satisfies Partial<Level>;
 export const PHB_PALADIN_4 = {
   choices: [
     {type: "feat", data: {
       choiceID: "paladin::feat-1",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "paladin::spell-5",
+      condition: maxPaladinSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_PALADIN_5 = {
+  choices: [
+    {type: "spell", data: {
+      choiceID: "faithful steed::spell",
+      condition: is("Find Steed")
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "paladin::spell-6",
+      condition: maxPaladinSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_PALADIN_6 = {
+  choices: [
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_PALADIN_7 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "paladin::spell-7",
+      condition: maxPaladinSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_PALADIN_8 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "paladin::feat-2",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_PALADIN_9 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "paladin::spell-8",
+      condition: maxPaladinSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "paladin::spell-9",
+      condition: maxPaladinSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_PALADIN_10 = {
+  choices: [
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_PALADIN_11 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "paladin::spell-10",
+      condition: maxPaladinSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_PALADIN_12 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "paladin::feat-3",
       condition: featType("general", "origin")
     }}
   ],
