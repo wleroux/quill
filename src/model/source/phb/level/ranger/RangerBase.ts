@@ -184,6 +184,100 @@ export const PHB_RANGER_4 = {
     }},
   ]
 } as const satisfies Partial<Level>;
+export const PHB_RANGER_5 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-6",
+      condition: maxRangerSpellLongRest
+    }},
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_RANGER_6 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-6",
+      condition: maxRangerSpellLongRest
+    }},
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_RANGER_7 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-6",
+      condition: maxRangerSpellLongRest
+    }},
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_RANGER_8 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "ranger::feat-2",
+      condition: featType("general", "origin"),
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-6",
+      condition: maxRangerSpellLongRest
+    }},
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_RANGER_9 = {
+  choices: [
+    {type: "expertise", data: {
+      choiceID: "expertise 1",
+    }},
+    {type: "expertise", data: {
+      choiceID: "expertise 2"
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-6",
+      condition: maxRangerSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_RANGER_10 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-6",
+      condition: maxRangerSpellLongRest
+    }},
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_RANGER_11 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-6",
+      condition: maxRangerSpellLongRest
+    }},
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_RANGER_12 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "ranger::feat-3",
+      condition: featType("general", "origin"),
+    }}
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "ranger::spell-6",
+      condition: maxRangerSpellLongRest
+    }},
+  ]
+} as const satisfies Partial<Level>;
 
 export default {
   [PHB_RANGER_1.label]: PHB_RANGER_1,
