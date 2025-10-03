@@ -121,6 +121,61 @@ export const PHB_ROGUE_4 = {
   ],
   longRest: []
 } as const satisfies Partial<Level>;
+export const PHB_ROGUE_5 = {
+  choices: [
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_ROGUE_6 = {
+  choices: [
+    {type: "expertise", data: {
+      choiceID: "rogue::expertise::expertise-3"
+    }},
+    {type: "expertise", data: {
+      choiceID: "rogue::expertise::expertise-4"
+    }}
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_ROGUE_7 = {
+  choices: [
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_ROGUE_8 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "rogue::feat-2",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_ROGUE_9 = {
+  choices: [
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_ROGUE_10 = {
+  choices: [
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_ROGUE_11 = {
+  choices: [
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_ROGUE_12 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "rogue::feat-3",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+
 
 export default {
   [PHB_ROGUE_1.label]: PHB_ROGUE_1,
