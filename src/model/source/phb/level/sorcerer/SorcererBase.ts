@@ -224,6 +224,212 @@ export const PHB_SORCERER_4 = {
   ],
   longRest: []
 } as const satisfies Partial<Level>;
+export const PHB_SORCERER_5 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::cantrip-replacement::5",
+      sourceID: sorcererCantripSources,
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::spell-replacement::5",
+      sourceID: sorcererPreparedSpellSources,
+      condition: maxSorcererSpellLevel(3)
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-8",
+      condition: maxSorcererSpellLevel(3)
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-9",
+      condition: maxSorcererSpellLevel(3)
+    }}
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_SORCERER_6 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::cantrip-replacement::6",
+      sourceID: sorcererCantripSources,
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::spell-replacement::6",
+      sourceID: sorcererPreparedSpellSources,
+      condition: maxSorcererSpellLevel(3)
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-10",
+      condition: maxSorcererSpellLevel(3)
+    }}
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_SORCERER_7 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::cantrip-replacement::7",
+      sourceID: sorcererCantripSources,
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::spell-replacement::7",
+      sourceID: sorcererPreparedSpellSources,
+      condition: maxSorcererSpellLevel(4)
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-11",
+      condition: maxSorcererSpellLevel(4)
+    }}
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_SORCERER_8 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::cantrip-replacement::8",
+      sourceID: sorcererCantripSources,
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::spell-replacement::8",
+      sourceID: sorcererPreparedSpellSources,
+      condition: maxSorcererSpellLevel(4)
+    }},
+    {type: "feat", data: {
+      choiceID: "sorcerer::feat-2",
+      condition: featType("general", "origin")
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-12",
+      condition: maxSorcererSpellLevel(4)
+    }},
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_SORCERER_9 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::cantrip-replacement::9",
+      sourceID: sorcererCantripSources,
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::spell-replacement::9",
+      sourceID: sorcererPreparedSpellSources,
+      condition: maxSorcererSpellLevel(5)
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-13",
+      condition: maxSorcererSpellLevel(5)
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-14",
+      condition: maxSorcererSpellLevel(5)
+    }},
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_SORCERER_10 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::cantrip-replacement::10",
+      sourceID: sorcererCantripSources,
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::spell-replacement::10",
+      sourceID: sorcererPreparedSpellSources,
+      condition: maxSorcererSpellLevel(5)
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::cantrip-6",
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-15",
+      condition: maxSorcererSpellLevel(5)
+    }},
+    {type: "metamagic", data: {
+      choiceID: "sorcerer::metamagic-3"
+    }},
+    {type: "metamagic", data: {
+      choiceID: "sorcerer::metamagic-4"
+    }}
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_SORCERER_11 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::cantrip-replacement::11",
+      sourceID: sorcererCantripSources,
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::spell-replacement::11",
+      sourceID: sorcererPreparedSpellSources,
+      condition: maxSorcererSpellLevel(5)
+    }},
+    {type: "spell", data: {
+      choiceID: "sorcerer::spell-16",
+      condition: maxSorcererSpellLevel(5)
+    }},
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
+export const PHB_SORCERER_12 = {
+  choices: [
+    {type: "spell-replacement", data: {
+      label: "Replace Cantrip",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::cantrip-replacement::12",
+      sourceID: sorcererCantripSources,
+      condition: sorcererCantripSpell
+    }},
+    {type: "spell-replacement", data: {
+      label: "Replace Prepared Spell",
+      required: alwaysFalse(),
+      choiceID: "sorcerer::spell-replacement::12",
+      sourceID: sorcererPreparedSpellSources,
+      condition: maxSorcererSpellLevel(5)
+    }},
+    {type: "feat", data: {
+      choiceID: "sorcerer::feat-3",
+      condition: featType("general", "origin")
+    }},
+  ],
+  longRest: []
+} as const satisfies Partial<Level>;
 
 export default {
   [PHB_SORCERER_1.label]: PHB_SORCERER_1,
