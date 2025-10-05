@@ -146,9 +146,101 @@ export const PHB_WIZARD_4 = {
   ],
   longRest: [
     {type: "spell", data: {
-      choiceID: "wizard::spell-5",
+      choiceID: "wizard::spell-7",
       condition: maxWizardSpellLongRest
     }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_WIZARD_5 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "wizard::spell-8",
+      condition: maxWizardSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "wizard::spell-9",
+      condition: maxWizardSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_WIZARD_6 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "wizard::spell-10",
+      condition: maxWizardSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_WIZARD_7 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "wizard::spell-11",
+      condition: maxWizardSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_WIZARD_8 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "wizard::spell-12",
+      condition: maxWizardSpellLongRest
+    }},
+    {type: "feat", data: {
+      choiceID: "wizard::feat-2",
+      condition: featType("general", "origin")
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_WIZARD_9 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "wizard::spell-13",
+      condition: maxWizardSpellLongRest
+    }},
+    {type: "spell", data: {
+      choiceID: "wizard::spell-14",
+      condition: maxWizardSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_WIZARD_10 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "wizard::spell-15",
+      condition: maxWizardSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_WIZARD_11 = {
+  choices: [
+  ],
+  longRest: [
+    {type: "spell", data: {
+      choiceID: "wizard::spell-16",
+      condition: maxWizardSpellLongRest
+    }}
+  ]
+} as const satisfies Partial<Level>;
+export const PHB_WIZARD_12 = {
+  choices: [
+    {type: "feat", data: {
+      choiceID: "wizard::feat-3",
+      condition: featType("general", "origin")
+    }}
+  ],
+  longRest: [
   ]
 } as const satisfies Partial<Level>;
 

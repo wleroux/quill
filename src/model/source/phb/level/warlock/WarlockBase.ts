@@ -471,6 +471,10 @@ export const PHB_WARLOCK_12 = {
       choiceID: "warlock::eldritch-invocation-replacement::12",
       required: alwaysFalse()
     }},
+    {type: "feat", data: {
+      choiceID: "warlock::feat-3",
+      condition: featType("general", "origin")
+    }}
   ],
   longRest: []
 } as const satisfies Partial<Level>;
