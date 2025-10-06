@@ -4,6 +4,7 @@ export type ItemTier =
   | "Minor"
   | "Major"
   ;
+export const ITEM_TIERS: ItemTier[] = ["Minor", "Major"] as const satisfies ItemTier[];
 export type ItemRarity =
   | "Mundane"
   | "Common"
@@ -12,6 +13,8 @@ export type ItemRarity =
   | "Very Rare"
   | "Legendary"
   ;
+export const ITEM_RARITIES: ItemRarity[] = ["Mundane", "Common", "Uncommon", "Rare", "Very Rare", "Legendary"] as const satisfies ItemRarity[];
+
 export type ItemType =
   | "Mount"
   ;

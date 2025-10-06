@@ -2,12 +2,21 @@ import {ChoiceID} from "@/model/source/choice/ChoiceID";
 import {Condition} from "@/model/source/condition/Condition";
 import {ItemChoice} from "@/model/character/level/item/ItemChoice";
 import {ClassChoice} from "./class/ClassChoice";
-import {initiateMundaneItem, initiatePet, majorCommonItem, minorCommonItem} from "@/model/source/condition/item/itemTypeCondition";
+import {
+  adeptMundaneItem,
+  initiateMundaneItem,
+  initiatePet,
+  itemRarity,
+  majorCommonItem,
+  majorUncommonItem,
+  minorCommonItem,
+  minorUncommonItem
+} from "@/model/source/condition/item/itemTypeCondition";
 import {Character} from "@/model/character/Character";
 import {alwaysFalse} from "@/model/source/condition/generic/FalseCondition";
 import {Game} from "@/model/game/Game";
 import {GAME_TIERS, GameTier} from "@/model/game/GameTier";
-
+import {ItemReplacementChoice} from "@/model/character/level/item-replace/ItemReplacementChoice";
 
 export function getCanLevelUp(character: Character, games: Game[]): boolean {
   const finishedGames = games.filter(game => game.status === "SUCCESS" || game.status === "FAILURE");
@@ -49,7 +58,7 @@ export type LevelChoice = {
   data: {
     choiceID: ChoiceID;
     enabled?: Condition<any>;
-    choices: (ItemChoice | ClassChoice)[]
+    choices: (ItemChoice | ItemReplacementChoice | ClassChoice)[]
   }
 }
 
@@ -178,9 +187,169 @@ const LEVEL_4: LevelChoice = {
   }
 };
 
+const LEVEL_5: LevelChoice = {
+  type: "level",
+  data: {
+    choiceID: "level::5",
+    enabled: alwaysFalse(),
+    choices: [
+      {type: "class", data: {
+        choiceID: "class::5",
+      }},
+      {type: "item-replacement", data: {
+        label: "Item Replacement",
+        choiceID: "level::item-replacement::5",
+        condition: itemRarity("Common"),
+        required: alwaysFalse()
+      }},
+      {type: "item", data: {
+        label: "Mundane Item (max 150gp)",
+        choiceID: "level::item::mundane-7",
+        condition: adeptMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Mundane Item (max 150gp)",
+        choiceID: "level::item::mundane-8",
+        condition: adeptMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Minor Uncommon Item",
+        choiceID: "level::item::minor-uncommon-4",
+        condition: minorUncommonItem
+      }},
+      {type: "item", data: {
+        label: "Major Uncommon Item",
+        choiceID: "level::item::major-uncommon-2",
+        condition: majorUncommonItem
+      }}
+    ]
+  }
+};
+
+const LEVEL_6: LevelChoice = {
+  type: "level",
+  data: {
+    choiceID: "level::6",
+    enabled: alwaysFalse(),
+    choices: [
+      {type: "class", data: {
+        choiceID: "class::6",
+      }},
+      {type: "item-replacement", data: {
+        label: "Item Replacement",
+        choiceID: "level::item-replacement::6",
+        condition: itemRarity("Common"),
+        required: alwaysFalse()
+      }},
+      {type: "item", data: {
+        label: "Mundane Item (max 150gp)",
+        choiceID: "level::item::mundane-7",
+        condition: adeptMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Mundane Item (max 150gp)",
+        choiceID: "level::item::mundane-8",
+        condition: adeptMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Minor Uncommon Item",
+        choiceID: "level::item::minor-uncommon-4",
+        condition: minorUncommonItem
+      }},
+      {type: "item", data: {
+        label: "Major Uncommon Item",
+        choiceID: "level::item::major-uncommon-2",
+        condition: majorUncommonItem
+      }}
+    ]
+  }
+};
+
+const LEVEL_7: LevelChoice = {
+  type: "level",
+  data: {
+    choiceID: "level::7",
+    enabled: alwaysFalse(),
+    choices: [
+      {type: "class", data: {
+        choiceID: "class::7",
+      }},
+      {type: "item-replacement", data: {
+        label: "Item Replacement",
+        choiceID: "level::item-replacement::7",
+        condition: itemRarity("Common"),
+        required: alwaysFalse()
+      }},
+      {type: "item", data: {
+        label: "Mundane Item (max 150gp)",
+        choiceID: "level::item::mundane-7",
+        condition: adeptMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Mundane Item (max 150gp)",
+        choiceID: "level::item::mundane-8",
+        condition: adeptMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Minor Uncommon Item",
+        choiceID: "level::item::minor-uncommon-4",
+        condition: minorUncommonItem
+      }},
+      {type: "item", data: {
+        label: "Major Uncommon Item",
+        choiceID: "level::item::major-uncommon-2",
+        condition: majorUncommonItem
+      }}
+    ]
+  }
+};
+
+const LEVEL_8: LevelChoice = {
+  type: "level",
+  data: {
+    choiceID: "level::8",
+    enabled: alwaysFalse(),
+    choices: [
+      {type: "class", data: {
+        choiceID: "class::8",
+      }},
+      {type: "item-replacement", data: {
+        label: "Item Replacement",
+        choiceID: "level::item-replacement::8",
+        condition: itemRarity("Common"),
+        required: alwaysFalse()
+      }},
+      {type: "item", data: {
+        label: "Mundane Item (max 150gp)",
+        choiceID: "level::item::mundane-7",
+        condition: adeptMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Mundane Item (max 150gp)",
+        choiceID: "level::item::mundane-8",
+        condition: adeptMundaneItem
+      }},
+      {type: "item", data: {
+        label: "Minor Uncommon Item",
+        choiceID: "level::item::minor-uncommon-4",
+        condition: minorUncommonItem
+      }},
+      {type: "item", data: {
+        label: "Major Uncommon Item",
+        choiceID: "level::item::major-uncommon-2",
+        condition: majorUncommonItem
+      }}
+    ]
+  }
+};
+
 export const DefaultLevelChoice = [
   LEVEL_1,
   LEVEL_2,
   LEVEL_3,
-  LEVEL_4
+  LEVEL_4,
+  LEVEL_5,
+  LEVEL_6,
+  LEVEL_7,
+  LEVEL_8
 ] as LevelChoice[];

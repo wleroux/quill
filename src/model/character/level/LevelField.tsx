@@ -9,6 +9,8 @@ import {ItemField} from "@/model/character/level/item/ItemField";
 import React from "react";
 import {classProcessor} from "./class/ClassProcessor";
 import {itemProcessor} from "@/model/character/level/item/ItemProcessor";
+import {itemReplacementProcessor} from "./item-replace/ItemReplacementProcessor";
+import {ItemReplacementField} from "@/model/character/level/item-replace/ItemReplacementField";
 
 export function LevelChoiceField({value, choice, decision, onChange}: {
   value: Character,
@@ -25,6 +27,11 @@ export function LevelChoiceField({value, choice, decision, onChange}: {
   } else if (choice.type === "item" && (decision?.type === undefined || decision.type === "item")) {
     return <ItemField value={value} choice={choice} decision={decision} onChange={fn => onChange(prev => {
       if (prev === undefined || prev.type === "item") return fn(prev);
+      return prev;
+    })} />
+  } else if (choice.type === "item-replacement" && (decision?.type === undefined || decision.type === "item-replacement")) {
+    return <ItemReplacementField value={value} choice={choice} decision={decision} onChange={fn => onChange(prev => {
+      if (prev === undefined || prev.type === "item-replacement") return fn(prev);
       return prev;
     })} />
   }
@@ -61,6 +68,10 @@ export function LevelField({value, choice, decision, inline, onChange}: {
     } else if (subchoice.type === "item" && (subdecision === undefined || subdecision.type === "item")) {
       if (itemProcessor(prevCharacter, subchoice, subdecision).valid) {
         value = itemProcessor(prevCharacter, subchoice, subdecision).orThrow();
+      }
+    } else if (subchoice.type === "item-replacement" && (subdecision === undefined || subdecision.type === "item-replacement")) {
+      if (itemReplacementProcessor(prevCharacter, subchoice, subdecision).valid) {
+        value = itemReplacementProcessor(prevCharacter, subchoice, subdecision).orThrow();
       }
     }
 

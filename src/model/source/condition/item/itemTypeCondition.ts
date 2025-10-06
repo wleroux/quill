@@ -10,9 +10,9 @@ export function itemTier(tier: ItemTier) {
   };
 }
 
-export function itemRarity(rarity: ItemRarity) {
+export function itemRarity(...rarity: ItemRarity[]) {
   return (itemID: ItemID): boolean => {
-    return REPOSITORY.ITEMS[itemID].rarity === rarity;
+    return rarity.some(rarity => REPOSITORY.ITEMS[itemID].rarity === rarity);
   }
 }
 
@@ -30,6 +30,10 @@ function worth(value: number) {
 export const initiatePet = all(itemRarity("Mundane"), worth(50_00), mount);
 
 export const initiateMundaneItem = all(itemRarity("Mundane"), worth(50_00), not(mount));
+export const adeptMundaneItem = all(itemRarity("Mundane"), worth(500_00), not(mount));
+export const vanguardMundaneItem = all(itemRarity("Mundane"), worth(1_000_00), not(mount));
+export const exemplarMundaneItem = all(itemRarity("Mundane"), worth(5_000_00), not(mount));
+export const harbingerMundaneItem = all(itemRarity("Mundane"), worth(15_000_00), not(mount));
 
 export const minorCommonItem = all(itemTier("Minor"), itemRarity("Common"));
 export const minorUncommonItem = all(itemTier("Minor"), itemRarity("Uncommon"));

@@ -4,6 +4,7 @@ import {LevelDecision} from "@/model/character/level/LevelDecision";
 import {ErrorResult, ValidResult} from "@/model/processor/Result";
 import {classProcessor} from "./class/ClassProcessor";
 import {itemProcessor} from "@/model/character/level/item/ItemProcessor";
+import {itemReplacementProcessor} from "@/model/character/level/item-replace/ItemReplacementProcessor";
 
 export const levelProcessor: Processor<LevelChoice, LevelDecision | undefined> = (value, choice, decision) => {
   // Validate Optional
@@ -18,6 +19,8 @@ export const levelProcessor: Processor<LevelChoice, LevelDecision | undefined> =
       return result.flatMap((value) => classProcessor(value, subchoice, subdecision))
     } else if (subchoice.type === "item" && (subdecision === undefined || subdecision?.type === "item")) {
       return result.flatMap((value) => itemProcessor(value, subchoice, subdecision))
+    } else if (subchoice.type === "item-replacement" && (subdecision === undefined || subdecision?.type === "item-replacement")) {
+      return result.flatMap((value) => itemReplacementProcessor(value, subchoice, subdecision))
     } else {
       throw new Error(`Unknown Choice Type: ${JSON.stringify(choice)} and ${JSON.stringify(decision)}`)
     }
