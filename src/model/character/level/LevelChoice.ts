@@ -18,8 +18,8 @@ import {Game} from "@/model/game/Game";
 import {GAME_TIERS, GameTier} from "@/model/game/GameTier";
 import {ItemReplacementChoice} from "@/model/character/level/item-replace/ItemReplacementChoice";
 
-export function getCanLevelUp(character: Character, games: Game[]): boolean {
-  const finishedGames = games.filter(game => game.status === "SUCCESS" || game.status === "FAILURE");
+export function getCanLevelUp(character: Character, games: Game[], gamesRan: Game[]): boolean {
+  const finishedGames = [...games, ...gamesRan].filter(game => game.status === "SUCCESS" || game.status === "FAILURE");
   const gameTiers: {[tier in GameTier]: number} = Object.fromEntries(GAME_TIERS.map(tier => [tier, finishedGames.filter(game => game.tier === tier).length])) as {[tier in GameTier]: number};
 
   const currentLevel = getCurrentLevel(character);

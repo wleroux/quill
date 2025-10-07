@@ -33,7 +33,7 @@ function Skill({id, proficient, expertise}: { id: SkillID, proficient: boolean, 
   </div>
 }
 
-export function CharacterProfile({value, games}: { value: Character, games: Game[] }) {
+export function CharacterProfile({value, games, gamesRan}: { value: Character, games: Game[], gamesRan: Game[] }) {
   const [isMundaneExpanded, setIsMundaneExpanded] = useState(false);
   const [isMagicalExpanded, setIsMagicalExpanded] = useState(true);
   const router = useRouter();
@@ -187,7 +187,7 @@ export function CharacterProfile({value, games}: { value: Character, games: Game
     </TabView>
 
     {!value.retired && <div className="absolute right-4 top-4">
-      <CharacterActionButton value={value} games={games}/>
+      <CharacterActionButton value={value} games={games} gamesRan={gamesRan}/>
     </div>}
   </div>
 }

@@ -16,6 +16,6 @@ export default async function MyCharacterPage({params}: {
   if (character.ownerID !== userID) return <>Unauthorized.</>;
 
   const games = await GameRepository.getGamesByCharacterID(characterID);
-
-  return <CharacterPage character={character} games={games} />
+  const gamesRan = await GameRepository.getGamesByGameMasterID(character.ownerID);
+  return <CharacterPage character={character} games={games} gamesRan={gamesRan} />
 }

@@ -31,8 +31,9 @@ export async function POST(
         {type: "train", data: [decision]}
       ]);
     } else if (decision.type === "level") {
+      const gamesRan = await GameRepository.getGamesByGameMasterID(character.ownerID);
       const games = await GameRepository.getGamesByCharacterID(characterID);
-      if (!getCanLevelUp(character, games)) {
+      if (!getCanLevelUp(character, games, gamesRan)) {
         return ErrorResult.of("Cannot level up yet!")
       }
       return CharacterRepository.applyToCharacter(character, [

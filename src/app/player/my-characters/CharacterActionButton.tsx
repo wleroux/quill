@@ -14,7 +14,7 @@ import {RetrainDialog} from "@/app/player/my-characters/RetrainDialog";
 import {ConfirmPopup} from "primereact/confirmpopup";
 import {Game} from "@/model/game/Game";
 
-export function CharacterActionButton({value, games}: {value: Character, games: Game[]}) {
+export function CharacterActionButton({value, games, gamesRan}: {value: Character, games: Game[], gamesRan: Game[]}) {
   const router = useRouter();
   const retire = useMutation({
     mutationFn: ({characterID}: {characterID: CharacterID}) => {
@@ -36,7 +36,7 @@ export function CharacterActionButton({value, games}: {value: Character, games: 
   const [isLongRestOpen, setIsLongRestOpen] = React.useState(false);
   const [isRetrainOpen, setIsRetrainOpen] = React.useState(false);
 
-  const canLevelUp = getCanLevelUp(value, games);
+  const canLevelUp = getCanLevelUp(value, games, gamesRan);
 
   return <>
     <Button ref={retireButtonRef} size="small" label="Actions" onClick={(ev) => {
