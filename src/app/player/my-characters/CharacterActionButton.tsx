@@ -49,9 +49,9 @@ export function CharacterActionButton({value, games, gamesRan}: {value: Characte
       {label: `Long Rest`, disabled: isRenameOpen, command() {
           setIsLongRestOpen(true);
         }},
-      {label: "Initiate Retrain", visible: getCurrentLevel(value) < 5, command() {
-          setIsRetrainOpen(true)
-        }},
+      {label: getCurrentLevel(value) < 5 ? "Initiate Retrain" : "Retrain", visible: getCurrentLevel(value) < 5 || getCanLevelUp(value, [], gamesRan), command() {
+        setIsRetrainOpen(true)
+      }},
       {label: `Rename`, disabled: isRenameOpen, command() {
           setIsRenameOpen(true);
         }},
