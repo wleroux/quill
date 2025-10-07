@@ -25,10 +25,10 @@ export function getCanLevelUp(character: Character, games: Game[]): boolean {
   const currentLevel = getCurrentLevel(character);
   if (currentLevel === 2) return true;
   else if (currentLevel === 3) return gameTiers["Initiate"] >= 5;
-  // else if (currentLevel === 4) return gameTiers["Initiate"] >= 10;
-  // else if (currentLevel === 5) return gameTiers["Adept"] >= 5;
-  // else if (currentLevel === 6) return gameTiers["Adept"] >= 10;
-  // else if (currentLevel === 7) return gameTiers["Adept"] >= 15;
+  else if (currentLevel === 4) return gameTiers["Initiate"] >= 10;
+  else if (currentLevel === 5) return gameTiers["Adept"] >= 5;
+  else if (currentLevel === 6) return gameTiers["Adept"] >= 10;
+  else if (currentLevel === 7) return gameTiers["Adept"] >= 15;
   // else if (currentLevel === 8) return gameTiers["Adept"] >= 20;
   // else if (currentLevel === 9) return gameTiers["Vanguard"] >= 5;
   // else if (currentLevel === 10) return gameTiers["Vanguard"] >= 10;
