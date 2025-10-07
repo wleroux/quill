@@ -181,6 +181,10 @@ export const PHB_CLERIC_4 = {
       choiceID: "cleric::cantrip-replacement::4",
       sourceID: clericCantripSources,
       condition: clericCantripSpell
+    }},
+    {type: "feat", data: {
+      choiceID: "cleric::feat-1",
+      condition: featType("general", "origin")
     }}
   ],
   longRest: [
@@ -263,7 +267,7 @@ export const PHB_CLERIC_8 = {
       condition: clericCantripSpell
     }},
     {type: "feat", data: {
-      choiceID: "feat",
+      choiceID: "cleric::feat-2",
       condition: featType("general", "origin")
     }}
   ],
@@ -339,7 +343,7 @@ export const PHB_CLERIC_12 = {
       condition: clericCantripSpell
     }},
     {type: "feat", data: {
-      choiceID: "feat",
+      choiceID: "cleric::feat-3",
       condition: featType("general", "origin")
     }}
   ],
