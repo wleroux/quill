@@ -77,7 +77,7 @@ const PHB_FEAT_MAGIC_INITIATE_CLERIC: Feat = {
     }},
     {type: "item", data: {
       choiceID: "item-1",
-      enabled: (_, context) => !context.items.some(item => item.itemID === "Component Pouch"),
+      enabled: (_, context) => !Object.values(context.items).some(item => item.itemID === "Component Pouch"),
       condition: is("Component Pouch")
     }}
   ]
@@ -109,7 +109,7 @@ const PHB_FEAT_MAGIC_INITIATE_DRUID: Feat = {
     }},
     {type: "item", data: {
       choiceID: "item-1",
-      enabled: (_, context) => !context.items.some(item => item.itemID === "Component Pouch"),
+      enabled: (_, context) => !Object.values(context.items).some(item => item.itemID === "Component Pouch"),
       condition: is("Component Pouch")
     }}
   ]
@@ -141,7 +141,7 @@ const PHB_FEAT_MAGIC_INITIATE_WIZARD: Feat = {
     }},
     {type: "item", data: {
       choiceID: "item-1",
-      enabled: (_, context) => !context.items.some(item => item.itemID === "Component Pouch"),
+      enabled: (_, context) => !Object.values(context.items).some(item => item.itemID === "Component Pouch"),
       condition: is("Component Pouch")
     }}
   ]

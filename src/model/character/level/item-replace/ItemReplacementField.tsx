@@ -15,9 +15,17 @@ export function ItemReplacementField({value, choice, decision, onChange}: {
   decision: ItemReplacementDecision | undefined,
   onChange: (fn: (value: ItemReplacementDecision | undefined) => (ItemReplacementDecision | undefined)) => void
 }) {
-  const VALID_ITEMS_TO_REPLACE = value.items.map(item => item.itemID)
-    .filter(itemID => choice.data.condition === undefined || choice.data.condition(itemID, value))
-    .sort((a,b) => REPOSITORY.ITEMS[a].label.localeCompare(REPOSITORY.ITEMS[b].label));
+  const VALID_ITEMS_TO_REPLACE = Object.keys(value.items)
+    .filter(sourceID => {
+      if (choice.data.condition === undefined) return true;
+      const itemID = value.items[sourceID].itemID;
+      return choice.data.condition(itemID, value)
+    })
+    .sort((a,b) => {
+      const aItemID = value.items[a].itemID;
+      const bItemID = value.items[b].itemID;
+      return REPOSITORY.ITEMS[aItemID].label.localeCompare(REPOSITORY.ITEMS[bItemID].label)
+    });
   const required = choice.data.required?.(undefined, value) ?? true;
 
   const replaceItem = decision?.data.itemID ? REPOSITORY.ITEMS[decision.data.itemID] : undefined;
@@ -25,7 +33,6 @@ export function ItemReplacementField({value, choice, decision, onChange}: {
     .filter(item => REPOSITORY.ITEMS[item].rarity === replaceItem?.rarity && REPOSITORY.ITEMS[item].tier === replaceItem?.tier)
     .filter(itemID => choice.data.condition === undefined || choice.data.condition(itemID, value))
     .sort((a,b) => REPOSITORY.ITEMS[a].label.localeCompare(REPOSITORY.ITEMS[b].label));
-
 
   const itemCategories = ITEM_RARITIES.flatMap(rarity => {
     return ITEM_TIERS.map(tier => {
@@ -36,7 +43,14 @@ export function ItemReplacementField({value, choice, decision, onChange}: {
   return <FieldSet inline>
     {!required && <FieldSet inline>
       <CheckboxField label={choice.data.label ?? "Replace Spell"} checked={decision !== undefined} onChange={(checked) => {
-        onChange(_ => checked ? ({type: "item-replacement", data: {replaceItemID: VALID_ITEMS_TO_REPLACE[0], itemID: VALID_ITEMS_TO_REPLACE[0], decisions: {}}}) : undefined)
+        onChange(_ => {
+          if (checked) {
+            const sourceID = VALID_ITEMS_TO_REPLACE[0];
+            const itemID = value.items[sourceID].itemID;
+            return ({type: "item-replacement", data: {sourceID, itemID, decisions: {}}});
+          }
+          return undefined
+        });
       }} />
     </FieldSet>}
 
@@ -44,28 +58,35 @@ export function ItemReplacementField({value, choice, decision, onChange}: {
       <DropdownField
         disabled={VALID_ITEMS_TO_REPLACE.length === 1}
         label={choice.data.label ?? "Item Replacement"}
-        value={decision?.data.replaceItemID}
+        value={decision?.data.sourceID}
         onChange={ev => {
-          const value = typeof ev.value === "string" ? ev.value : ev.value.value;
-          if (value === undefined) return;
+          const sourceID = typeof ev.value === "string" ? ev.value : ev.value.value;
+          if (sourceID === undefined) return;
           else onChange(prev => {
-            if (!prev) return ({type: "item-replacement", data: {replaceItemID: value, itemID: value, decisions: {}}});
-            return ({type: "item-replacement", data: {...prev.data, replaceItemID: value, itemID: value, decisions: {}}});
+            const itemID = value.items[sourceID].itemID;
+            if (!prev) return ({type: "item-replacement", data: {sourceID, itemID, decisions: {}}});
+            return ({type: "item-replacement", data: {...prev.data, sourceID, itemID, decisions: {}}});
           });
         }}
         optionGroupLabel={"label"}
         optionGroupChildren={"items"}
         options={
           itemCategories
-          .filter(([rarity, tier]) => VALID_ITEMS_TO_REPLACE.some(item => REPOSITORY.ITEMS[item].rarity === rarity && REPOSITORY.ITEMS[item].tier === tier))
+          .filter(([rarity, tier]) => VALID_ITEMS_TO_REPLACE.some(sourceID => {
+            const itemID = value.items[sourceID].itemID;
+            return REPOSITORY.ITEMS[itemID].rarity === rarity && REPOSITORY.ITEMS[itemID].tier === tier
+          }))
           .map(([rarity, tier]) => {
             return ({
               label: `${tier} ${rarity}`,
               items: VALID_ITEMS_TO_REPLACE
-                .filter(itemID => REPOSITORY.ITEMS[itemID].rarity === rarity && REPOSITORY.ITEMS[itemID].tier === tier)
-                .map(itemID => ({
-                  value: itemID,
-                  label: REPOSITORY.ITEMS[itemID].label
+                .filter(sourceID => {
+                  const itemID = value.items[sourceID].itemID;
+                  return REPOSITORY.ITEMS[itemID].rarity === rarity && REPOSITORY.ITEMS[itemID].tier === tier;
+                })
+                .map(sourceID => ({
+                  value: sourceID,
+                  label: REPOSITORY.ITEMS[value.items[sourceID].itemID].label
                 }))
             })
           })
@@ -75,11 +96,11 @@ export function ItemReplacementField({value, choice, decision, onChange}: {
         label={"Item"}
         value={decision?.data.itemID}
         onChange={ev => {
-          const value = typeof ev.value === "string" ? ev.value : ev.value.value;
-          if (value === undefined) return;
+          const itemID = typeof ev.value === "string" ? ev.value : ev.value.value;
+          if (itemID === undefined) return;
           else onChange(prev => {
             if (prev)
-              return ({type: "item-replacement", data: {...prev.data, itemID: value, decisions: {}}});
+              return ({type: "item-replacement", data: {...prev.data, itemID: itemID, decisions: {}}});
             return undefined;
           });
         }}

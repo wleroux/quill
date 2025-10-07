@@ -24,10 +24,13 @@ export const itemProcessor: Processor<ItemChoice, ItemDecision | undefined> = (v
 
     return item.choices.reduce(choicesReducer(decision.data.decisions), ValidResult.of({
       ...value,
-      items: [...value.items, {
-        itemID: decision.data.itemID,
-        decisions: decision.data.decisions
-      }]
+      items: {
+        ...value.items,
+        [choice.data.choiceID]: {
+          itemID: decision.data.itemID,
+          decisions: decision.data.decisions
+        }
+      }
     }));
   }
 }

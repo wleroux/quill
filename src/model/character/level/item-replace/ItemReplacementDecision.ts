@@ -5,7 +5,7 @@ import {ChoiceID} from "@/model/source/choice/ChoiceID";
 export type ItemReplacementDecision = {
   type: "item-replacement";
   data: {
-    replaceItemID: ItemID;
+    sourceID: string;
     itemID: ItemID;
     decisions: {
       [choiceID: ChoiceID]: Decision

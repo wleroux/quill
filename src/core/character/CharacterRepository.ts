@@ -1,6 +1,6 @@
 import {Resource} from "sst/resource";
 import {CharacterID} from "@/model/character/CharacterID";
-import {Character, INITIAL_CHARACTER} from "@/model/character/Character";
+import {Character, INITIAL_CHARACTER, migrateCharacter} from "@/model/character/Character";
 import {dynamoDBClient, getLoader, send} from "@/core/DynamoDBClient";
 import {QueryCommand, QueryCommandOutput} from "@aws-sdk/lib-dynamodb";
 import {QueueRepository} from "@/core/queue/QueueRepository";
@@ -165,7 +165,7 @@ class CharacterLoader {
       ExpressionAttributeValues: {":PK": "CHARACTER", ":SK": `CHARACTER#${id}`}
     }));
     if (Response.Items) {
-      this.cache[id] = Response.Items[0].Data;
+      this.cache[id] = migrateCharacter(Response.Items[0].Data);
       return this.cache[id];
     } else {
       throw new Error("Could not find Character");
@@ -189,7 +189,7 @@ class CharacterLoader {
     if (!response.Items) return [];
     return response.Items.map((Item) => {
       const id = Item.Data.id;
-      if (!this.cache[id]) this.cache[id] = Item.Data;
+      if (!this.cache[id]) this.cache[id] = migrateCharacter(Item.Data);
       return this.cache[id];
     });
   }
@@ -210,7 +210,7 @@ class CharacterLoader {
       if (Response.Items) {
         characters.push(...Response.Items.map((Item) => {
           const id = Item.Data.id;
-          if (!this.cache[id]) this.cache[id] = Item.Data;
+          if (!this.cache[id]) this.cache[id] = migrateCharacter(Item.Data);
           return this.cache[id];
         }));
       }

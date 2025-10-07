@@ -18,12 +18,13 @@ import {ProgressDecision} from "@/model/character/progress/ProgressDecision";
 import {ManeuverID} from "@/model/source/model/Maneuver";
 import {LongRestDecision} from "@/model/character/long-rest/LongRestDecision";
 import {LanguageID} from "@/model/source/model/Language";
+import {validateCharacter} from "@/app/scribe/characters/validateCharacter";
 
 type Proficiency = "untrained" | "proficient" | "expertise";
 
 export type Character = {
   id: CharacterID;
-  version: undefined,
+  version: 1,
   ownerID: Snowflake;
   revision: number,
   retired: boolean;
@@ -44,9 +45,11 @@ export type Character = {
   }};
   stats: {[attributeID in AttributeID]: number};
   items: {
-    itemID: ItemID;
-    decisions: {[choiceID: ChoiceID]: Decision}
-  }[];
+    [sourceID: string]: {
+      itemID: ItemID;
+      decisions: {[choiceID: ChoiceID]: Decision}
+    }
+  };
   languages?: LanguageID[],
   savingThrows: {
     [attributeID in AttributeID]: "untrained" | "proficient"
@@ -65,9 +68,22 @@ export type Character = {
   choices: {[choiceID: ChoiceID]: string};
 };
 
+export function migrateCharacter(value: any): Character {
+  if (value.version === undefined) {
+    const valid = validateCharacter(value);
+    if (valid.valid) {
+      value.items = valid.value.items;
+    } else {
+      value.items = {};
+    }
+    value.version = 1;
+  }
+  return value;
+}
+
 export const INITIAL_CHARACTER = (id: CharacterID, ownerID: Snowflake): Character => ({
   id,
-  version: undefined,
+  version: 1,
   revision: 0,
   ownerID: ownerID,
   retired: false,
@@ -83,7 +99,7 @@ export const INITIAL_CHARACTER = (id: CharacterID, ownerID: Snowflake): Characte
   // result
   classIDs: [],
   choices: {},
-  items: [],
+  items: {},
   languages: [],
   feats: {},
   eldritchInvocations: {},

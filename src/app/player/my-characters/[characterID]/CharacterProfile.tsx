@@ -92,7 +92,7 @@ export function CharacterProfile({value, games}: { value: Character, games: Game
                 {!isMundaneExpanded && <span className="pi pi-chevron-right"/>}
                 <span>Mundane</span>
               </strong>
-              {isMundaneExpanded && value.items.filter(item => REPOSITORY.ITEMS[item.itemID].rarity === "Mundane")
+              {isMundaneExpanded && Object.values(value.items).filter(item => REPOSITORY.ITEMS[item.itemID].rarity === "Mundane")
                 .sort((a, b) => REPOSITORY.ITEMS[a.itemID].label.localeCompare(REPOSITORY.ITEMS[b.itemID].label))
                 .map((item, index) => <div key={`${item.itemID}-${index}`}>
                   - {REPOSITORY.ITEMS[item.itemID]?.label}
@@ -104,7 +104,7 @@ export function CharacterProfile({value, games}: { value: Character, games: Game
                 {!isMagicalExpanded && <span className="pi pi-chevron-right"/>}
                 Magical
               </strong>
-              {isMagicalExpanded && value.items.filter(item => REPOSITORY.ITEMS[item.itemID].rarity !== "Mundane")
+              {isMagicalExpanded && Object.values(value.items).filter(item => REPOSITORY.ITEMS[item.itemID].rarity !== "Mundane")
                 .sort((a, b) => REPOSITORY.ITEMS[a.itemID].label.localeCompare(REPOSITORY.ITEMS[b.itemID].label))
                 .map((item, index) => <div key={`${item.itemID}-${index}`}>
                   - {REPOSITORY.ITEMS[item.itemID]?.label}

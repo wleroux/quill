@@ -214,12 +214,12 @@ const LEVEL_5: LevelChoice = {
       }},
       {type: "item", data: {
         label: "Minor Uncommon Item",
-        choiceID: "level::item::minor-uncommon-4",
+        choiceID: "level::item::minor-uncommon-1",
         condition: minorUncommonItem
       }},
       {type: "item", data: {
         label: "Major Uncommon Item",
-        choiceID: "level::item::major-uncommon-2",
+        choiceID: "level::item::major-uncommon-1",
         condition: majorUncommonItem
       }}
     ]
@@ -253,13 +253,8 @@ const LEVEL_6: LevelChoice = {
       }},
       {type: "item", data: {
         label: "Minor Uncommon Item",
-        choiceID: "level::item::minor-uncommon-4",
+        choiceID: "level::item::minor-uncommon-2",
         condition: minorUncommonItem
-      }},
-      {type: "item", data: {
-        label: "Major Uncommon Item",
-        choiceID: "level::item::major-uncommon-2",
-        condition: majorUncommonItem
       }}
     ]
   }
@@ -292,13 +287,8 @@ const LEVEL_7: LevelChoice = {
       }},
       {type: "item", data: {
         label: "Minor Uncommon Item",
-        choiceID: "level::item::minor-uncommon-4",
+        choiceID: "level::item::minor-uncommon-3",
         condition: minorUncommonItem
-      }},
-      {type: "item", data: {
-        label: "Major Uncommon Item",
-        choiceID: "level::item::major-uncommon-2",
-        condition: majorUncommonItem
       }}
     ]
   }
@@ -328,11 +318,6 @@ const LEVEL_8: LevelChoice = {
         label: "Mundane Item (max 150gp)",
         choiceID: "level::item::mundane-8",
         condition: adeptMundaneItem
-      }},
-      {type: "item", data: {
-        label: "Minor Uncommon Item",
-        choiceID: "level::item::minor-uncommon-4",
-        condition: minorUncommonItem
       }},
       {type: "item", data: {
         label: "Major Uncommon Item",

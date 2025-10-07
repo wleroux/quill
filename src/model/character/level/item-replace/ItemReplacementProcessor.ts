@@ -14,37 +14,33 @@ export const itemReplacementProcessor: Processor<ItemReplacementChoice, ItemRepl
       return ErrorResult.of([new ProcessorError("REQUIRED", [choice.data.choiceID], choice, decision)]);
     return ValidResult.of(value);
   } else {
-    // VALIDATE ITEM
-    if (choice.data.condition !== undefined && !choice.data.condition(decision.data.replaceItemID, value))
-      return ErrorResult.of([new ProcessorError("UNMET CONDITION", [choice.data.choiceID], choice, decision)]);
-    const itemIDIndex = value.items.findIndex(item => item.itemID === decision.data.replaceItemID);
-    if (itemIDIndex < 0)
+    // VALIDATE SOURCE ITEM
+    const sourceItemDecision = value.items[decision.data.sourceID];
+    if (!sourceItemDecision) return ErrorResult.of([new ProcessorError("UNMET CONDITION", [choice.data.choiceID], choice, decision)]);
+    const sourceItem = REPOSITORY.ITEMS[sourceItemDecision.itemID];
+    if (!sourceItem) return ErrorResult.of([new ProcessorError("UNKNOWN ITEM", [choice.data.choiceID], choice, decision)]);
+
+    if (choice.data.condition !== undefined && !choice.data.condition(sourceItemDecision.itemID, value))
       return ErrorResult.of([new ProcessorError("UNMET CONDITION", [choice.data.choiceID], choice, decision)]);
 
+    const item = REPOSITORY.ITEMS[decision.data.itemID];
+    if (!item) return ErrorResult.of([new ProcessorError("UNKNOWN ITEM", [choice.data.choiceID], choice, decision)]);
     if (choice.data.condition !== undefined && !choice.data.condition(decision.data.itemID, value))
       return ErrorResult.of([new ProcessorError("UNMET CONDITION", [choice.data.choiceID], choice, decision)]);
 
-    const itemReplaced = REPOSITORY.ITEMS[decision.data.replaceItemID];
-    if (!itemReplaced)
-      return ErrorResult.of([new ProcessorError("UNKNOWN ITEM", [choice.data.choiceID], choice, decision)]);
 
-    const item = REPOSITORY.ITEMS[decision.data.itemID];
-    if (!item)
-      return ErrorResult.of([new ProcessorError("UNKNOWN ITEM", [choice.data.choiceID], choice, decision)]);
-
-    if (itemReplaced.rarity !== item.rarity || itemReplaced.tier !== item.tier)
+    if (sourceItem.rarity !== item.rarity || sourceItem.tier !== item.tier)
       return ErrorResult.of([new ProcessorError("RARITY MISMATCH", [choice.data.choiceID], choice, decision)]);
 
     return ValidResult.of({
       ...value,
-      items: [
-        ...value.items.slice(0, itemIDIndex),
-        {
+      items: {
+        ...value.items,
+        [decision.data.sourceID]: {
           itemID: decision.data.itemID,
           decisions: decision.data.decisions
-        },
-        ...value.items.slice(itemIDIndex + 1)
-      ]
+        }
+      }
     });
   }
 }
