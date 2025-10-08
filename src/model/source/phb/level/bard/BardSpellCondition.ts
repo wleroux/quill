@@ -1,5 +1,3 @@
-import {SpellID} from "@/model/source/model/Spell";
-import {Condition} from "@/model/source/condition/Condition";
 import {all} from "@/model/source/condition/generic/AllCondition";
 import {spellLevel} from "@/model/source/condition/spell/SpellLevelCondition";
 import {is} from "@/model/source/condition/generic/IsCondition";
@@ -13,7 +11,7 @@ export const bardSpell = is(
   "Mage Hand",
   "Mending",
   "Message",
-  "Minor",
+  "Minor Illusion",
   "Prestidigitation",
   "Starry Wisp",
   "Thunderclap",
