@@ -179,6 +179,11 @@ export const BASE_BARD_4 = {
       condition: bardLeveledSpell(2, false),
     }},
     {type: "spell", data: {
+      label: "Cantrip",
+      choiceID: "bard::spell::cantrip-3",
+      condition: bardCantripSpell
+    }},
+    {type: "spell", data: {
       choiceID: "bard::spell::spell-7",
       condition: bardLeveledSpell(2, false),
     }},
@@ -346,6 +351,11 @@ export const BASE_BARD_10 = {
       choiceID: "bard::cantrip-replacement::10",
       sourceID: bardPreparedSpellID,
       condition: bardLeveledSpell(5, true)
+    }},
+    {type: "spell", data: {
+      label: "Cantrip",
+      choiceID: "bard::spell::cantrip-4",
+      condition: bardCantripSpell
     }},
     {type: "spell", data: {
       choiceID: "bard::spell::spell-15",
