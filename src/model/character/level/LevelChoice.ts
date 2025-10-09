@@ -44,6 +44,18 @@ export function getCanLevelUp(character: Character, games: Game[], gamesRan: Gam
   return false;
 }
 
+export function getMaxUnretireLevel(gamesRan: Game[]): number {
+  const finishedGames = gamesRan.filter(game => game.status === "SUCCESS" || game.status === "FAILURE");
+  const gameTiers: {[tier in GameTier]: number} = Object.fromEntries(GAME_TIERS.map(tier => [tier, finishedGames.filter(game => game.tier === tier).length])) as {[tier in GameTier]: number};
+  if (gameTiers["Initiate"] < 5) return 3;
+  else if (gameTiers["Initiate"] < 10)  return 4;
+  else if (gameTiers["Adept"] < 5) return 5;
+  else if (gameTiers["Adept"] < 10) return 6;
+  else if (gameTiers["Adept"] < 15) return 7;
+  else return 8;
+}
+
+
 export function getCurrentLevel(value: Character) {
   return value.progress.filter(progress => progress.type === "level" &&
     Object.values(progress.data.decisions).some(data => data.type === "class")

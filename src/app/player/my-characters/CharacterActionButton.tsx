@@ -6,13 +6,14 @@ import React, {useRef, useState} from "react";
 import {Menu} from "primereact/menu";
 import {Button} from "@/lib/components/Button";
 import {MENU_PASSTHROUGH} from "@/lib/components/Menu";
-import {getCanLevelUp, getCurrentLevel} from "@/model/character/level/LevelChoice";
+import {getCanLevelUp, getCurrentLevel, getMaxUnretireLevel} from "@/model/character/level/LevelChoice";
 import {RenameDialog} from "@/lib/character/train/RenameDialog";
 import {LevelDialog} from "@/lib/character/train/LevelDialog";
 import {LongRestDialog} from "@/lib/character/long-rest/LongRestDialog";
 import {RetrainDialog} from "@/app/player/my-characters/RetrainDialog";
 import {ConfirmPopup} from "primereact/confirmpopup";
 import {Game} from "@/model/game/Game";
+import {useUnretireMutation} from "@/lib/character/unretire/useUnretireMutation";
 
 export function CharacterActionButton({value, games, gamesRan}: {value: Character, games: Game[], gamesRan: Game[]}) {
   const router = useRouter();
@@ -26,6 +27,8 @@ export function CharacterActionButton({value, games, gamesRan}: {value: Characte
       router.refresh();
     }
   });
+  const unretire = useUnretireMutation({});
+
   const menu = useRef<Menu>(null);
 
   const [isConfirmRetireVisible, setIsConfirmRetireVisible] = useState(false);
@@ -37,6 +40,7 @@ export function CharacterActionButton({value, games, gamesRan}: {value: Characte
   const [isRetrainOpen, setIsRetrainOpen] = React.useState(false);
 
   const canLevelUp = getCanLevelUp(value, games, gamesRan);
+  const maxUnretireLevel = getMaxUnretireLevel(gamesRan);
 
   return <>
     <Button ref={retireButtonRef} size="small" label="Actions" onClick={(ev) => {
@@ -56,8 +60,11 @@ export function CharacterActionButton({value, games, gamesRan}: {value: Characte
           setIsRenameOpen(true);
         }},
       {label: `Retire`, disabled: retire.isPending || isConfirmRetireVisible, command() {
-          setIsConfirmRetireVisible(true);
-        }}
+        setIsConfirmRetireVisible(true);
+      }},
+      {label: `Unretire`, disabled: unretire.isPending || getCurrentLevel(value) > maxUnretireLevel, command() {
+        unretire.mutate({characterID: value.id});
+      }}
     ]} />
     <RenameDialog value={value} visible={isRenameOpen} onClose={() => setIsRenameOpen(false)} />
     {canLevelUp && <LevelDialog value={value} visible={isLevelUpOpen} onClose={() => setIsLevelUpOpen(false)} />}
@@ -69,7 +76,7 @@ export function CharacterActionButton({value, games, gamesRan}: {value: Characte
       message: {className: "pl-4 text-red-100"},
       icon: {className: "text-red-100"}
     }} target={retireButtonRef.current ?? undefined} visible={isConfirmRetireVisible} onHide={() => setIsConfirmRetireVisible(false)}
-                  message={`Are you sure you want to retire ${value.name}? Once retired, they cannot be unretired.`} icon="pi pi-exclamation-triangle" accept={() => {
+                  message={`Are you sure you want to retire ${value.name}? Once retired, they may not be able to be unretired.`} icon="pi pi-exclamation-triangle" accept={() => {
       retire.mutate({characterID: value.id});
     }} reject={() => setIsConfirmRetireVisible(false)}  />
   </>
